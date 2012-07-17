@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            
+     	  	<Button
+         	   android:id="@+id/previous"
+         	   android:layout_width="fill_parent"
+         	   android:layout_height="wrap_content"
+        	   android:layout_weight="4"
+         	   android:text="@string/prev" />
+     	  	
+     	  	<TextView 
+     	  	    android:id="@+id/category"
+     	  	    android:layout_width="fill_parent"
+     	  	    android:layout_height="wrap_content"
+     	  	    android:layout_weight="3"
+     	  	    android:text="@string/category"
+     	  	    android:gravity="center" />
+
+       		<Button
+       		   android:id="@+id/next"
+       	       android:layout_width="fill_parent"
+      	       android:layout_height="wrap_content"
+         	   android:layout_weight="4"
+         	   android:text="@string/next" />
+       	</LinearLayout>
+       	
+        
+		<TextView
+		   		android:id="@+id/joke"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:text="@string/joke" 
+                android:gravity="top"
+                android:layout_weight="1" />
+		
+		
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+           <Button
+               android:id="@+id/favourite"
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:text="@string/fav" />
+
+       		<Button
+       		    android:id="@+id/back"
+       		    android:layout_width="fill_parent"
+       		    android:layout_height="wrap_content"
+       		    android:layout_weight="1"
+       		    android:text="@string/menu" />
+       		
+        </LinearLayout>
+
+    </LinearLayout>

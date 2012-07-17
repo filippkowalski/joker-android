@@ -1,22 +1,25 @@
 package org.me.joker;
 
 import java.util.ArrayList;
-import android.app.ListActivity;
+import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.content.Intent;
  
-public class JokerActivity extends ListActivity{
+public class JokerActivity extends Activity{
   
  private final String DB_NAME = "bazaKategorii";
   
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.main);
+        setContentView(R.layout.main);
          
         ArrayList<String> results = new ArrayList<String>();
          
@@ -29,7 +32,7 @@ public class JokerActivity extends ListActivity{
         bazaKategorii.execSQL("CREATE TABLE IF NOT EXISTS Kategorie (numer VARCHAR, nazwaKategorii VARCHAR)");  
         bazaKategorii.execSQL("INSERT INTO Kategorie  Values('1','Zboczone');");
         bazaKategorii.execSQL("INSERT INTO Kategorie  Values('1','O Jasiu');");
-        bazaKategorii.execSQL("INSERT INTO Kategorie  Values('1','O studentach');");
+        bazaKategorii.execSQL("INSERT INTO Kategorie  Values('1','O Blondynkach');");
         bazaKategorii.execSQL("INSERT INTO Kategorie  Values('1','Turbo suchary');");
        
        
@@ -42,8 +45,6 @@ public class JokerActivity extends ListActivity{
        }while(cursor.moveToNext()); //Metoda zwraca FALSE wówczas gdy cursor przejdzie ostatni wpis
       }
           
-      this.setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,results));
-          
         }
         catch(SQLiteException e) { 
          Log.e(getClass().getSimpleName(), "Could not create or Open the database"); }
@@ -52,5 +53,29 @@ public class JokerActivity extends ListActivity{
          bazaKategorii.execSQL("DELETE FROM Kategorie");
          bazaKategorii.close();
         }
+        
+        
+        
+        Button jasiu = (Button)findViewById(R.id.oJasiu);
+        Button blondynki = (Button)findViewById(R.id.oBlondynkach);
+        
+        jasiu.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		newIntent("O Jasiu");
+        	}
+        });
+        
+        blondynki.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		newIntent("O Blondynkach");
+        	}
+        });
     }
+    
+    
+    public void newIntent(String category){
+    	Intent intent = new Intent(getApplicationContext(), SecondIntent.class);
+    	intent.putExtra("CATEGORY", category);
+    	startActivity(intent);
+    };
 }
