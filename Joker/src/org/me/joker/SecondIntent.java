@@ -15,10 +15,13 @@ public class SecondIntent extends Activity{
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.second);
 	        
+	        /*Stworzenie view
+	         * Wpisanie kategorii w naglowek
+	         */
 	        if (savedInstanceState == null){
 	        	Bundle extras = getIntent().getExtras();
 	        	if (extras == null){
-	        		cat = "dupa";
+	        		cat = null;
 	        	}
 	        	else {
 	        		cat = extras.getString("CATEGORY");
@@ -31,12 +34,26 @@ public class SecondIntent extends Activity{
 	        TextView kat = (TextView)findViewById(R.id.category);
 	        kat.setText(cat);
 	        
+	        TextView kawal = (TextView)findViewById(R.id.joke);
+	        
 	        Button powrot = (Button)findViewById(R.id.back);
 	        powrot.setOnClickListener(new OnClickListener(){
 	        	public void onClick(View view){
 	        		SecondIntent.this.finish();
 	        	}
 	        });
+	        
+	        /*Otworzenie bazy danych
+	         * Pobranie kawalu do TextView
+	         */
+	        
+	      
+	       
+	       DatabaseAdapter db = new DatabaseAdapter(cat, getApplicationContext());
+	        
+	       String joke = db.loadJoke();
+	        
+	       kawal.setText(joke);
 	 }
 	 
 }
