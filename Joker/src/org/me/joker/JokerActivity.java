@@ -1,63 +1,53 @@
 package org.me.joker;
 
-import java.io.IOException;
-
-import android.app.Activity;
+import android.app.ListActivity;
 import android.os.Bundle;
-import android.widget.Button;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.content.Intent;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+
 
  
-public class JokerActivity extends Activity{
+public class JokerActivity extends ListActivity{
   
   
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        
-        
-        /*Jesli baza danych nie istnieje
-         * to jest tworzona w tym miejscu
-         */
-        DatabaseHelper myDbHelper = new DatabaseHelper(this);
-        
-        try{
-        	
-        	myDbHelper.createDatabase();
-        	
-        }
-        catch (IOException e){
-        	throw new Error("Unable to create database");
-        }
-        
-        myDbHelper.close();
-        
-        /*Stworzenie view
-         * 
-         */
-        Button jasiu = (Button)findViewById(R.id.oJasiu);
-        Button blondynki = (Button)findViewById(R.id.oBlondynkach);
-        
-        jasiu.setOnClickListener(new OnClickListener(){
-        	public void onClick(View view){
-        		newIntent("O Jasiu");
-        	}
-        });
-        
-        blondynki.setOnClickListener(new OnClickListener(){
-        	public void onClick(View view){
-        		newIntent("O Blondynkach");
-        	}
-        });
+ 
+        ListAdapter adapter = createAdapter();
+        setListAdapter(adapter);
     }
-    
-    
-    public void newIntent(String category){
-    	Intent intent = new Intent(getApplicationContext(), SecondIntent.class);
-    	intent.putExtra("CATEGORY", category);
-    	startActivity(intent);
-    };
+ 
+    /**
+     * Creates and returns a list adapter for the current list activity
+     * @return
+     */
+
+    protected ListAdapter createAdapter()
+    {
+    	String[] categories = new String[] {
+    			"Chuck Norris",
+    			"Zboczone",
+    			"O babie",
+    			"O bacy",
+    			"O blondynkach",
+    			"O duchownych",
+    			"O facetach",
+    			"O Jasiu",
+    			"O kobietach",
+    			"O lekarzach",
+    			"O pijakach",
+    			"O policjantach",
+    			"O studentach",
+    			"O tesciowej",
+    			"O zwierzetach",
+    			"Turbo suchary"
+    	};
+ 
+    	// Create a simple array adapter (of type string) with the test values
+    	ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, categories);
+ 
+    	return adapter;
+    }
 }
