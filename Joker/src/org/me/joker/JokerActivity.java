@@ -27,37 +27,41 @@ public class JokerActivity extends ListActivity{
      * Creates and returns a list adapter for the current list activity
      * @return
      */
+    
+    
+    String[] category = new String[] {
+			"Chuck Norris",
+			"Zboczone",
+			"O babie",
+			"O bacy",
+			"O blondynkach",
+			"O duchownych",
+			"O facetach",
+			"O Jasiu",
+			"O kobietach",
+			"O lekarzach",
+			"O pijakach",
+			"O policjantach",
+			"O studentach",
+			"O tesciowej",
+			"O zwierzetach",
+			"Turbo suchary"
+	};
 
     protected ListAdapter createAdapter()
-    {
-    	String[] categories = new String[] {
-    			"Chuck Norris",
-    			"Zboczone",
-    			"O babie",
-    			"O bacy",
-    			"O blondynkach",
-    			"O duchownych",
-    			"O facetach",
-    			"O Jasiu",
-    			"O kobietach",
-    			"O lekarzach",
-    			"O pijakach",
-    			"O policjantach",
-    			"O studentach",
-    			"O tesciowej",
-    			"O zwierzetach",
-    			"Turbo suchary"
-    	};
- 
+    {    
     	// Create a simple array adapter (of type string) with the test values
-    	ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, categories);
+    	ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, category);
  
     	return adapter;
     }
+        
     
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-    	startActivity(new Intent(this, SecondIntent.class)); 
+    	Intent intent = new Intent(getApplicationContext(), SecondIntent.class);
+		intent.putExtra("CATEGORY", category);
+    	startActivity(intent);
     }
    
 }
