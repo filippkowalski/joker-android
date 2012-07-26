@@ -33,16 +33,10 @@ public class DatabaseAdapter{
 		
 		String joke = null;
 		db = dbh.getDatabase();
-		/*
-		Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like '1'", null);
+		Cursor c = db.rawQuery("SELECT text FROM oJasiu", null);
 	
-		if(c.moveToFirst()){
-			joke = "jest";
-		}
-		else{
-			joke = "nie ma";
-		}
-		*/
+		c.moveToFirst();
+		joke = c.getString(c.getColumnIndex("text"));
 		
 		return joke;
 	}
