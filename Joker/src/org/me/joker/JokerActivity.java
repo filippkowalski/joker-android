@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.io.IOException;
+
 
  
 public class JokerActivity extends ListActivity{
@@ -21,6 +23,14 @@ public class JokerActivity extends ListActivity{
  
         ListAdapter adapter = createAdapter();
         setListAdapter(adapter);
+        
+        DatabaseHelper dbh = new DatabaseHelper(this);
+        try{
+        	dbh.createDatabase();
+        }
+        catch (IOException e){
+        	throw new Error("Error creating database.");
+        }
     }
  
     /**
@@ -60,7 +70,7 @@ public class JokerActivity extends ListActivity{
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
     	Intent intent = new Intent(getApplicationContext(), SecondIntent.class);
-		intent.putExtra("CATEGORY", category);
+		intent.putExtra("CATEGORY", category[(int)id]);
     	startActivity(intent);
     }
    

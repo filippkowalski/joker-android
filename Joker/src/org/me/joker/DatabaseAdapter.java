@@ -8,7 +8,6 @@ public class DatabaseAdapter{
 
 	public static final String DB_NAME = "jokes.db";
 	public String DB_TABLE;
-	public static final int DATABASE_VERSION = 1;
 	public static final String Key_ID = "_id";
 	public static final String Key_Joke = "text";
 	public String DB_ID = "1";
@@ -33,8 +32,10 @@ public class DatabaseAdapter{
 	     dbh.openDatabase();
 		
 		String joke = null;
+		db = dbh.getDatabase();
 		/*
-		Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE, null);
+		Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like '1'", null);
+	
 		if(c.moveToFirst()){
 			joke = "jest";
 		}

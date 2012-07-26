@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.content.Context;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,12 +15,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static String DB_PATH = "/data/data/org.me.joker/databases/";
 	private static String DB_NAME = "jokes.db";
+	public static final int DB_VERSION = 4;
 	private SQLiteDatabase jokes;
 	private final Context myContext;
 	
 	
 	public DatabaseHelper(Context context){
-		super(context, DB_NAME, null, 1);
+		super(context, DB_NAME, null, DB_VERSION);
 		this.myContext = context;
 	}
 	
@@ -34,8 +36,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 		if(dbExist){
 			
+			Log.v("DB Exists", "db exists");
+			this.getWritableDatabase();
+			
 		}
-		else{
+		
+		dbExist = checkDatabase();
+		
+		if(!dbExist){
 			
 			this.getReadableDatabase();
 			
@@ -119,6 +127,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	
+	public SQLiteDatabase getDatabase(){
+		return jokes;
+	}
+	
+	
 	public synchronized void close(){
 		
 		if (jokes != null){
@@ -140,7 +153,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
-		
+		if (newVersion > oldVersion)
+			Log.w("Database Upgrade", "Database higher than old.");
+			myContext.deleteDatabase(DB_NAME);
+
 	}
 	
 }
