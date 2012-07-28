@@ -9,30 +9,25 @@ import android.view.View.OnClickListener;
 
 public class SecondIntent extends Activity{
 	
-	private String cat = "kategoria";
+	private int catId = 1;
+	private String catName = "Kategoria";
 	
 	public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.second);
 	        
-	        /*Stworzenie view
-	         * Wpisanie kategorii w naglowek
+	        /*
+	         * Przejecie danych z pierwszego okna
 	         */
-	        if (savedInstanceState == null){
-	        	Bundle extras = getIntent().getExtras();
-	        	if (extras == null){
-	        		cat = null;
-	        	}
-	        	else {
-	        		cat = extras.getString("CATEGORY");
-	        	}
-	        }
-	        else {
-	        	cat = (String) savedInstanceState.getSerializable("CATEGORY");
-	        }
+	        Bundle bundle = getIntent().getExtras();
+	        catId = bundle.getInt("ID");
+	        catName = bundle.getString("CATEGORY");
 	        
+	        /*
+	         * Stworzenie view oraz wpisanie kategorii w naglowek
+	         */
 	        TextView kat = (TextView)findViewById(R.id.category);
-	        kat.setText(cat);
+	        kat.setText(catName);
 	        
 	        TextView kawal = (TextView)findViewById(R.id.joke);
 	        
@@ -49,7 +44,7 @@ public class SecondIntent extends Activity{
 	        
 	      
 	       
-	       DatabaseAdapter db = new DatabaseAdapter(cat, getApplicationContext());
+	       DatabaseAdapter db = new DatabaseAdapter(catId, getApplicationContext());
 	        
 	       String joke = db.loadJoke();
 	        

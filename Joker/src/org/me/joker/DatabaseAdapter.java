@@ -19,8 +19,8 @@ public class DatabaseAdapter{
 	private SQLiteDatabase db;
 	
 	
-	public DatabaseAdapter(String category, Context context){
-		DB_TABLE = category;
+	public DatabaseAdapter(int category, Context context){
+		DB_TABLE = getCategory(category);
 		this.context = context;
 		DBHelper = new DatabaseHelper(context);
 	}
@@ -33,12 +33,37 @@ public class DatabaseAdapter{
 		
 		String joke = null;
 		db = dbh.getDatabase();
-		Cursor c = db.rawQuery("SELECT text FROM oJasiu", null);
+		Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like 1", null);
 	
 		c.moveToFirst();
 		joke = c.getString(c.getColumnIndex("text"));
 		
+		dbh.close();
+		
 		return joke;
+	}
+	
+	/*
+	 * Metoda ta zwraca nazwe kategorii
+	 * o zadanym id z bazy danych
+	 */
+	
+	public String getCategory(int id){
+		 
+		DatabaseHelper dbh = new DatabaseHelper(context);
+	       
+	    dbh.openDatabase();
+		
+		String category = null;
+		db = dbh.getDatabase();
+		Cursor c = db.rawQuery("SELECT kategoria FROM kategorie WHERE _id like " + (id + 1), null);
+		c.moveToFirst();
+		
+		category = c.getString(c.getColumnIndex("kategoria"));
+		
+		dbh.close();
+		
+		return category;
 	}
 
 }

@@ -40,14 +40,12 @@ public class JokerActivity extends ListActivity{
     
     
     String[] category = new String[] {
-			"Chuck Norris",
-			"Zboczone",
+			"O Jasiu",
+			"O blondynkach",
 			"O babie",
 			"O bacy",
-			"O blondynkach",
 			"O duchownych",
 			"O facetach",
-			"O Jasiu",
 			"O kobietach",
 			"O lekarzach",
 			"O pijakach",
@@ -55,6 +53,8 @@ public class JokerActivity extends ListActivity{
 			"O studentach",
 			"O tesciowej",
 			"O zwierzetach",
+			"Chuck Norris",
+			"Zboczone",
 			"Turbo suchary"
 	};
 
@@ -70,6 +70,7 @@ public class JokerActivity extends ListActivity{
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
     	Intent intent = new Intent(getApplicationContext(), SecondIntent.class);
+		intent.putExtra("ID", (int)id);
 		intent.putExtra("CATEGORY", category[(int)id]);
     	startActivity(intent);
     }
