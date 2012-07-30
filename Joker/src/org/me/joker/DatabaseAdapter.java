@@ -67,9 +67,15 @@ public class DatabaseAdapter{
        
         public void setLastJokePlus(int catID){
             int lastID = getLastJoke(catID);
-            ContentValues data = new ContentValues();
-            data.put("ostatni", 3);
-            db.update(TABLE_NAME, data, "_id=" + catID, null);
+            DatabaseHelper dbh = new DatabaseHelper(context);              
+            dbh.openDatabase();        
+            int ostatni = 1;
+            db = dbh.getDatabase();
+            //to do chuja powinno dzialac ale nie dziala, nie edytuje tego jebanego rekordu, WTF
+            db.rawQuery("UPDATE kategorie SET ostatni = 123 WHERE _id = 1", null);
+            
+            dbh.close();
+           
         }
  
  
