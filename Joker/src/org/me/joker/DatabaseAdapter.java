@@ -1,12 +1,14 @@
 package org.me.joker;
 
-import android.database.sqlite.SQLiteDatabase;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 public class DatabaseAdapter{
 
 	public static final String DB_NAME = "jokes.db";
+	public static final String TABLE_NAME = "kategorie";
 	public String DB_TABLE;
 	public static final String Key_ID = "_id";
 	public static final String Key_Joke = "text";
@@ -25,21 +27,21 @@ public class DatabaseAdapter{
 		DBHelper = new DatabaseHelper(context);
 	}
 	
-	public String loadJoke(){
+	public String loadJoke(int id){
 		
-		 DatabaseHelper dbh = new DatabaseHelper(context);
+		DatabaseHelper dbh = new DatabaseHelper(context);
 	       
-	     dbh.openDatabase();
+	    dbh.openDatabase();
 		
 		String joke = null;
 		db = dbh.getDatabase();
-		Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like 1", null);
+		Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + getLastJoke(id), null);
 	
 		c.moveToFirst();
 		joke = c.getString(c.getColumnIndex("text"));
 		
 		dbh.close();
-		
+		c.close();
 		return joke;
 	}
 	
@@ -48,6 +50,32 @@ public class DatabaseAdapter{
 	 * o zadanym id z bazy danych
 	 */
 	
+	public int getLastJoke(int id) {
+		DatabaseHelper dbh = new DatabaseHelper(context);	       
+	    dbh.openDatabase();		
+		int ostatni = 1;
+		db = dbh.getDatabase();
+		Cursor c = db.rawQuery("SELECT numeric FROM kategorie WHERE _id like " + (id + 1), null);
+		c.moveToFirst();
+		
+		ostatni = c.getInt(c.getColumnIndex("ostatni"));
+		
+		dbh.close();
+		c.close();
+		return ostatni;
+	}
+	
+	public void setLastJokePlus(int catID){
+            int lastID = getLastJoke(catID);
+            DatabaseHelper dbh = new DatabaseHelper(context);	       
+    	    dbh.openDatabase();		
+    		db = dbh.getDatabase();
+            db.rawQuery("UPDATE kategorie SET ostatni = "+ lastID +" WHERE _id = "+ catID, null);    		
+    		dbh.close();
+	}
+	
+
+
 	public String getCategory(int id){
 		 
 		DatabaseHelper dbh = new DatabaseHelper(context);
@@ -60,10 +88,9 @@ public class DatabaseAdapter{
 		c.moveToFirst();
 		
 		category = c.getString(c.getColumnIndex("kategoria"));
-		
+		c.close();
 		dbh.close();
 		
 		return category;
 	}
-
 }

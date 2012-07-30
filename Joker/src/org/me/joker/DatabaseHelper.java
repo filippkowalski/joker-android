@@ -34,8 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 		boolean dbExist = checkDatabase();
 		
-		if(dbExist){
-			
+		if(dbExist){			
 			Log.v("DB Exists", "db exists");
 			this.getWritableDatabase();
 			
@@ -154,8 +153,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
 		if (newVersion > oldVersion)
-			Log.w("Database Upgrade", "Database higher than old.");
+			Log.v("Database Upgrade", "Database higher than old.");
 			myContext.deleteDatabase(DB_NAME);
+			jokes.close();
 			try {
 				createDatabase();
 			} catch (IOException e) {
