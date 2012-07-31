@@ -1,6 +1,7 @@
 package org.me.joker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Button;
@@ -23,6 +24,10 @@ public class SecondIntent extends Activity{
 	        catId = bundle.getInt("ID");
 	        catName = bundle.getString("CATEGORY");
 	        
+	        final DatabaseAdapter db = new DatabaseAdapter(catId, getApplicationContext());
+	        
+		      
+	        
 	        /*
 	         * Stworzenie view oraz wpisanie kategorii w naglowek
 	         */
@@ -38,17 +43,37 @@ public class SecondIntent extends Activity{
 	        	}
 	        });
 	        
+	        
+			Button poprzedni = (Button)findViewById(R.id.previous);
+			poprzedni.setOnClickListener(new OnClickListener(){
+				public void onClick(View view){
+					Intent intent = new Intent(getApplicationContext(), SecondIntent.class);
+					intent.putExtra("ID", (int)catId);
+					intent.putExtra("CATEGORY", catName);
+			    	startActivity(intent);
+				}
+			});
+			
+			Button nastepny = (Button)findViewById(R.id.next);
+			nastepny.setOnClickListener(new OnClickListener(){
+				public void onClick(View view){
+					Intent intent = new Intent(getApplicationContext(), SecondIntent.class);
+					intent.putExtra("ID", (int)catId);
+					intent.putExtra("CATEGORY", catName);
+					db.setLastJokePlus(catId);
+			    	startActivity(intent);
+				}
+			});
+	        
 	        /*Otworzenie bazy danych
 	         * Pobranie kawalu do TextView
 	         */
 	        
 	      
+			 String joke = db.loadJoke(catId);
+		        
+		       kawal.setText(joke);
 	       
-	       DatabaseAdapter db = new DatabaseAdapter(catId, getApplicationContext());
-	        
-	       String joke = db.loadJoke(catId);
-	        
-	       kawal.setText(joke);
 	 }
 	 
 }

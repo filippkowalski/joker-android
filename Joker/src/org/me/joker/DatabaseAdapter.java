@@ -31,7 +31,7 @@ public class DatabaseAdapter{
                
                 DatabaseHelper dbh = new DatabaseHelper(context);
                
-            dbh.openDatabase();
+                dbh.openDatabase();
                
                 String joke = null;
                 db = dbh.getDatabase();
@@ -39,7 +39,7 @@ public class DatabaseAdapter{
        
                 c.moveToFirst();
                 joke = c.getString(c.getColumnIndex("text"));
-               
+                db.close();
                 dbh.close();
                 c.close();
                 return joke;
@@ -52,38 +52,35 @@ public class DatabaseAdapter{
        
         private int getLastJoke(int id) {
                 DatabaseHelper dbh = new DatabaseHelper(context);              
-            dbh.openDatabase();        
+                dbh.openDatabase();        
                 int ostatni = 1;
                 db = dbh.getDatabase();
                 Cursor c = db.rawQuery("SELECT ostatni FROM kategorie WHERE _id like " + (id + 1), null);
                 c.moveToFirst();
                
                 ostatni = c.getInt(c.getColumnIndex("ostatni"));
-               
-                dbh.close();
                 c.close();
+                db.close();
+                dbh.close();
+               
                 return ostatni;
         }
        
         public void setLastJokePlus(int catID){
-            int lastID = getLastJoke(catID);
-            DatabaseHelper dbh = new DatabaseHelper(context);              
-            dbh.openDatabase();        
-            int ostatni = 1;
-            db = dbh.getDatabase();
-            //to do chuja powinno dzialac ale nie dziala, nie edytuje tego jebanego rekordu, WTF
-            db.rawQuery("UPDATE kategorie SET ostatni = 123 WHERE _id = 1", null);
-            
-            dbh.close();
-           
+        		DatabaseHelper dbh = new DatabaseHelper(context);
+        		dbh.openDatabase();
+        		db = dbh.getDatabase();
+        		int lastID = getLastJoke(catID);
+        		ContentValues data = new ContentValues();
+        		data.put("ostatni", 1);
+        		dbh.close();
         }
  
  
         public String getCategory(int id){
                  
                 DatabaseHelper dbh = new DatabaseHelper(context);
-               
-            dbh.openDatabase();
+                dbh.openDatabase();
                
                 String category = null;
                 db = dbh.getDatabase();
@@ -93,7 +90,7 @@ public class DatabaseAdapter{
                 category = c.getString(c.getColumnIndex("kategoria"));
                 c.close();
                 dbh.close();
-               
+                db.close();
                 return category;
         }
 }
