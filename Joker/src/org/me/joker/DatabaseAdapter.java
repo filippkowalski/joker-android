@@ -6,7 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
  
 public class DatabaseAdapter{
- 
+
+		private static String DB_PATH = "/data/data/org.me.joker/databases/";
         public static final String DB_NAME = "jokes.db";
         public static final String TABLE_NAME = "kategorie";
         public String DB_TABLE;
@@ -51,29 +52,45 @@ public class DatabaseAdapter{
          */
        
         private int getLastJoke(int id) {
-                DatabaseHelper dbh = new DatabaseHelper(context);              
-                dbh.openDatabase();        
-                int ostatni = 1;
-                db = dbh.getDatabase();
-                Cursor c = db.rawQuery("SELECT ostatni FROM kategorie WHERE _id like " + (id + 1), null);
-                c.moveToFirst();
-               
-                ostatni = c.getInt(c.getColumnIndex("ostatni"));
-                c.close();
-                db.close();
-                dbh.close();
-               
-                return ostatni;
+            DatabaseHelper dbh = new DatabaseHelper(context);              
+            dbh.openDatabase();        
+            int ostatni = 1;
+            db = dbh.getDatabase();
+            Cursor c = db.rawQuery("SELECT ostatni FROM " + TABLE_NAME + " WHERE _id like " + (id + 1), null);
+            c.moveToFirst();
+           
+            ostatni = c.getInt(c.getColumnIndex("ostatni"));
+            c.close();
+            dbh.close();
+            db.close();
+            
+            return ostatni;
         }
-       
+   
         public void setLastJokePlus(int catID){
-        		DatabaseHelper dbh = new DatabaseHelper(context);
-        		dbh.openDatabase();
-        		db = dbh.getDatabase();
-        		int lastID = getLastJoke(catID);
-        		ContentValues data = new ContentValues();
-        		data.put("ostatni", 1);
-        		dbh.close();
+        	DatabaseHelper dbh = new DatabaseHelper(context);
+    		dbh.openDatabase();
+    		db = dbh.getDatabase();
+    		int lastID = getLastJoke(catID);
+    		lastID++;
+    		if (lastID > getLastInsertedID(DB_TABLE)){
+    			lastID = 1;
+    		}
+    		ContentValues data = new ContentValues();
+    		data.put("ostatni", lastID);
+    		String myPath = DB_PATH + DB_NAME;
+    		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+    		db.update(TABLE_NAME, data, "_id=" + (catID + 1), null);
+    		dbh.close();
+    		db.close();
+        }
+        
+        public int getLastInsertedID(String TABLE){
+        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
+        	Cursor c = db.query(TABLE, new String[] {"_id"}, null, null, null, null, null);
+        	c.moveToLast();
+        	int lastID = (int)c.getLong(c.getColumnIndex("_id"));
+        	return lastID;
         }
  
  

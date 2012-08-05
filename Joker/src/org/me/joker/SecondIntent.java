@@ -34,7 +34,7 @@ public class SecondIntent extends Activity{
 	        TextView kat = (TextView)findViewById(R.id.category);
 	        kat.setText(catName);
 	        
-	        TextView kawal = (TextView)findViewById(R.id.joke);
+	        final TextView kawal = (TextView)findViewById(R.id.joke);
 	        
 	        Button powrot = (Button)findViewById(R.id.back);
 	        powrot.setOnClickListener(new OnClickListener(){
@@ -57,11 +57,10 @@ public class SecondIntent extends Activity{
 			Button nastepny = (Button)findViewById(R.id.next);
 			nastepny.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
-					Intent intent = new Intent(getApplicationContext(), SecondIntent.class);
-					intent.putExtra("ID", (int)catId);
-					intent.putExtra("CATEGORY", catName);
+
 					db.setLastJokePlus(catId);
-			    	startActivity(intent);
+					
+					kawal.setText(db.loadJoke(catId));
 				}
 			});
 	        
@@ -72,7 +71,7 @@ public class SecondIntent extends Activity{
 	      
 			 String joke = db.loadJoke(catId);
 		        
-		       kawal.setText(joke);
+		     kawal.setText(joke);
 	       
 	 }
 	 
