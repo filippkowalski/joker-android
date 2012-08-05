@@ -28,6 +28,11 @@ public class DatabaseAdapter{
                 DBHelper = new DatabaseHelper(context);
         }
        
+        
+        /*
+         * Metoda zwraca kawal o podanym ID
+         */
+        
         public String loadJoke(int id){
                
                 DatabaseHelper dbh = new DatabaseHelper(context);
@@ -46,10 +51,9 @@ public class DatabaseAdapter{
                 return joke;
         }
        
-        /*
-         * Metoda ta zwraca nazwe kategorii
-         * o zadanym id z bazy danych
-         */
+       /*
+        * Metoda zwraca ID ostatniego ogladanego ID
+        */
        
         private int getLastJoke(int id) {
             DatabaseHelper dbh = new DatabaseHelper(context);              
@@ -67,6 +71,12 @@ public class DatabaseAdapter{
             return ostatni;
         }
    
+        
+        /*
+         * Metoda zwiêksza w bazie danych
+         * wartoœæ kolumny ostatni o 1
+         */
+        
         public void setLastJokePlus(int catID){
         	DatabaseHelper dbh = new DatabaseHelper(context);
     		dbh.openDatabase();
@@ -85,6 +95,11 @@ public class DatabaseAdapter{
     		db.close();
         }
         
+        
+        /*
+         * Metoda zwraca ostatnie id w kategorii
+         */
+        
         public int getLastInsertedID(String TABLE){
         	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
         	Cursor c = db.query(TABLE, new String[] {"_id"}, null, null, null, null, null);
@@ -93,7 +108,11 @@ public class DatabaseAdapter{
         	return lastID;
         }
  
- 
+        /*
+         * Metoda ta zwraca nazwe kategorii
+         * o zadanym id z bazy danych
+         */
+        
         public String getCategory(int id){
                  
                 DatabaseHelper dbh = new DatabaseHelper(context);
