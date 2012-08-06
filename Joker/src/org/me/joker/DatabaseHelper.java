@@ -15,7 +15,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static String DB_PATH = "/data/data/org.me.joker/databases/";
 	private static String DB_NAME = "jokes.db";
-	public static final int DB_VERSION = 6;
+	public static final int DB_VERSION = 7;
 	private SQLiteDatabase jokes;
 	private final Context myContext;
 	
@@ -156,6 +156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			Log.v("Database Upgrade", "Database higher than old.");
 			myContext.deleteDatabase(DB_NAME);
 			jokes.close();
+			db.close();
 			try {
 				createDatabase();
 			} catch (IOException e) {

@@ -39,6 +39,7 @@ public class JokerActivity extends ListActivity{
     
     
     String[] category = new String[] {
+    		"ULUBIONE",
 			"O Jasiu",
 			"O blondynkach",
 			"O babie",

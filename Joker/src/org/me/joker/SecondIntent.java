@@ -77,9 +77,14 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        /*Otworzenie bazy danych
 	         * Pobranie kawalu do TextView
 	         */
-	        	      
-			 String joke = db.loadJoke(catId);  
-		     kawal.setText(joke);
+	         try{
+	        	 String joke = db.loadJoke(catId);  
+	        	 kawal.setText(joke);
+	         }
+	         catch (Exception e){
+	        	 kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");
+	         }
+			 
 		     
 		   //wczytanie biblioteki gestów
 		        mLibrary = GestureLibraries.fromRawResource(this, R.raw.gestures);
@@ -98,17 +103,12 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 		ArrayList<Prediction> predictions = mLibrary.recognize(gesture);
 		
 		final DatabaseAdapter db = new DatabaseAdapter(catId, getApplicationContext());
-		TextView kat = (TextView)findViewById(R.id.category);
-        kat.setText(catName);        
         final TextView kawal = (TextView)findViewById(R.id.joke);
 		
 		if (predictions.size() > 0) {
 			Prediction prediction = predictions.get(0);
 			if (prediction.score > 1.0) {
-				Toast.makeText(this, prediction.name, Toast.LENGTH_SHORT).show();
 				
-				//tutaj trzeba wykombinowac cos, zeby po zareagowaniu na 'next' zrobil kolejny
-				// bo poki co ponizsze warunki nie dzialaja
 				if(prediction.name.contains("next")){
 					db.setLastJokePlus(catId);					
 					kawal.setText(db.loadJoke(catId));
