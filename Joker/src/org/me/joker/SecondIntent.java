@@ -109,20 +109,14 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				
 				//tutaj trzeba wykombinowac cos, zeby po zareagowaniu na 'next' zrobil kolejny
 				// bo poki co ponizsze warunki nie dzialaja
-				//if(prediction.name == "next "){
+				if(prediction.name.contains("next")){
 					db.setLastJokePlus(catId);					
 					kawal.setText(db.loadJoke(catId));
-					String joke = db.loadJoke(catId);  
-				    kawal.setText(joke);
-				//}
-				/*  
-				if(prediction.name == "previous "){
+				}  
+				if(prediction.name.contains("previous")){
 					db.setLastJokeMinus(catId);					
 					kawal.setText(db.loadJoke(catId));
-					String joke = db.loadJoke(catId);  
-				    kawal.setText(joke);
 				}
-				*/
 			}
 		}
 	}

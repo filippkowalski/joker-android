@@ -54,7 +54,8 @@ public class JokerActivity extends ListActivity{
 			"O zwierzetach",
 			"Chuck Norris",
 			"Zboczone",
-			"Turbo suchary"
+			"Turbo suchary",
+			"Chamskie"
 	};
 
     protected ListAdapter createAdapter()
