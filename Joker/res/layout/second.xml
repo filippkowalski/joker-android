@@ -3,18 +3,20 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
+        
+        
+        
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
-            
+            
      	  	<Button
-         	   android:id="@+id/previous"
-         	   android:layout_width="fill_parent"
-         	   android:layout_height="wrap_content"
-        	   android:layout_weight="4"
-         	   android:text="@string/prev" />
+     	  	    android:id="@+id/previous"
+     	  	    android:layout_width="97dp"
+     	  	    android:layout_height="wrap_content"
+     	  	    android:text="@string/prev" />
      	  	
      	  	<TextView 
      	  	    android:id="@+id/category"
@@ -63,5 +65,13 @@
        		    android:text="@string/menu" />
        		
         </LinearLayout>
+
+		<android.gesture.GestureOverlayView
+		    android:id="@+id/gestures"
+		    android:layout_width="fill_parent"
+		    android:layout_height="150dp"
+		    android:eventsInterceptionEnabled="true"
+		    android:gestureStrokeType="single"
+		    android:measureAllChildren="true" />
 
     </LinearLayout>

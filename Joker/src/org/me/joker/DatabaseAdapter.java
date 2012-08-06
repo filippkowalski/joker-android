@@ -95,6 +95,29 @@ public class DatabaseAdapter{
     		db.close();
         }
         
+        /*
+         * Metoda zmniejsza w bazie danych
+         * wartosc kolumny ostatni o 1
+         */
+        
+        public void setLastJokeMinus(int catID){
+        	DatabaseHelper dbh = new DatabaseHelper(context);
+    		dbh.openDatabase();
+    		db = dbh.getDatabase();
+    		int lastID = getLastJoke(catID);
+    		lastID--;
+    		if (lastID <= 0 ){
+    			lastID = getLastInsertedID(DB_TABLE);
+    		}
+    		ContentValues data = new ContentValues();
+    		data.put("ostatni", lastID);
+    		String myPath = DB_PATH + DB_NAME;
+    		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+    		db.update(TABLE_NAME, data, "_id=" + (catID + 1), null);
+    		dbh.close();
+    		db.close();
+        }
+        
         
         /*
          * Metoda zwraca ostatnie id w kategorii
