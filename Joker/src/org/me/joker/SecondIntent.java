@@ -45,7 +45,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        /*
 	         * Stworzenie view oraz wpisanie kategorii w naglowek
 	         */
-	        TextView kat = (TextView)findViewById(R.id.category);
+	        final TextView kat = (TextView)findViewById(R.id.category);
 	        kat.setText(catName);
 	        
 	        final TextView kawal = (TextView)findViewById(R.id.joke);
@@ -85,6 +85,26 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					
 				}
 			});
+			
+			Button ulub =(Button)findViewById(R.id.favourite);
+			ulub.setOnClickListener(new OnClickListener(){
+				public void onClick(View view){
+					/*
+					 * Jesli jestesmy w kategorii ulubione to przycisk ten usunie kawal z tejze kategorii
+					 */
+					if(catName.contains("ULUBIONE")){
+						db.deleteJokeFromFavourites(catId);
+					}
+					else{
+						db.addJokeToFavourites(kawal.getText().toString());
+					}
+					
+				}
+			});
+			
+			
+			
+			
 	        
 	        /*Otworzenie bazy danych
 	         * Pobranie kawalu do TextView

@@ -152,4 +152,58 @@ public class DatabaseAdapter{
                 db.close();
                 return category;
         }
+        
+        /*
+         * Metoda dodaje przekazany kawal do bazy danych
+         */
+        
+        public void addJokeToFavourites(String joke){
+        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
+        	
+        	ContentValues values = new ContentValues();
+        	values.put(Key_Joke, joke);
+        	
+        	db.insert("ulubione", null, values);
+        	db.close();
+        }
+        
+        
+        
+        /*
+         * Metoda usuwa kawal z ulubionych
+         */
+        public void deleteJokeFromFavourites(int id){
+        	/*
+        	 * Pobranie id kawalu do usuniecia
+        	 */
+        	DatabaseHelper dbh = new DatabaseHelper(context);
+            dbh.openDatabase();
+            
+            db = dbh.getDatabase();
+        	
+        	Cursor c = db.rawQuery("SELECT ostatni FROM kategorie WHERE _id like " + (id + 1), null);
+        	c.moveToFirst();
+        	
+        	id = c.getInt(c.getColumnIndex("ostatni"));
+        	
+        	dbh.close();
+        	db.close();
+        	
+        	/*
+        	 * Przekopiowanie ostatnieogo kawalu w miejsce usuwanego
+        	 */
+        	
+        	String joke = null;
+        	
+        	
+        	
+        	/*
+        	 * Usuniecie kawalu 
+        	 */
+        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
+        	
+        	db.execSQL("DELETE FROM ulubione WHERE _id = " + id);
+        	
+        	db.close();
+        }
 }
