@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.text.method.ScrollingMovementMethod;
 
 public class SecondIntent extends Activity implements OnGesturePerformedListener{
 	
@@ -49,6 +49,10 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        kat.setText(catName);
 	        
 	        final TextView kawal = (TextView)findViewById(R.id.joke);
+	        /*
+	         * Sprawienie, ze pole tekstowe mozna przewijac
+	         */
+	        kawal.setMovementMethod(new ScrollingMovementMethod());
 	        
 	        Button powrot = (Button)findViewById(R.id.back);
 	        powrot.setOnClickListener(new OnClickListener(){
