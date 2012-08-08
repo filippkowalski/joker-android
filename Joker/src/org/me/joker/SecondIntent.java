@@ -98,6 +98,22 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					 */
 					if(catName.contains("ULUBIONE")){
 						db.deleteJokeFromFavourites(catId);
+						try{
+				        	 db.setLastJokeMinus(catId);
+				        	 String joke = db.loadJoke(catId);
+				        	 kawal.setText(joke);
+				         }
+				         catch(Exception e){
+				        	 try{
+				        		 db.setLastJokePlus(catId);
+				        		 db.setLastJokePlus(catId);
+				        		 String joke = db.loadJoke(catId);
+				        		 kawal.setText(joke);
+				        	 }
+				        	 catch(Exception ex){
+				        		 kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");
+				        	 }
+				         }
 					}
 					else{
 						db.addJokeToFavourites(kawal.getText().toString());
@@ -114,12 +130,23 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	         * Pobranie kawalu do TextView
 	         */
 	         try{
-	        	 String joke = db.loadJoke(catId);  
+	        	 String joke = db.loadJoke(catId);
 	        	 kawal.setText(joke);
 	         }
-	         catch (Exception e){
-	        	 kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");
+	         catch(Exception e){
+	        	 try{
+	        		 db.setLastJokeMinus(catId);
+	        		 String joke = db.loadJoke(catId);
+	        		 kawal.setText(joke);
+	        	 }
+	        	 catch(Exception ex){
+	        		 
+	        			 kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");
+	        		 
+	        	 }
 	         }
+	         
+	        	 
 			 
 		     
 		   //wczytanie biblioteki gestów

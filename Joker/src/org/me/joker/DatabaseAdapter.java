@@ -193,8 +193,6 @@ public class DatabaseAdapter{
         	 * Przekopiowanie ostatnieogo kawalu w miejsce usuwanego
         	 */
         	
-        	String joke = null;
-        	
         	
         	
         	/*
