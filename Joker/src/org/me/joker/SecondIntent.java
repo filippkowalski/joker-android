@@ -61,16 +61,28 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			Button poprzedni = (Button)findViewById(R.id.previous);
 			poprzedni.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
-					db.setLastJokeMinus(catId);					
-					kawal.setText(db.loadJoke(catId));
+					try{
+						db.setLastJokeMinus(catId);					
+						kawal.setText(db.loadJoke(catId));
+					}
+					catch(Exception e){
+						
+					}
+					
 				}
 			});
 			
 			Button nastepny = (Button)findViewById(R.id.next);
 			nastepny.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
-					db.setLastJokePlus(catId);
-					kawal.setText(db.loadJoke(catId));
+					try{
+						db.setLastJokePlus(catId);
+						kawal.setText(db.loadJoke(catId));
+					}
+					catch(Exception e){
+						
+					}
+					
 				}
 			});
 	        
@@ -110,12 +122,23 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			if (prediction.score > 1.0) {
 				
 				if(prediction.name.contains("next")){
-					db.setLastJokePlus(catId);					
-					kawal.setText(db.loadJoke(catId));
+					try{
+						db.setLastJokePlus(catId);					
+						kawal.setText(db.loadJoke(catId));
+					}
+					catch(Exception e){
+						
+					}
+					
 				}  
 				if(prediction.name.contains("previous")){
-					db.setLastJokeMinus(catId);					
-					kawal.setText(db.loadJoke(catId));
+					try{
+						db.setLastJokeMinus(catId);					
+						kawal.setText(db.loadJoke(catId));
+					}
+					catch(Exception e){
+						
+					}
 				}
 			}
 		}
