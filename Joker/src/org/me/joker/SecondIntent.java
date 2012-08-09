@@ -10,11 +10,11 @@ import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.gesture.Prediction;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.text.method.ScrollingMovementMethod;
 
 public class SecondIntent extends Activity implements OnGesturePerformedListener{
@@ -102,6 +102,9 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				        	 db.setLastJokeMinus(catId);
 				        	 String joke = db.loadJoke(catId);
 				        	 kawal.setText(joke);
+				        	 
+				        	 Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty ;(",Toast.LENGTH_SHORT);
+					         toast.show();
 				         }
 				         catch(Exception e){
 				        	 try{
@@ -109,6 +112,9 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				        		 db.setLastJokePlus(catId);
 				        		 String joke = db.loadJoke(catId);
 				        		 kawal.setText(joke);
+				        		 
+				        		 Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty ;(",Toast.LENGTH_SHORT);
+						         toast.show();
 				        	 }
 				        	 catch(Exception ex){
 				        		 kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");
@@ -117,6 +123,9 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					}
 					else{
 						db.addJokeToFavourites(kawal.getText().toString());
+			             
+			            Toast toast = Toast.makeText(getBaseContext(),"Zajebiście! Kawał został dodany!",Toast.LENGTH_SHORT);
+			            toast.show();
 					}
 					
 				}
@@ -149,7 +158,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        	 
 			 
 		     
-		   //wczytanie biblioteki gest�w
+		   //wczytanie biblioteki gestów
 		        mLibrary = GestureLibraries.fromRawResource(this, R.raw.gestures);
 		        if (!mLibrary.load()) {
 		        	finish();
