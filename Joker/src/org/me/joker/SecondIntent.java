@@ -10,12 +10,12 @@ import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.gesture.Prediction;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.text.method.ScrollingMovementMethod;
 
 public class SecondIntent extends Activity implements OnGesturePerformedListener{
 	
@@ -54,6 +54,12 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	         */
 	        kawal.setMovementMethod(new ScrollingMovementMethod());
 	        
+	        
+	        //licznik
+	        final TextView nr = (TextView)findViewById(R.id.nr);
+	        String number = Integer.toString(db.getLastJoke(catId));
+	        String lastNumber = Integer.toString(db.getLastInsertedID());
+	        nr.setText(number+"/"+lastNumber);
 	        
 	        //przyciski
 	        Button powrot = (Button)findViewById(R.id.back);

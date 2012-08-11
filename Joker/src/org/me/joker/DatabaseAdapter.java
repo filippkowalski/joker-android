@@ -55,7 +55,7 @@ public class DatabaseAdapter{
         * Metoda zwraca ID ostatniego ogladanego ID
         */
        
-        private int getLastJoke(int id) {
+        int getLastJoke(int id) {
             DatabaseHelper dbh = new DatabaseHelper(context);              
             dbh.openDatabase();        
             int ostatni = 1;
@@ -83,7 +83,7 @@ public class DatabaseAdapter{
     		db = dbh.getDatabase();
     		int lastID = getLastJoke(catID);
     		lastID++;
-    		if (lastID > getLastInsertedID(DB_TABLE)){
+    		if (lastID > getLastInsertedID()){
     			lastID = 1;
     		}
     		ContentValues data = new ContentValues();
@@ -107,7 +107,7 @@ public class DatabaseAdapter{
     		int lastID = getLastJoke(catID);
     		lastID--;
     		if (lastID <= 0 ){
-    			lastID = getLastInsertedID(DB_TABLE);
+    			lastID = getLastInsertedID();
     		}
     		ContentValues data = new ContentValues();
     		data.put("ostatni", lastID);
@@ -123,9 +123,9 @@ public class DatabaseAdapter{
          * Metoda zwraca ostatnie id w kategorii
          */
         
-        public int getLastInsertedID(String TABLE){
+        public int getLastInsertedID(){
         	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
-        	Cursor c = db.query(TABLE, new String[] {"_id"}, null, null, null, null, null);
+        	Cursor c = db.query(DB_TABLE, new String[] {"_id"}, null, null, null, null, null);
         	c.moveToLast();
         	int lastID = (int)c.getLong(c.getColumnIndex("_id"));
         	return lastID;

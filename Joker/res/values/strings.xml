@@ -19,5 +19,6 @@
     <string name="menu">Powrót</string>
     <string name="joke">Kawał</string>
     <string name="category">Kategoria</string>
+    <string name="nr">nr</string>
 
 </resources>
