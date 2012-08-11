@@ -5,6 +5,14 @@
     <string name="app_name">Joker</string>
     <string name="oJasiu">O Jasiu</string>
     <string name="oBlondynkach">O Blondynkach</string>
+    <string name="oStudentach">O studentach</string>
+    <string name="chuckNorris">Chuck Norris</string>
+    <string name="oKobietach">O kobietach</string>
+    <string name="turboSuchary">Turbo Suchary</string>
+    <string name="chamskie">Chamskie</string>
+    <string name="zboczone">Zboczone</string>
+    <string name="oZwierzetach">O zwierzętach</string>
+    <string name="oFacetach">O facetach</string>
     <string name="prev">Poprzedni</string>
     <string name="next">Następny</string>
     <string name="fav">Ulubiony</string>

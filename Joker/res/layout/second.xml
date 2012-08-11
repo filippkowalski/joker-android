@@ -3,9 +3,8 @@
         android:id="@+id/gestures"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        
-        android:gestureStrokeType="multiple"
-   		android:eventsInterceptionEnabled="true"
+        android:eventsInterceptionEnabled="true"
+        android:gestureStrokeType="single"
         android:orientation="vertical" >
         
         <LinearLayout
@@ -26,14 +25,14 @@
      	  	    android:layout_width="97dp"
      	  	    android:layout_height="wrap_content"
      	  	    android:text="@string/prev" />
-     	  	
-     	  	<TextView 
+
+     	  	<TextView
      	  	    android:id="@+id/category"
      	  	    android:layout_width="fill_parent"
      	  	    android:layout_height="wrap_content"
      	  	    android:layout_weight="3"
-     	  	    android:text="@string/category"
-     	  	    android:gravity="center" />
+     	  	    android:gravity="center"
+     	  	    android:text="@string/category" />
 
        		<Button
        		   android:id="@+id/next"

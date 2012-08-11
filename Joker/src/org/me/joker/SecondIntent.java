@@ -54,6 +54,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	         */
 	        kawal.setMovementMethod(new ScrollingMovementMethod());
 	        
+	        
+	        //przyciski
 	        Button powrot = (Button)findViewById(R.id.back);
 	        powrot.setOnClickListener(new OnClickListener(){
 	        	public void onClick(View view){
