@@ -76,6 +76,11 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					try{
 						db.setLastJokeMinus(catId);					
 						kawal.setText(db.loadJoke(catId));
+						//licznik
+				        final TextView nr = (TextView)findViewById(R.id.nr);
+				        String number = Integer.toString(db.getLastJoke(catId));
+				        String lastNumber = Integer.toString(db.getLastInsertedID());
+				        nr.setText(number+"/"+lastNumber);
 					}
 					catch(Exception e){
 						
@@ -90,6 +95,11 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					try{
 						db.setLastJokePlus(catId);
 						kawal.setText(db.loadJoke(catId));
+						//licznik
+				        final TextView nr = (TextView)findViewById(R.id.nr);
+				        String number = Integer.toString(db.getLastJoke(catId));
+				        String lastNumber = Integer.toString(db.getLastInsertedID());
+				        nr.setText(number+"/"+lastNumber);
 					}
 					catch(Exception e){
 						
@@ -156,10 +166,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        		 String joke = db.loadJoke(catId);
 	        		 kawal.setText(joke);
 	        	 }
-	        	 catch(Exception ex){
-	        		 
-	        			 kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");
-	        		 
+	        	 catch(Exception ex){	        		 
+	        			 kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");	        		 
 	        	 }
 	         }
 	         
