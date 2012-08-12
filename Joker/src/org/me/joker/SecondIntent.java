@@ -11,6 +11,8 @@ import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.gesture.Prediction;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -23,6 +25,41 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	
 	private int catId = 1;
 	private String catName = "Kategoria";
+	
+	
+	//przy kliknieciu 'menu'
+	@Override
+	 public boolean onCreateOptionsMenu(Menu menu) {
+	     getMenuInflater().inflate(R.menu.menu, menu);
+	     return true;
+	}
+	
+	//obsluga przyciskow menu
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+ 
+        String toast = "";
+ 
+        switch (item.getItemId()) {
+ 
+        case R.id.item1:
+        	toast = "O kurwa! Kawal dodano do ulubionych! A tak serio to to jest do zrobienia";
+        	Toast.makeText(getApplicationContext(),toast,
+            Toast.LENGTH_LONG).show();
+        	
+            break;
+        case R.id.item2:
+        	toast = "cos";
+            break;
+        case R.id.item3:
+ 	        SecondIntent.this.finish();        
+            break; 
+        }     
+ 
+        return true;
+    }
+ 
+	
 	
 
 	@Override

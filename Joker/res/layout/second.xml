@@ -12,40 +12,47 @@
             android:layout_width="fill_parent"    
             android:layout_height="fill_parent"
             android:orientation="vertical">    
-        
+        
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
-            
-     	  	<Button
-     	  	    android:id="@+id/previous"
-     	  	    android:layout_width="97dp"
-     	  	    android:layout_height="wrap_content"
-     	  	    android:text="@string/prev" />
-
-     	  	<TextView
-     	  	    android:id="@+id/nr"
-     	  	    android:layout_width="41dp"
-     	  	    android:layout_height="wrap_content"
-     	  	    android:text="@string/nr" />
-
-     	  	<TextView
-     	  	    android:id="@+id/category"
-     	  	    android:layout_width="89dp"
-     	  	    android:layout_height="wrap_content"
-     	  	    android:gravity="center"
-     	  	    android:text="@string/category" />
 
-       		<Button
-       		   android:id="@+id/next"
-       	       android:layout_width="fill_parent"
-      	       android:layout_height="wrap_content"
-         	   android:layout_weight="4"
-         	   android:text="@string/next" />
-       	</LinearLayout>
-       	
+            <Button
+                android:id="@+id/previous"
+                android:layout_width="97dp"
+                android:layout_height="wrap_content"
+                android:text="@string/prev" />
+
+            <LinearLayout
+                android:layout_width="97dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/category"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/category" />
+
+                <TextView
+                    android:id="@+id/nr"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/nr" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/next"
+                android:layout_width="101dp"
+                android:layout_height="wrap_content"
+                android:text="@string/next" />
+        </LinearLayout>
         
 		<TextView
 		   		android:id="@+id/joke"
