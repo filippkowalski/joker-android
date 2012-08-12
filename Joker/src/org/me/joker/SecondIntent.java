@@ -37,19 +37,52 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	//obsluga przyciskow menu
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
- 
-        String toast = "";
- 
-        switch (item.getItemId()) {
+
+		switch (item.getItemId()) {
  
         case R.id.item1:
-        	toast = "O kurwa! Kawal dodano do ulubionych! A tak serio to to jest do zrobienia";
-        	Toast.makeText(getApplicationContext(),toast,
-            Toast.LENGTH_LONG).show();
+
+        	
+        	final DatabaseAdapter db = new DatabaseAdapter(catId, getApplicationContext());
+            final TextView kawal = (TextView)findViewById(R.id.joke);
+        	
+        	/*
+			 * Jesli jestesmy w kategorii ulubione to przycisk ten usunie kawal z tejze kategorii
+			 */
+			if(catName.contains("ULUBIONE")){
+				db.deleteJokeFromFavourites(catId);
+				try{
+		        	 db.setLastJokeMinus(catId);
+		        	 String joke = db.loadJoke(catId);
+		        	 kawal.setText(joke);
+		        	 
+		        	 Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty ;(",Toast.LENGTH_SHORT);
+			         toast.show();
+		         }
+		         catch(Exception e){
+		        	 try{
+		        		 db.setLastJokePlus(catId);
+		        		 db.setLastJokePlus(catId);
+		        		 String joke = db.loadJoke(catId);
+		        		 kawal.setText(joke);
+		        		 
+		        		 Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty ;(",Toast.LENGTH_SHORT);
+				         toast.show();
+		        	 }
+		        	 catch(Exception ex){
+		        		 kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");
+		        	 }
+		         }
+			}
+			else{
+				db.addJokeToFavourites(kawal.getText().toString());
+	             
+	            Toast toast = Toast.makeText(getBaseContext(),"Zajebiście! Kawał został dodany!",Toast.LENGTH_SHORT);
+	            toast.show();
+			}
         	
             break;
         case R.id.item2:
-        	toast = "cos";
             break;
         case R.id.item3:
  	        SecondIntent.this.finish();        
