@@ -54,6 +54,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
         case R.id.item3:
  	        SecondIntent.this.finish();        
             break; 
+            
         }     
  
         return true;
