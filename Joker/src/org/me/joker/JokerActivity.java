@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.view.Window;
+import android.view.WindowManager;
 
 import java.io.IOException;
 
@@ -19,9 +21,19 @@ public class JokerActivity extends ListActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
- 
+        
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         ListAdapter adapter = createAdapter();
         setListAdapter(adapter);
+        
+        getListView().setCacheColorHint(0);
+        getListView().setBackgroundResource(R.drawable.jokerbckg);
+        getListView().setDividerHeight(0);
+
+        
         
         DatabaseHelper dbh = new DatabaseHelper(this);
         try{
@@ -30,6 +42,7 @@ public class JokerActivity extends ListActivity{
         catch (IOException e){
         	throw new Error("Error creating database.");
         }
+        dbh.close();
     }
  
     /**

@@ -14,10 +14,14 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class SecondIntent extends Activity implements OnGesturePerformedListener{
 	
@@ -99,6 +103,11 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
+	        
+	        requestWindowFeature(Window.FEATURE_NO_TITLE);
+	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+	                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	        
 	        setContentView(R.layout.second);      
 	     
 	       
@@ -272,6 +281,11 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					try{
 						db.setLastJokePlus(catId);					
 						kawal.setText(db.loadJoke(catId));
+						//licznik
+				        final TextView nr = (TextView)findViewById(R.id.nr);
+				        String number = Integer.toString(db.getLastJoke(catId));
+				        String lastNumber = Integer.toString(db.getLastInsertedID());
+				        nr.setText(number+"/"+lastNumber);
 					}
 					catch(Exception e){
 						
@@ -282,6 +296,11 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					try{
 						db.setLastJokeMinus(catId);					
 						kawal.setText(db.loadJoke(catId));
+						//licznik
+				        final TextView nr = (TextView)findViewById(R.id.nr);
+				        String number = Integer.toString(db.getLastJoke(catId));
+				        String lastNumber = Integer.toString(db.getLastInsertedID());
+				        nr.setText(number+"/"+lastNumber);
 					}
 					catch(Exception e){
 						

@@ -20,5 +20,6 @@
     <string name="joke">Kawał</string>
     <string name="category">Kategoria</string>
     <string name="nr">nr</string>
+    <string name="dscp">Application background</string>
 
 </resources>
