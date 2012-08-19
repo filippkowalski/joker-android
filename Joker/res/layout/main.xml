@@ -6,19 +6,19 @@
 	android:layout_height="fill_parent"
 	android:eventsInterceptionEnabled="true"
 	android:gestureStrokeType="multiple"
-	android:orientation="vertical" >
+	android:orientation="vertical"
+	android:background="@drawable/jokerbckg"  >
 	
     
     <ListView
-        android:id="@+id/list"
+        android:id="@android:id/list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:choiceMode="singleChoice"
         tools:listitem="@android:layout/simple_list_item_1"
-        android:dividerHeight="0dip"
-        android:background="@drawable/jokerbckg" >
+        android:dividerHeight="0dp"
+        android:cacheColorHint="#00000000" >
     </ListView>
+
 	
 </android.gesture.GestureOverlayView>

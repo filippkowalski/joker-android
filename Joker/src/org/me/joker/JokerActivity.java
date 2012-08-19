@@ -26,13 +26,14 @@ public class JokerActivity extends ListActivity{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        setContentView(R.layout.main);
+        
+        getListView().setDividerHeight(0);
+        
         ListAdapter adapter = createAdapter();
         setListAdapter(adapter);
         
-        getListView().setCacheColorHint(0);
-        getListView().setBackgroundResource(R.drawable.jokerbckg);
-        getListView().setDividerHeight(0);
-
+        
         
         
         DatabaseHelper dbh = new DatabaseHelper(this);
