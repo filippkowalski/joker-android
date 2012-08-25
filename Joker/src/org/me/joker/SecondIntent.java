@@ -42,7 +42,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 
 		switch (item.getItemId()) {
  
-        case R.id.item1:
+        case R.id.item1: // wcisniecie przycisku ulubione
 
         	
         	final DatabaseAdapter db = new DatabaseAdapter(catId, getApplicationContext());
@@ -84,10 +84,15 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			}
         	
             break;
-        case R.id.item2:
+        case R.id.item2: // przycisk drugi - wyslij kawal znajomemu
+        	
+        	
+        	
+        	//tutaj musi byc cos co wysyla tekst przez maila
+        	
             break;
         case R.id.item3:
- 	        SecondIntent.this.finish();        
+ 	        SecondIntent.this.finish();        // przycisk powrot
             break; 
             
         }     
@@ -102,6 +107,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        
+	        //to rozumiem ma chowac pasek u gory jo ?
 	        requestWindowFeature(Window.FEATURE_NO_TITLE);
 	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 	                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -117,8 +123,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        catName = bundle.getString("CATEGORY");
 	        
 	        final DatabaseAdapter db = new DatabaseAdapter(catId, getApplicationContext());
-	        
-		      
+	      
 	        
 	        /*
 	         * Stworzenie view oraz wpisanie kategorii w naglowek
@@ -132,7 +137,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	         */
 	        kawal.setMovementMethod(new ScrollingMovementMethod());
 	        
-	        
+     
 	        //licznik
 	        final TextView nr = (TextView)findViewById(R.id.nr);
 	        String number = Integer.toString(db.getLastJoke(catId));
@@ -243,14 +248,9 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        	 kawal.setText(joke);
 	         }
 	         catch(Exception e){
-	        	 try{
-	        		 db.setLastJokeMinus(catId);
-	        		 String joke = db.loadJoke(catId);
-	        		 kawal.setText(joke);
-	        	 }
-	        	 catch(Exception ex){	        		 
-	        			 kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");	        		 
-	        	 }
+       		 
+	        		 kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");	        		 
+
 	         }
 	         
 	        	 
