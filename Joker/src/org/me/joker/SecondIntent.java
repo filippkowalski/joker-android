@@ -20,8 +20,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.Window;
-import android.view.WindowManager;
 
 public class SecondIntent extends Activity implements OnGesturePerformedListener{
 	
@@ -74,7 +72,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				         toast.show();
 		        	 }
 		        	 catch(Exception ex){
-		        		 kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");
+		        		 kawal.setText("Brak kawału do wyświetlenia w wybranej kategorii");
 		        	 }
 		         }
 			}
@@ -140,7 +138,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        String number = Integer.toString(db.getLastJoke(catId));
 	        String lastNumber = Integer.toString(db.getLastInsertedID());
 	        nr.setText(number+"/"+lastNumber);
-	        
+	       
+	        /*
 	        //przyciski
 	        Button powrot = (Button)findViewById(R.id.back);
 	        powrot.setOnClickListener(new OnClickListener(){
@@ -148,6 +147,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        		SecondIntent.this.finish();
 	        	}
 	        });
+	        */
 	        
 	        
 			Button poprzedni = (Button)findViewById(R.id.previous);
@@ -188,12 +188,13 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				}
 			});
 			
+			/*
 			Button ulub =(Button)findViewById(R.id.favourite);
 			ulub.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
-					/*
-					 * Jesli jestesmy w kategorii ulubione to przycisk ten usunie kawal z tejze kategorii
-					 */
+					
+					// Jesli jestesmy w kategorii ulubione to przycisk ten usunie kawal z tejze kategorii
+					 
 					if(catName.contains("ULUBIONE")){
 						db.deleteJokeFromFavourites(catId);
 						try{
@@ -228,6 +229,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					
 				}
 			});
+			*/
 			
 			
 			
