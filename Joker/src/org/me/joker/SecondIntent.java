@@ -107,6 +107,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        
+	        
 	        //to rozumiem ma chowac pasek u gory jo ?
 	        requestWindowFeature(Window.FEATURE_NO_TITLE);
 	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
@@ -154,8 +155,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        });
 	        */
 	        
-	        
-			Button poprzedni = (Button)findViewById(R.id.previous);
+	        //odwrocony previous
+			Button poprzedni = (Button)findViewById(R.id.next);
 			poprzedni.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
 					try{
@@ -173,8 +174,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					
 				}
 			});
-			
-			Button nastepny = (Button)findViewById(R.id.next);
+			//odwrocony next
+			Button nastepny = (Button)findViewById(R.id.previous);
 			nastepny.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
 					try{
@@ -263,6 +264,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 		        }
 		        
 		        GestureOverlayView gestures = (GestureOverlayView) findViewById(R.id.gestures);
+		        gestures.setGestureVisible(false);
 		        gestures.addOnGesturePerformedListener(this);
 		        
 	 }
