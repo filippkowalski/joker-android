@@ -154,11 +154,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		// TODO Auto-generated method stub
 		if (newVersion > oldVersion)
 			Log.v("Database Upgrade", "Database higher than old.");
-			myContext.deleteDatabase(DB_NAME);
-			jokes.close();
-			db.close();
 			try {
-				createDatabase();
+				copyDatabase();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				throw new Error("Blad przy tworzeniu bazy danych.");

@@ -140,11 +140,18 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        
      
 	        //licznik
-	        final TextView nr = (TextView)findViewById(R.id.nr);
-	        String number = Integer.toString(db.getLastJoke(catId));
-	        String lastNumber = Integer.toString(db.getLastInsertedID());
-	        nr.setText(number+"/"+lastNumber);
-	       
+	        try{
+	        	final TextView nr = (TextView)findViewById(R.id.nr);
+		        String number = Integer.toString(db.getLastJoke(catId));
+		        String lastNumber = Integer.toString(db.getLastInsertedID());
+		        nr.setText(number+"/"+lastNumber);
+	        }
+	        catch(Exception e){
+	        	Toast toast = Toast.makeText(getBaseContext(),"Brak ulubionych kawałów",Toast.LENGTH_SHORT);
+		        toast.show();
+		        SecondIntent.this.finish();
+	        }
+	        
 	        /*
 	        //przyciski
 	        Button powrot = (Button)findViewById(R.id.back);
