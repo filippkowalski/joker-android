@@ -162,8 +162,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        });
 	        */
 	        
-	        //odwrocony previous
-			Button poprzedni = (Button)findViewById(R.id.next);
+			Button poprzedni = (Button)findViewById(R.id.previous);
 			poprzedni.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
 					try{
@@ -181,8 +180,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					
 				}
 			});
-			//odwrocony next
-			Button nastepny = (Button)findViewById(R.id.previous);
+			Button nastepny = (Button)findViewById(R.id.next);
 			nastepny.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
 					try{
