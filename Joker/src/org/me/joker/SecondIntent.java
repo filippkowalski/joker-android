@@ -17,7 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -162,7 +162,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        });
 	        */
 	        
-			Button poprzedni = (Button)findViewById(R.id.previous);
+			ImageButton poprzedni = (ImageButton)findViewById(R.id.previous);
 			poprzedni.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
 					try{
@@ -180,7 +180,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					
 				}
 			});
-			Button nastepny = (Button)findViewById(R.id.next);
+			ImageButton nastepny = (ImageButton)findViewById(R.id.next);
 			nastepny.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
 					try{
@@ -199,8 +199,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				}
 			});
 			
-			/*
-			Button ulub =(Button)findViewById(R.id.favourite);
+			ImageButton ulub =(ImageButton)findViewById(R.id.favourite);
 			ulub.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
 					
@@ -240,7 +239,6 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					
 				}
 			});
-			*/
 			
 			
 			

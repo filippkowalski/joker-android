@@ -21,5 +21,7 @@
     <string name="category">Kategoria</string>
     <string name="nr">nr</string>
     <string name="dscp">Application background</string>
+    <string name="previ">Previous joke button</string>
+    <string name="favo">favourite button</string>
 
 </resources>
