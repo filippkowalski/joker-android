@@ -79,7 +79,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			else{
 				db.addJokeToFavourites(kawal.getText().toString());
 	             
-	            Toast toast = Toast.makeText(getBaseContext(),"Zajebiście! Kawał został dodany!",Toast.LENGTH_SHORT);
+	            Toast toast = Toast.makeText(getBaseContext(),"Kawał został dodany!",Toast.LENGTH_SHORT);
 	            toast.show();
 			}
         	
