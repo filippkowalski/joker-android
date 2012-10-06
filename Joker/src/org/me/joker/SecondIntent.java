@@ -163,6 +163,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        /*
 	         * Sprawienie, ze pole tekstowe mozna przewijac
 	         */
+	        kawal.scrollTo(0,0);
 	        kawal.setMovementMethod(new ScrollingMovementMethod());
 	        
      
@@ -212,6 +213,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				public void onClick(View view){
 					try{
 						db.setLastJokePlus(catId);
+						kawal.scrollTo(0,0);
 						kawal.setText(db.loadJoke(catId));
 						//licznik
 				        final TextView nr = (TextView)findViewById(R.id.nr);
@@ -237,6 +239,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 						try{
 				        	 db.setLastJokeMinus(catId);
 				        	 String joke = db.loadJoke(catId);
+				        	 kawal.scrollTo(0,0);
 				        	 kawal.setText(joke);
 				        	 
 				        	 Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty ;(",Toast.LENGTH_SHORT);
