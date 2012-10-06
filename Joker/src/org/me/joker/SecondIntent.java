@@ -306,7 +306,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			Prediction prediction = predictions.get(0);
 			if (prediction.score > 1.0) {
 				
-				if(prediction.name.contains("next")){
+				if(prediction.name.contains("previous")){
 					try{
 						db.setLastJokePlus(catId);					
 						kawal.setText(db.loadJoke(catId));
@@ -321,7 +321,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					}
 					
 				}  
-				if(prediction.name.contains("previous")){
+				if(prediction.name.contains("next")){
 					try{
 						db.setLastJokeMinus(catId);					
 						kawal.setText(db.loadJoke(catId));
