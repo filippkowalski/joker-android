@@ -3,7 +3,6 @@ package org.me.joker;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
@@ -15,9 +14,9 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,50 +79,24 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			else{
 				db.addJokeToFavourites(kawal.getText().toString());
 	             
-	            Toast toast = Toast.makeText(getBaseContext(),"Kawał został dodany!",Toast.LENGTH_SHORT);
+	            Toast toast = Toast.makeText(getBaseContext(),"Zajebiście! Kawał został dodany!",Toast.LENGTH_SHORT);
 	            toast.show();
 			}
         	
             break;
         case R.id.item2: // przycisk drugi - wyslij kawal znajomemu
         	
-        	DatabaseAdapter database = new DatabaseAdapter(catId, getApplicationContext());
         	
-        	Intent i = new Intent(Intent.ACTION_SEND);
-        	i.setType("message/rfc822");
-        	i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"TwojZnajomy@gmail.com"});
-        	i.putExtra(Intent.EXTRA_SUBJECT, "Fajny kawał");
-        	i.putExtra(Intent.EXTRA_TEXT   , database.loadJoke(catId));
-        	try {
-        	    startActivity(Intent.createChooser(i, "Wysyłanie maila..."));
-        	} catch (android.content.ActivityNotFoundException ex) {
-        	    Toast.makeText(SecondIntent.this, "Nie masz żadnych klientów pocztowych do wykonania tej akcji...", Toast.LENGTH_SHORT).show();
-        	}
         	
+        	//tutaj musi byc cos co wysyla tekst przez maila
         	
             break;
-        case R.id.item4:
+        case R.id.item3:
  	        SecondIntent.this.finish();        // przycisk powrot
             break; 
             
-  
-		
-		case R.id.item3:  //zaproponuj nam kawał
-			
-		Intent i1 = new Intent(Intent.ACTION_SEND);
-    	i1.setType("message/rfc822");
-    	i1.putExtra(Intent.EXTRA_EMAIL  , new String[]{"void.studio7@gmail.com"});
-    	i1.putExtra(Intent.EXTRA_SUBJECT, "Propozycja kawału");
-    	i1.putExtra(Intent.EXTRA_TEXT   , "Zaproponuj nam kawał - jeśli będzie dobry, uwzględnimy go w kolejnym updeacie, a Tobie damy o tym znać ;)");
-    	try {
-    	    startActivity(Intent.createChooser(i1, "Wysyłanie maila..."));
-    	} catch (android.content.ActivityNotFoundException ex) {
-    	    Toast.makeText(SecondIntent.this, "Nie masz żadnych klientów pocztowych do wykonania tej akcji...", Toast.LENGTH_SHORT).show();
-    	}
-    	
-		
-			break;
-     } 
+        }     
+ 
         return true;
     }
  
@@ -140,7 +113,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 	                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	        
-	        setContentView(R.layout.second);      
+	        setContentView(R.layout.second); 
 	     
 	       
 	        /*
@@ -163,7 +136,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        /*
 	         * Sprawienie, ze pole tekstowe mozna przewijac
 	         */
-	        kawal.scrollTo(0,0);
+	        kawal.scrollTo(0, 0);
 	        kawal.setMovementMethod(new ScrollingMovementMethod());
 	        
      
@@ -213,7 +186,6 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				public void onClick(View view){
 					try{
 						db.setLastJokePlus(catId);
-						kawal.scrollTo(0,0);
 						kawal.setText(db.loadJoke(catId));
 						//licznik
 				        final TextView nr = (TextView)findViewById(R.id.nr);
@@ -239,7 +211,6 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 						try{
 				        	 db.setLastJokeMinus(catId);
 				        	 String joke = db.loadJoke(catId);
-				        	 kawal.scrollTo(0,0);
 				        	 kawal.setText(joke);
 				        	 
 				        	 Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty ;(",Toast.LENGTH_SHORT);
@@ -263,12 +234,17 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					else{
 						db.addJokeToFavourites(kawal.getText().toString());
 			             
-			            Toast toast = Toast.makeText(getBaseContext(),"Zajebiście! Kawał został dodany!",Toast.LENGTH_SHORT);
+			            Toast toast = Toast.makeText(getBaseContext(),"Kawał został dodany!",Toast.LENGTH_SHORT);
 			            toast.show();
 					}
 					
 				}
 			});
+			
+			
+			if(catName.contains("ULUBIONE")){
+	        	ulub.setImageResource(R.drawable.removebutton);
+	        }
 			
 	        
 	        /*Otworzenie bazy danych
@@ -278,10 +254,12 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        	 String joke = db.loadJoke(catId);
 	        	 kawal.setText(joke);
 	         }
-	         catch(Exception e){       		 
+	         catch(Exception e){
+       		 
 	        		 kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");	        		 
 
-	         }         
+	         }
+	         
 	        	 
 			 
 		     
@@ -309,7 +287,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			Prediction prediction = predictions.get(0);
 			if (prediction.score > 1.0) {
 				
-				if(prediction.name.contains("previous")){
+				if(prediction.name.contains("next")){
 					try{
 						db.setLastJokePlus(catId);					
 						kawal.setText(db.loadJoke(catId));
@@ -324,7 +302,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					}
 					
 				}  
-				if(prediction.name.contains("next")){
+				if(prediction.name.contains("previous")){
 					try{
 						db.setLastJokeMinus(catId);					
 						kawal.setText(db.loadJoke(catId));
