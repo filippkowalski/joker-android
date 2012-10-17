@@ -136,7 +136,6 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        /*
 	         * Sprawienie, ze pole tekstowe mozna przewijac
 	         */
-	        kawal.scrollTo(0, 0);
 	        kawal.setMovementMethod(new ScrollingMovementMethod());
 	        
      
@@ -174,6 +173,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				        String number = Integer.toString(db.getLastJoke(catId));
 				        String lastNumber = Integer.toString(db.getLastInsertedID());
 				        nr.setText(number+"/"+lastNumber);
+				        
+				        kawal.scrollTo(0, 0);
 					}
 					catch(Exception e){
 						
@@ -194,6 +195,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				        String number = Integer.toString(db.getLastJoke(catId));
 				        String lastNumber = Integer.toString(db.getLastInsertedID());
 				        nr.setText(number+"/"+lastNumber);
+				        
+				        kawal.scrollTo(0, 0);
 					}
 					catch(Exception e){
 						
@@ -300,6 +303,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				        String number = Integer.toString(db.getLastJoke(catId));
 				        String lastNumber = Integer.toString(db.getLastInsertedID());
 				        nr.setText(number+"/"+lastNumber);
+				        
+				        kawal.scrollTo(0, 0);
 					}
 					catch(Exception e){
 						
@@ -315,6 +320,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				        String number = Integer.toString(db.getLastJoke(catId));
 				        String lastNumber = Integer.toString(db.getLastInsertedID());
 				        nr.setText(number+"/"+lastNumber);
+				        
+				        kawal.scrollTo(0, 0);
 					}
 					catch(Exception e){
 						
