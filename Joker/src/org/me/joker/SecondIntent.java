@@ -91,9 +91,10 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
          	
         	        	Intent i = new Intent(Intent.ACTION_SEND);
         	        	i.setType("message/rfc822");
-        	        	i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"TwojZnajomy@gmail.com"});
-        	        	i.putExtra(Intent.EXTRA_SUBJECT, "Fajny kawał");
-        	        	i.putExtra(Intent.EXTRA_TEXT   , database.loadJoke(catId));
+        	        	i.putExtra(Intent.EXTRA_EMAIL  , new String[]{""});
+        	        	i.putExtra(Intent.EXTRA_SUBJECT, "Fajny kawał - polecam ;)");
+        	        	i.putExtra(Intent.EXTRA_TEXT   , database.loadJoke(catId)+" " +
+        	        			"Kawał wysłany z aplikacji Joker - kawały dowcipy, dostępny na Google Play - http://bit.ly/TxgVn6 ");
         	        	try {
         	        	    startActivity(Intent.createChooser(i, "Wysyłanie maila..."));
         	        	} catch (android.content.ActivityNotFoundException ex) {
