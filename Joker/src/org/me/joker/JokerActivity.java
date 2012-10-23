@@ -37,7 +37,7 @@ public class JokerActivity extends Activity{
         }
         dbh.close();
         
-        // Tworzenie obiektów button
+        // Tworzenie obiektów button asfdafsfdassadfdfsfddafs
         
         Button categories = (Button)findViewById(R.id.kawaly);
         categories.setOnClickListener(new OnClickListener(){

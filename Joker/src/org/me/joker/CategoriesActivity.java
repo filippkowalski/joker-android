@@ -33,7 +33,7 @@ public class CategoriesActivity extends Activity {
 	}
 	
 
-    //Funkcja, która tworzy nowy intent wraz z przekazywaniem informacji o kategorii.
+    //Funkcja, która tworzy nowy intent wraz z przekazywaniem informacji o kategorii. fadsdaf
     
     private void runSecondIntent(int catId, String catName){
     	Intent intent = new Intent(getApplicationContext(), SecondIntent.class);

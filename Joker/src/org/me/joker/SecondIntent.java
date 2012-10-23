@@ -43,7 +43,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 
 		switch (item.getItemId()) {
  
-        case R.id.item1: // wcisniecie przycisku ulubione
+        case R.id.item1: // wcisniecie przycisku ulubione asfassafdasfasdadfssadfs
 
         	
         	final DatabaseAdapter db = new DatabaseAdapter(catId, getApplicationContext());
