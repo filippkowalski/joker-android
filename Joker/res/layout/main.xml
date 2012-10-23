@@ -12,6 +12,7 @@
             android:layout_height="wrap_content" >
 
             <ImageView
+                android:contentDescription="@string/Naglowek"
                 android:id="@+id/imageView1"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
@@ -27,7 +28,7 @@
             android:layout_height="wrap_content" >
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/kawaly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -35,7 +36,7 @@
                 android:layout_marginRight="40dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:text="Kawały" />
+                android:text="@string/Kawaly" />
 
         </TableRow>
 
@@ -53,7 +54,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:text="O nas" />
+                android:text="@string/ONas" />
 
         </TableRow>
 
@@ -71,7 +72,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:text="Ustawienia" />
+                android:text="@string/Ustawienia" />
         </TableRow>
 
         <TableRow
@@ -88,7 +89,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:text="Polub nas na FB" />
+                android:text="@string/FB" />
         </TableRow>
 
         <TableRow
@@ -105,7 +106,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:text="Oceń aplikację" />
+                android:text="@string/Ocen" />
 
         </TableRow>
 
@@ -123,7 +124,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:text="O aplikacji" />
+                android:text="@string/OApk" />
 
         </TableRow>
 

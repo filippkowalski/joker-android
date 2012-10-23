@@ -23,5 +23,12 @@
     <string name="dscp">Application background</string>
     <string name="previ">Previous joke button</string>
     <string name="favo">favourite button</string>
+    <string name="Kawaly">Kawały</string>
+    <string name="ONas">O nas</string>
+    <string name="Ustawienia">Ustawienia</string>
+    <string name="FB">Polub nas na FB</string>
+    <string name="Ocen">Oceń aplikację</string>
+    <string name="OApk">O aplikacji</string>
+    <string name="Naglowek">Nagłówek</string>
 
 </resources>
