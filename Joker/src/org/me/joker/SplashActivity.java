@@ -10,7 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 public class SplashActivity extends Activity {
-	private long splashDelay = 2500; //2,5 seconds ssadfasfsadfadfssadfsadfsdafdas
+	private long splashDelay = 2000; //2 seconds 
 	
     /** Called when the activity is first created. */
     @Override
