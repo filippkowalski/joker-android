@@ -12,7 +12,6 @@ import android.view.WindowManager;
 public class SplashActivity extends Activity {
 	private long splashDelay = 2000; //2 seconds 
 	
-    /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,16 +22,14 @@ public class SplashActivity extends Activity {
         
         setContentView(R.layout.splash);
         
-        TimerTask task = new TimerTask()
-        {
-
+        //timer allows to show splash screen
+        TimerTask task = new TimerTask(){
 			@Override
 			public void run() {
 				finish();
 				Intent mainIntent = new Intent().setClass(SplashActivity.this, JokerActivity.class);
 				startActivity(mainIntent);
-			}
-        	
+			}        	
         };
         
         Timer timer = new Timer();

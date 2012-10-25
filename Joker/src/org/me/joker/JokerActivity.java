@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.io.IOException;
 
@@ -37,15 +38,27 @@ public class JokerActivity extends Activity{
         }
         dbh.close();
         
-        // Tworzenie obiektów button asfdafsfdassadfdfsfddafs
         
-        Button categories = (Button)findViewById(R.id.kawaly);
+        //Buttony i ich funkcje
+        
+        //button przekierowujacy do kategorii
+        ImageView categories = (ImageView)findViewById(R.id.kawaly);
         categories.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
         		Intent intent = new Intent(getApplicationContext(), CategoriesActivity.class);
         		startActivityForResult(intent, 1337);
         	}
         });
+        
+        //button przekierowujacy do 'o nas'
+        
+        //button przekierowujacy do ustawien
+        
+        //button przekierowujacy do 'polub nas na fejsie'
+        
+        //button przekierowujacy do 'ocen aplikacje'
+        
+        //button przekierowujacy do 'o aplikacji'
     }
    
 }

@@ -26,35 +26,32 @@
             android:id="@+id/tableRow2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
-            <Button
+
+            <ImageView
                 android:id="@+id/kawaly"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="10dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="@string/Kawaly" />
+                android:src="@drawable/kawalybutton"
+                android:contentDescription="@string/kawaly"
+                 />
 
         </TableRow>
-
+
         <TableRow
             android:id="@+id/tableRow3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/button2"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" >
+
+            <ImageView
+                android:id="@+id/ustawienia"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:text="@string/ONas" />
+                android:src="@drawable/ustawieniabutton"
+                android:contentDescription="@string/ustawienia" />
 
         </TableRow>
 
@@ -62,51 +59,44 @@
             android:id="@+id/tableRow4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/Button01"
+
+            <ImageView
+                android:id="@+id/imageView3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="5dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="@string/Ustawienia" />
+                android:src="@drawable/ocenbutton" />
+
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/button3"
+
+            <ImageView
+                android:id="@+id/imageView2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="5dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="@string/FB" />
+                android:src="@drawable/polubnasnafbbutton" />
+
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/Button02"
+
+            <ImageView
+                android:id="@+id/imageView5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="5dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="@string/Ocen" />
+                android:src="@drawable/oaplikacjibutton" />
 
         </TableRow>
 
@@ -114,17 +104,14 @@
             android:id="@+id/tableRow7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/Button03"
+
+            <ImageView
+                android:id="@+id/imageView6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="5dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="@string/OApk" />
+                android:src="@drawable/onasbutton" />
 
         </TableRow>
 

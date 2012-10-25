@@ -10,18 +10,20 @@
         android:layout_height="wrap_content" >
 
         <ImageView
-            android:id="@+id/blondynki"         android:layout_width="90dp"
+            android:id="@+id/oBlondynkach"         
+            android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_margin="10dp"
             android:src="@drawable/blondynki"
             android:contentDescription="@string/oBlondynkach" />
-
+
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/chuckNorris"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_margin="10dp"
-            android:src="@drawable/chuck" />
+            android:src="@drawable/chuck"
+            android:contentDescription="@string/chuckNorris" />
 
     </TableRow>
 

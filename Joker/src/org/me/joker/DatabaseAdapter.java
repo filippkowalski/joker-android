@@ -29,10 +29,7 @@ public class DatabaseAdapter{
         }
        
         
-        /*
-         * Metoda zwraca kawal o podanym ID
-         */
-        
+        // Metoda zwraca kawal o podanym ID
         public String loadJoke(int id){
                
                 DatabaseHelper dbh = new DatabaseHelper(context);
