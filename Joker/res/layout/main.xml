@@ -4,7 +4,8 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
 	    android:background="@drawable/jokerbckg"
-	    android:orientation="horizontal">
+	    android:orientation="horizontal"
+	    android:gravity="center" >
 
         <TableRow
             android:id="@+id/tableRow1"
@@ -26,16 +27,18 @@
             android:id="@+id/tableRow2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
-            <ImageView
+
+            <ImageButton
                 android:id="@+id/kawaly"
-                android:layout_width="0dp"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:src="@drawable/kawalybutton"
                 android:contentDescription="@string/kawaly"
-                 />
+                android:scaleType="fitStart"
+                android:background="@null"
+                android:layout_gravity="center" />
 
         </TableRow>
 

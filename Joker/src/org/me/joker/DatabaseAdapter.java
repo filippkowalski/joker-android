@@ -57,7 +57,7 @@ public class DatabaseAdapter{
             dbh.openDatabase();        
             int ostatni = 1;
             db = dbh.getDatabase();
-            Cursor c = db.rawQuery("SELECT ostatni FROM " + TABLE_NAME + " WHERE _id like " + (id + 1), null);
+            Cursor c = db.rawQuery("SELECT ostatni FROM " + TABLE_NAME + " WHERE _id like " + id, null);
             c.moveToFirst();
            
             ostatni = c.getInt(c.getColumnIndex("ostatni"));
@@ -87,7 +87,7 @@ public class DatabaseAdapter{
     		data.put("ostatni", lastID);
     		String myPath = DB_PATH + DB_NAME;
     		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
-    		db.update(TABLE_NAME, data, "_id=" + (catID + 1), null);
+    		db.update(TABLE_NAME, data, "_id=" + catID, null);
     		dbh.close();
     		db.close();
         }
@@ -110,7 +110,7 @@ public class DatabaseAdapter{
     		data.put("ostatni", lastID);
     		String myPath = DB_PATH + DB_NAME;
     		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
-    		db.update(TABLE_NAME, data, "_id=" + (catID + 1), null);
+    		db.update(TABLE_NAME, data, "_id=" + catID, null);
     		dbh.close();
     		db.close();
         }
@@ -140,7 +140,7 @@ public class DatabaseAdapter{
                
                 String category = null;
                 db = dbh.getDatabase();
-                Cursor c = db.rawQuery("SELECT kategoria FROM kategorie WHERE _id like " + (id + 1), null);
+                Cursor c = db.rawQuery("SELECT kategoria FROM kategorie WHERE _id like " + id, null);
                 c.moveToFirst();
                
                 category = c.getString(c.getColumnIndex("kategoria"));
@@ -178,7 +178,7 @@ public class DatabaseAdapter{
             
             db = dbh.getDatabase();
         	
-        	Cursor c = db.rawQuery("SELECT ostatni FROM kategorie WHERE _id like " + (id + 1), null);
+        	Cursor c = db.rawQuery("SELECT ostatni FROM kategorie WHERE _id like " + id, null);
         	c.moveToFirst();
         	
         	id = c.getInt(c.getColumnIndex("ostatni"));

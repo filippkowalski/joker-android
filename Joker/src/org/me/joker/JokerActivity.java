@@ -7,8 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 
 import java.io.IOException;
 
@@ -42,7 +41,7 @@ public class JokerActivity extends Activity{
         //Buttony i ich funkcje
         
         //button przekierowujacy do kategorii
-        ImageView categories = (ImageView)findViewById(R.id.kawaly);
+        ImageButton categories = (ImageButton)findViewById(R.id.kawaly);
         categories.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
         		Intent intent = new Intent(getApplicationContext(), CategoriesActivity.class);
