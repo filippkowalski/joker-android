@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 
 public class CategoriesActivity extends Activity {
 	
@@ -25,7 +25,7 @@ public class CategoriesActivity extends Activity {
         //Buttony prowadzace do kawalow
         
         //blondynki
-        ImageView blondes = (ImageView)findViewById(R.id.oBlondynkach);
+        ImageButton blondes = (ImageButton)findViewById(R.id.oBlondynkach);
         blondes.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
         		runSecondIntent(3, "O Blondynkach");
@@ -33,7 +33,7 @@ public class CategoriesActivity extends Activity {
         });
         
         //chuck norris
-        ImageView chuckNorris = (ImageView)findViewById(R.id.chuckNorris);
+        ImageButton chuckNorris = (ImageButton)findViewById(R.id.chuckNorris);
         chuckNorris.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
         		runSecondIntent(8, "Chuck Norris");
