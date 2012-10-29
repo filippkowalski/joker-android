@@ -3,6 +3,7 @@ package org.me.joker;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
@@ -73,15 +74,22 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 		        SecondIntent.this.finish();
 	        }
 	        
-	        /*
-	        //przyciski
-	        Button powrot = (Button)findViewById(R.id.back);
-	        powrot.setOnClickListener(new OnClickListener(){
+	      
+	        
+	        ImageButton socialshare = (ImageButton)findViewById(R.id.socialshare);
+	        socialshare.setOnClickListener(new OnClickListener(){
 	        	public void onClick(View view){
-	        		SecondIntent.this.finish();
+	        		//tworze baze zeby moc wczytac kawal do wyslania, fajnie by bylo to pominac zeby nie otwierac 10x bazy
+	        		DatabaseAdapter database = new DatabaseAdapter(catId, getApplicationContext());
+	        		
+	        		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+	        		sharingIntent.setType("text/plain");
+	        		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, database.loadJoke(catId) + " "+"Kawał znaleziony w aplikacji Joker - http://bitly.com/TxgVn6");
+	        		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Dobry kawał ;)");
+	        		startActivity(Intent.createChooser(sharingIntent, "Share using:"));
+	        		// czemu to nie dziala ? ? -> database.close();
 	        	}
 	        });
-	        */
 	        
 			ImageButton poprzedni = (ImageButton)findViewById(R.id.previous);
 			poprzedni.setOnClickListener(new OnClickListener(){
