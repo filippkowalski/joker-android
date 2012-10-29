@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckboxPreference
+    <CheckBoxPreference
         android:defaultValue="false"
         android:key="internet"
-        android:summary="Połączenie z internetem"
-        android:title="Ta funkcja pozwoli aktualizować na bieżaco oceny kawałów"
+        android:summary="Ta funkcja pozwoli aktualizować na bieżaco oceny kawałów"
+        android:title="Połączenie z internetem"
         />
 	
     <ListPreference
