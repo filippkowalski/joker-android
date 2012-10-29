@@ -133,8 +133,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					
 				}
 			});
-			/*
-			ImageButton ulub =(ImageButton)findViewById(R.id.favourite);
+			
+			ImageButton ulub =(ImageButton)findViewById(R.id.fav);
 			ulub.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
 					
@@ -181,7 +181,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			if(catName.contains("ULUBIONE")){
 	        	ulub.setImageResource(R.drawable.removebutton);
 	        }
-			*/
+			
 	        
 	        /*Otworzenie bazy danych
 	         * Pobranie kawalu do TextView
