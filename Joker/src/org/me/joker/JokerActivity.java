@@ -15,7 +15,8 @@ import android.widget.ImageButton;
 
  
 public class JokerActivity extends Activity{
-  
+	
+	private final static String APP_PNAME = "org.me.joker";  
   
 	/** Called when the activity is first created. */
     @Override
@@ -72,8 +73,7 @@ public class JokerActivity extends Activity{
         ImageButton ocen = (ImageButton)findViewById(R.id.ocen);
         ocen.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
-		        String JokerUrl ="https://play.google.com/store/apps/details?id=org.me.joker#?t=W251bGwsMSwxLDIxMiwib3JnLm1lLmpva2VyIl0.";
-		        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(JokerUrl)));
+        		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
 	        	}
         });
         
