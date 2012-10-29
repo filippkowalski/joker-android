@@ -100,13 +100,13 @@
             android:layout_height="wrap_content" >
 
             <ImageButton
-                android:id="@+id/oaplikacji"
+                android:id="@+id/onas"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:src="@drawable/oaplikacjibutton"
-                android:contentDescription="@string/oaplikacji"
+                android:src="@drawable/onasbutton"
+                android:contentDescription="@string/onas"
                 android:scaleType="fitCenter"
                 android:background="@null" />
 

@@ -1,15 +1,16 @@
 package org.me.joker;
 
+import java.io.IOException;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-
-import java.io.IOException;
 
 
  
@@ -47,10 +48,8 @@ public class JokerActivity extends Activity{
         		Intent intent = new Intent(getApplicationContext(), CategoriesActivity.class);
         		startActivityForResult(intent, 1337);
         	}
-        });
-        
-        //button przekierowujacy do 'o nas'
-        
+        });        
+       
         //button przekierowujacy do ustawien
         ImageButton settings = (ImageButton)findViewById(R.id.ustawienia);
         settings.setOnClickListener(new OnClickListener(){
@@ -61,10 +60,33 @@ public class JokerActivity extends Activity{
         });
         
         //button przekierowujacy do 'polub nas na fejsie'
+        ImageButton polubnasnafb = (ImageButton)findViewById(R.id.polubnasnafb);
+        polubnasnafb.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+		        String JokerUrl ="https://www.facebook.com/voidstd";
+		        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(JokerUrl)));
+	        	}
+        });        
         
         //button przekierowujacy do 'ocen aplikacje'
+        ImageButton ocen = (ImageButton)findViewById(R.id.ocen);
+        ocen.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+		        String JokerUrl ="https://play.google.com/store/apps/details?id=org.me.joker#?t=W251bGwsMSwxLDIxMiwib3JnLm1lLmpva2VyIl0.";
+		        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(JokerUrl)));
+	        	}
+        });
         
-        //button przekierowujacy do 'o aplikacji'
+        //button przekierowujacy do 'o nas'
+        ImageButton onas = (ImageButton)findViewById(R.id.onas);
+        onas.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		setContentView(R.layout.onas);
+        	}    
+        });
+        	        
+    
+        
     }
    
 }
