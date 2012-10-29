@@ -52,6 +52,13 @@ public class JokerActivity extends Activity{
         //button przekierowujacy do 'o nas'
         
         //button przekierowujacy do ustawien
+        ImageButton settings = (ImageButton)findViewById(R.id.ustawienia);
+        settings.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+        		startActivityForResult(intent, 1337);
+        	}
+        });
         
         //button przekierowujacy do 'polub nas na fejsie'
         

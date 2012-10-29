@@ -10,7 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 public class SplashActivity extends Activity {
-	private long splashDelay = 2000; //2 seconds 
+	private long splashDelay = 1500; //1,5 seconds 
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -84,7 +84,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        		
 	        		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 	        		sharingIntent.setType("text/plain");
-	        		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, database.loadJoke(catId) + " "+"Kawał znaleziony w aplikacji Joker - http://bitly.com/TxgVn6");
+	        		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, database.loadJoke(catId) +'\n'+"Kawał znaleziony w aplikacji Joker - http://bitly.com/TxgVn6");
 	        		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Dobry kawał ;)");
 	        		startActivity(Intent.createChooser(sharingIntent, "Share using:"));
 	        		// czemu to nie dziala ? ? -> database.close();
