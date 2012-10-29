@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 
  
@@ -75,6 +76,23 @@ public class JokerActivity extends Activity{
         	public void onClick(View view){
         		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
 	        	}
+        });
+        
+        //button od "zaproponuj kawal"
+        ImageButton zaproponuj = (ImageButton)findViewById(R.id.zaproponujkawal);
+        zaproponuj.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		Intent i1 = new Intent(Intent.ACTION_SEND);
+        		i1.setType("message/rfc822");
+        		i1.putExtra(Intent.EXTRA_EMAIL  , new String[]{"void.studio7@gmail.com"});
+        		i1.putExtra(Intent.EXTRA_SUBJECT, "Propozycja kawa³u dla aplikacji Joker");
+        		i1.putExtra(Intent.EXTRA_TEXT   , "Zaproponuj nam kawa³ - jeœli bêdzie dobry, uwzglêdnimy go w kolejnym updeacie, a Tobie damy o tym znaæ ;)");
+        		try {
+        			startActivity(Intent.createChooser(i1, "Wysy³anie maila..."));
+        		} catch (android.content.ActivityNotFoundException ex) {
+        			Toast.makeText(JokerActivity.this, "Nie masz ¿adnych klientów pocztowych do wykonania tej akcji...", Toast.LENGTH_SHORT).show();
+        		}
+        	}    
         });
         
         //button przekierowujacy do 'o nas'

@@ -11,7 +11,7 @@
             android:id="@+id/tableRow1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
+
             <ImageView
                 android:contentDescription="@string/Naglowek"
                 android:id="@+id/imageView1"
@@ -32,7 +32,7 @@
                 android:id="@+id/kawaly"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:src="@drawable/kawalybutton"
                 android:contentDescription="@string/kawaly"
@@ -45,7 +45,7 @@
             android:id="@+id/tableRow3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp" >
+            android:layout_margin="5dp" >
             
             <ImageButton
                 android:id="@+id/ustawienia"
@@ -68,12 +68,28 @@
                 android:id="@+id/ocen"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:src="@drawable/ocenbutton"
                 android:contentDescription="@string/ocen"
                 android:scaleType="fitCenter"
-                android:background="@null" />		 </TableRow>	
+                android:background="@null" />		 </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageButton
+                android:id="@+id/zaproponujkawal"
+                android:src="@drawable/zaproponujbutton"
+                android:contentDescription="@string/zaproponujkawal"
+                android:scaleType="fitCenter"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"  />
+
+        </TableRow>
 
         <TableRow
             android:id="@+id/tableRow5"
@@ -85,7 +101,6 @@
                 android:id="@+id/polubnasnafb"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:src="@drawable/polubnasnafbbutton"
                 android:contentDescription="@string/polubnasnafb"
