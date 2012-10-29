@@ -31,6 +31,9 @@
     <string name="OApk">O aplikacji</string>
     <string name="Naglowek">Nagłówek</string>
 	<string name="ustawienia">Ustawienia</string>	
-
+	<string name="ocen">Oceń</string>	
+	<string name="polubnasnafb">Polub nas na FB</string>	
+	<string name="onas">O nas</string>	
+	<string name="oaplikacji">O aplikacji</string>	
 	
 </resources>

@@ -36,9 +36,8 @@
                 android:layout_weight="1"
                 android:src="@drawable/kawalybutton"
                 android:contentDescription="@string/kawaly"
-                android:scaleType="fitStart"
-                android:background="@null"
-                android:layout_gravity="center" />
+                android:scaleType="fitCenter"
+                android:background="@null" />
 
         </TableRow>
 
@@ -47,14 +46,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp" >
-
-            <ImageView
+            
+            <ImageButton
                 android:id="@+id/ustawienia"
-                android:layout_width="0dp"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:src="@drawable/ustawieniabutton"
-                android:contentDescription="@string/ustawienia" />
+                android:contentDescription="@string/ustawienia"
+                android:scaleType="fitCenter"
+                android:background="@null" />
 
         </TableRow>
 
@@ -62,29 +64,33 @@
             android:id="@+id/tableRow4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="0dp"
+			<ImageButton
+                android:id="@+id/ocen"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:src="@drawable/ocenbutton" />
-
-        </TableRow>
+                android:src="@drawable/ocenbutton"
+                android:contentDescription="@string/ocen"
+                android:scaleType="fitCenter"
+                android:background="@null" />		 </TableRow>	
 
         <TableRow
             android:id="@+id/tableRow5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="0dp"
+
+            
+            <ImageButton
+                android:id="@+id/polubnasnafb"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:src="@drawable/polubnasnafbbutton" />
+                android:src="@drawable/polubnasnafbbutton"
+                android:contentDescription="@string/polubnasnafb"
+                android:scaleType="fitCenter"
+                android:background="@null" />
 
         </TableRow>
 
@@ -92,14 +98,17 @@
             android:id="@+id/tableRow6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="0dp"
+
+            <ImageButton
+                android:id="@+id/oaplikacji"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:src="@drawable/oaplikacjibutton" />
+                android:src="@drawable/oaplikacjibutton"
+                android:contentDescription="@string/oaplikacji"
+                android:scaleType="fitCenter"
+                android:background="@null" />
 
         </TableRow>
 
@@ -107,14 +116,17 @@
             android:id="@+id/tableRow7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="0dp"
+
+            <ImageButton
+                android:id="@+id/onas"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:src="@drawable/onasbutton" />
+                android:src="@drawable/onasbutton"
+                android:contentDescription="@string/onas"
+                android:scaleType="fitCenter"
+                android:background="@null" />
 
         </TableRow>
 
