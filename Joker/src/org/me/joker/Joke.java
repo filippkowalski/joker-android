@@ -138,16 +138,16 @@ public class Joke {
 	
 	public int getNextJokeId(){
 		if ((getId() + 1) > getNumberOfJokesInCategory())
-			return getId() + 1;
-		else
 			return 1;
+		else
+			return getId() + 1;
 	}
 	
 	public int getPreviousJokeId(){
 		if ((getId() - 1) < 1)
-			return getId() - 1;
-		else
 			return getNumberOfJokesInCategory();
+		else
+			return getId() - 1;
 	}
 	
 	public void onNextButtonClick(){

@@ -45,7 +45,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        catId = bundle.getInt("ID");
 	        catName = bundle.getString("CATEGORY");
 	        
-	        final DatabaseAdapter db = new DatabaseAdapter(catId, getApplicationContext());
+	        final Joke joke = new Joke(catId, getApplicationContext());
 	      
 	        
 	        /*
@@ -64,9 +64,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        //licznik
 	        try{
 	        	final TextView nr = (TextView)findViewById(R.id.nr);
-		        String number = Integer.toString(db.getLastJokeId(catId));
-		        String lastNumber = Integer.toString(db.getLastInsertedID());
-		        nr.setText(number+"/"+lastNumber);
+		        nr.setText(joke.getNumber());
 	        }
 	        catch(Exception e){
 	        	Toast toast = Toast.makeText(getBaseContext(),"Brak ulubionych kawałów",Toast.LENGTH_SHORT);
@@ -82,7 +80,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        		
 	        		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 	        		sharingIntent.setType("text/plain");
-	        		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, kawal.getText().toString() +'\n'+"Kawał znaleziony w aplikacji Joker - http://bitly.com/TxgVn6");
+	        		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, joke.getContent() +'\n'+"Kawał znaleziony w aplikacji Joker - http://bitly.com/TxgVn6");
 	        		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Dobry kawał ;)");
 	        		startActivity(Intent.createChooser(sharingIntent, "Share using:"));
 	        		// czemu to nie dziala ? ? -> database.close();
@@ -92,14 +90,12 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			ImageButton poprzedni = (ImageButton)findViewById(R.id.previous);
 			poprzedni.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
-					try{
-						db.setLastJokeMinus(catId);					
-						kawal.setText(db.loadLastJoke(catId));
+					try{				
+						kawal.setText(joke.getPrevious());
+						joke.onPreviousButtonClick();
 						//licznik
 				        final TextView nr = (TextView)findViewById(R.id.nr);
-				        String number = Integer.toString(db.getLastJokeId(catId));
-				        String lastNumber = Integer.toString(db.getLastInsertedID());
-				        nr.setText(number+"/"+lastNumber);
+				        nr.setText(joke.getNumber());
 				        
 				        kawal.scrollTo(0, 0);
 					}
@@ -113,15 +109,11 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			nastepny.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
 					try{
-						
-						db.setLastJokePlus(catId);
-						kawal.scrollTo(0, 0);
-						kawal.setText(db.loadLastJoke(catId));
+						kawal.setText(joke.getNext());
+						joke.onNextButtonClick();
 						//licznik
 				        final TextView nr = (TextView)findViewById(R.id.nr);
-				        String number = Integer.toString(db.getLastJokeId(catId));
-				        String lastNumber = Integer.toString(db.getLastInsertedID());
-				        nr.setText(number+"/"+lastNumber);
+				        nr.setText(joke.getNumber());
 				        
 				        kawal.scrollTo(0, 0);
 					}
@@ -139,34 +131,21 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					// Jesli jestesmy w kategorii ulubione to przycisk ten usunie kawal z tejze kategorii
 					 
 					if(catName.contains("ULUBIONE")){
-						db.deleteJokeFromFavourites(catId);
+						joke.deleteFromFavourites();
 						try{
-				        	 db.setLastJokeMinus(catId);
-				        	 String joke = db.loadLastJoke(catId);
-				        	 kawal.scrollTo(0, 0);
-				        	 kawal.setText(joke);
+							kawal.setText(joke.getPrevious());
+							joke.onPreviousButtonClick();
+							kawal.scrollTo(0, 0);
 				        	 
-				        	 Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty ;(",Toast.LENGTH_SHORT);
-					         toast.show();
+				        	Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty ;(",Toast.LENGTH_SHORT);
+					        toast.show();
 				         }
 				         catch(Exception e){
-				        	 try{
-				        		 db.setLastJokePlus(catId);
-				        		 db.setLastJokePlus(catId);
-				        		 String joke = db.loadLastJoke(catId);
-				        		 kawal.scrollTo(0, 0);
-				        		 kawal.setText(joke);
-				        		 
-				        		 Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty ;(",Toast.LENGTH_SHORT);
-						         toast.show();
-				        	 }
-				        	 catch(Exception ex){
-				        		 kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");
-				        	 }
-				         }
+				        	 kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");
+				        }
 					}
 					else{
-						db.addJokeToFavourites(kawal.getText().toString());
+						joke.addToFavourites();
 			             
 			            Toast toast = Toast.makeText(getBaseContext(),"Kawał został dodany!",Toast.LENGTH_SHORT);
 			            toast.show();
@@ -185,13 +164,10 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	         * Pobranie kawalu do TextView
 	         */
 	         try{
-	        	 String joke = db.loadLastJoke(catId);
-	        	 kawal.setText(joke);
+	        	kawal.setText(joke.getContent());
 	         }
 	         catch(Exception e){
-       		 
-	        		 kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");	        		 
-
+	        	kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");
 	         }
 	         
 	        	 
@@ -213,8 +189,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	//metoda obslugujaca gesty
 	public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
 		ArrayList<Prediction> predictions = mLibrary.recognize(gesture);
-		
-		final DatabaseAdapter db = new DatabaseAdapter(catId, getApplicationContext());
+
+		final Joke joke = new Joke(catId, getApplicationContext());
         final TextView kawal = (TextView)findViewById(R.id.joke);
 		
 		if (predictions.size() > 0) {
@@ -222,14 +198,12 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			if (prediction.score > 1.0) {
 				
 				if(prediction.name.contains("previous")){
-					try{
-						db.setLastJokePlus(catId);					
-						kawal.setText(db.loadLastJoke(catId));
+					try{				
+						kawal.setText(joke.getNext());
+						joke.onNextButtonClick();
 						//licznik
 				        final TextView nr = (TextView)findViewById(R.id.nr);
-				        String number = Integer.toString(db.getLastJokeId(catId));
-				        String lastNumber = Integer.toString(db.getLastInsertedID());
-				        nr.setText(number+"/"+lastNumber);
+				        nr.setText(joke.getNumber());
 				        
 				        kawal.scrollTo(0, 0);
 					}
@@ -239,14 +213,12 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					
 				}  
 				if(prediction.name.contains("next")){
-					try{
-						db.setLastJokeMinus(catId);					
-						kawal.setText(db.loadLastJoke(catId));
+					try{				
+						kawal.setText(joke.getPrevious());
+						joke.onPreviousButtonClick();
 						//licznik
 				        final TextView nr = (TextView)findViewById(R.id.nr);
-				        String number = Integer.toString(db.getLastJokeId(catId));
-				        String lastNumber = Integer.toString(db.getLastInsertedID());
-				        nr.setText(number+"/"+lastNumber);
+				        nr.setText(joke.getNumber());
 				        
 				        kawal.scrollTo(0, 0);
 					}
