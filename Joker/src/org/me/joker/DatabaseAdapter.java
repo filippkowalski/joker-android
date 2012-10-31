@@ -29,8 +29,8 @@ public class DatabaseAdapter{
         }
        
         
-        // Metoda zwraca kawal o podanym ID
-        public String loadJoke(int id){
+        // Metoda zwraca ostatnio ogladany kawal z kategorii o podanym ID
+        public String loadLastJoke(int id){
                
                 DatabaseHelper dbh = new DatabaseHelper(context);
                
@@ -38,21 +38,41 @@ public class DatabaseAdapter{
                
                 String joke = null;
                 db = dbh.getDatabase();
-                Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + getLastJoke(id), null);
+                Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + getLastJokeId(id), null);
        
                 c.moveToFirst();
                 joke = c.getString(c.getColumnIndex("text"));
+                c.close();
                 db.close();
                 dbh.close();
-                c.close();
                 return joke;
         }
        
+        // Metoda zwraca kawal z podanej kategorii i o podanym ID kawalu
+        
+        public String loadJoke(int catId, int jokeId){
+            
+            DatabaseHelper dbh = new DatabaseHelper(context);
+           
+            dbh.openDatabase();
+           
+            String joke = null;
+            db = dbh.getDatabase();
+            Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + jokeId, null);
+   
+            c.moveToFirst();
+            joke = c.getString(c.getColumnIndex("text"));
+            c.close();
+            db.close();
+            dbh.close();
+            return joke;
+        }
+        
        /*
         * Metoda zwraca ID ostatniego ogladanego ID
         */
        
-        int getLastJoke(int id) {
+        int getLastJokeId(int id) {
             DatabaseHelper dbh = new DatabaseHelper(context);              
             dbh.openDatabase();        
             int ostatni = 1;
@@ -78,7 +98,7 @@ public class DatabaseAdapter{
         	DatabaseHelper dbh = new DatabaseHelper(context);
     		dbh.openDatabase();
     		db = dbh.getDatabase();
-    		int lastID = getLastJoke(catID);
+    		int lastID = getLastJokeId(catID);
     		lastID++;
     		if (lastID > getLastInsertedID()){
     			lastID = 1;
@@ -101,7 +121,7 @@ public class DatabaseAdapter{
         	DatabaseHelper dbh = new DatabaseHelper(context);
     		dbh.openDatabase();
     		db = dbh.getDatabase();
-    		int lastID = getLastJoke(catID);
+    		int lastID = getLastJokeId(catID);
     		lastID--;
     		if (lastID <= 0 ){
     			lastID = getLastInsertedID();
@@ -125,6 +145,8 @@ public class DatabaseAdapter{
         	Cursor c = db.query(DB_TABLE, new String[] {"_id"}, null, null, null, null, null);
         	c.moveToLast();
         	int lastID = (int)c.getLong(c.getColumnIndex("_id"));
+        	db.close();
+        	c.close();
         	return lastID;
         }
  
@@ -169,35 +191,11 @@ public class DatabaseAdapter{
         /*
          * Metoda usuwa kawal z ulubionych
          */
-        public void deleteJokeFromFavourites(int id){
-        	/*
-        	 * Pobranie id kawalu do usuniecia
-        	 */
-        	DatabaseHelper dbh = new DatabaseHelper(context);
-            dbh.openDatabase();
-            
-            db = dbh.getDatabase();
+        public void deleteJokeFromFavourites(int jokeId){
         	
-        	Cursor c = db.rawQuery("SELECT ostatni FROM kategorie WHERE _id like " + id, null);
-        	c.moveToFirst();
-        	
-        	id = c.getInt(c.getColumnIndex("ostatni"));
-        	
-        	dbh.close();
-        	db.close();
-        	
-        	/*
-        	 * Przekopiowanie ostatnieogo kawalu w miejsce usuwanego
-        	 */
-        	
-        	
-        	
-        	/*
-        	 * Usuniecie kawalu 
-        	 */
         	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
         	
-        	db.execSQL("DELETE FROM ulubione WHERE _id = " + id);
+        	db.execSQL("DELETE FROM ulubione WHERE _id = " + jokeId);
         	
         	db.close();
         }

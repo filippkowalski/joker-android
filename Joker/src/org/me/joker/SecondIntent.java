@@ -64,7 +64,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        //licznik
 	        try{
 	        	final TextView nr = (TextView)findViewById(R.id.nr);
-		        String number = Integer.toString(db.getLastJoke(catId));
+		        String number = Integer.toString(db.getLastJokeId(catId));
 		        String lastNumber = Integer.toString(db.getLastInsertedID());
 		        nr.setText(number+"/"+lastNumber);
 	        }
@@ -79,12 +79,10 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        ImageButton socialshare = (ImageButton)findViewById(R.id.socialshare);
 	        socialshare.setOnClickListener(new OnClickListener(){
 	        	public void onClick(View view){
-	        		//tworze baze zeby moc wczytac kawal do wyslania, fajnie by bylo to pominac zeby nie otwierac 10x bazy
-	        		DatabaseAdapter database = new DatabaseAdapter(catId, getApplicationContext());
 	        		
 	        		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 	        		sharingIntent.setType("text/plain");
-	        		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, database.loadJoke(catId) +'\n'+"Kawał znaleziony w aplikacji Joker - http://bitly.com/TxgVn6");
+	        		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, kawal.getText().toString() +'\n'+"Kawał znaleziony w aplikacji Joker - http://bitly.com/TxgVn6");
 	        		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Dobry kawał ;)");
 	        		startActivity(Intent.createChooser(sharingIntent, "Share using:"));
 	        		// czemu to nie dziala ? ? -> database.close();
@@ -96,10 +94,10 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				public void onClick(View view){
 					try{
 						db.setLastJokeMinus(catId);					
-						kawal.setText(db.loadJoke(catId));
+						kawal.setText(db.loadLastJoke(catId));
 						//licznik
 				        final TextView nr = (TextView)findViewById(R.id.nr);
-				        String number = Integer.toString(db.getLastJoke(catId));
+				        String number = Integer.toString(db.getLastJokeId(catId));
 				        String lastNumber = Integer.toString(db.getLastInsertedID());
 				        nr.setText(number+"/"+lastNumber);
 				        
@@ -118,10 +116,10 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 						
 						db.setLastJokePlus(catId);
 						kawal.scrollTo(0, 0);
-						kawal.setText(db.loadJoke(catId));
+						kawal.setText(db.loadLastJoke(catId));
 						//licznik
 				        final TextView nr = (TextView)findViewById(R.id.nr);
-				        String number = Integer.toString(db.getLastJoke(catId));
+				        String number = Integer.toString(db.getLastJokeId(catId));
 				        String lastNumber = Integer.toString(db.getLastInsertedID());
 				        nr.setText(number+"/"+lastNumber);
 				        
@@ -144,7 +142,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 						db.deleteJokeFromFavourites(catId);
 						try{
 				        	 db.setLastJokeMinus(catId);
-				        	 String joke = db.loadJoke(catId);
+				        	 String joke = db.loadLastJoke(catId);
 				        	 kawal.scrollTo(0, 0);
 				        	 kawal.setText(joke);
 				        	 
@@ -155,7 +153,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				        	 try{
 				        		 db.setLastJokePlus(catId);
 				        		 db.setLastJokePlus(catId);
-				        		 String joke = db.loadJoke(catId);
+				        		 String joke = db.loadLastJoke(catId);
 				        		 kawal.scrollTo(0, 0);
 				        		 kawal.setText(joke);
 				        		 
@@ -187,7 +185,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	         * Pobranie kawalu do TextView
 	         */
 	         try{
-	        	 String joke = db.loadJoke(catId);
+	        	 String joke = db.loadLastJoke(catId);
 	        	 kawal.setText(joke);
 	         }
 	         catch(Exception e){
@@ -226,10 +224,10 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				if(prediction.name.contains("previous")){
 					try{
 						db.setLastJokePlus(catId);					
-						kawal.setText(db.loadJoke(catId));
+						kawal.setText(db.loadLastJoke(catId));
 						//licznik
 				        final TextView nr = (TextView)findViewById(R.id.nr);
-				        String number = Integer.toString(db.getLastJoke(catId));
+				        String number = Integer.toString(db.getLastJokeId(catId));
 				        String lastNumber = Integer.toString(db.getLastInsertedID());
 				        nr.setText(number+"/"+lastNumber);
 				        
@@ -243,10 +241,10 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				if(prediction.name.contains("next")){
 					try{
 						db.setLastJokeMinus(catId);					
-						kawal.setText(db.loadJoke(catId));
+						kawal.setText(db.loadLastJoke(catId));
 						//licznik
 				        final TextView nr = (TextView)findViewById(R.id.nr);
-				        String number = Integer.toString(db.getLastJoke(catId));
+				        String number = Integer.toString(db.getLastJokeId(catId));
 				        String lastNumber = Integer.toString(db.getLastInsertedID());
 				        nr.setText(number+"/"+lastNumber);
 				        
