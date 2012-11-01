@@ -15,6 +15,7 @@ public class Joke {
 	private int id;
 	private String number;
 	private int numberOfJokesInCategory;
+	private int numberOfJokesInDatabase;
 	private boolean rated;
 	private boolean favourite;
 	
@@ -33,6 +34,7 @@ public class Joke {
 	}
 	
 	public Joke(Context context){
+		checkNumberOfJokesInDatabase();
 		setRandomJoke();
 		this.context = context;
 	}
@@ -87,6 +89,14 @@ public class Joke {
 		return number;
 	}
 	
+	public void setNumberOfJokesInDatabase(int a){
+		numberOfJokesInDatabase = a;
+	}
+	
+	public int getNumberOfJokesInDatabase(){
+		return numberOfJokesInDatabase;
+	}
+	
 	public int getNumberOfJokesInCategory(){
 		return numberOfJokesInCategory;
 	}
@@ -135,6 +145,19 @@ public class Joke {
 		numberOfJokesInCategory = dba.getLastInsertedID();
 	}
 	
+	public void checkNumberOfJokesInDatabase(){
+		int sum = 0;
+		
+		for (int i = 2; i <= 11; i++){
+			setCategory(i);
+			checkNumberOfJokesInCategory();
+			sum += getNumberOfJokesInCategory();
+		}
+		
+		setNumberOfJokesInDatabase(sum);
+	}
+	
+	
 	public void refreshJoke(){
 		setId(getLastReadJokeId());
 		setContent(getContentFromDatabase());
@@ -179,12 +202,26 @@ public class Joke {
 		dba.deleteJokeFromFavourites(getId());
 	}
 	
-	public String setRandomJoke(){
+	public void setRandomJoke(){
 		Random rand = new Random();
-		setCategory(rand.nextInt(10) + 2);
+		int random = rand.nextInt(getNumberOfJokesInDatabase()) + 1;
+		
+		//sprawdzenie w ktorej kategorii jest kawal
+		int sum = 0;
+		int i = 2;
+		setCategory(i);
 		checkNumberOfJokesInCategory();
-		setId(rand.nextInt(getNumberOfJokesInCategory()) + 1);
-		refreshJoke();
-		return getContent();
+		while ((sum + getNumberOfJokesInCategory()) < random){
+			sum += getNumberOfJokesInCategory();
+			i++;
+			setCategory(i);
+			checkNumberOfJokesInCategory();
+		}
+		setCategory(i - 1);
+		
+		// ustawienie
+		setId(random - sum);
+		
+		setContent(getJokeFromDatabase(getId()));
 	}
 }
