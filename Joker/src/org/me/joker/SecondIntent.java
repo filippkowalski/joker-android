@@ -45,7 +45,15 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        catId = bundle.getInt("ID");
 	        catName = bundle.getString("CATEGORY");
 	        
-	        final Joke joke = new Joke(catId, getApplicationContext());
+	        final Joke joke;
+	        
+	        if (catId == 0){
+	        	joke = new Joke(getApplicationContext());
+	        }
+	        else{
+	        	joke = new Joke(catId, getApplicationContext());
+	        }
+	        
 	      
 	        
 	        /*
@@ -64,7 +72,11 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        //licznik
 	        try{
 	        	final TextView nr = (TextView)findViewById(R.id.nr);
-		        nr.setText(joke.getNumber());
+	        	if (!catName.contains("Losowe")){
+	        		nr.setText(joke.getNumber());
+	        	}
+	        	else
+	        		nr.setText("");
 	        }
 	        catch(Exception e){
 	        	Toast toast = Toast.makeText(getBaseContext(),"Brak ulubionych kawałów",Toast.LENGTH_SHORT);
@@ -90,35 +102,52 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			ImageButton poprzedni = (ImageButton)findViewById(R.id.previous);
 			poprzedni.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
-					try{				
-						kawal.setText(joke.getPrevious());
-						joke.onPreviousButtonClick();
-						//licznik
-				        final TextView nr = (TextView)findViewById(R.id.nr);
-				        nr.setText(joke.getNumber());
-				        
-				        kawal.scrollTo(0, 0);
-					}
-					catch(Exception e){
-						
+					if (!catName.contains("Losowe")){
+							try{				
+							kawal.setText(joke.getPrevious());
+							joke.onPreviousButtonClick();
+							//licznik
+					        final TextView nr = (TextView)findViewById(R.id.nr);
+					        nr.setText(joke.getNumber());
+					        
+					        kawal.scrollTo(0, 0);
+						}
+						catch(Exception e){
+							
+						}
 					}
 					
+					else{
+						joke.setRandomJoke();
+						kawal.setText(joke.getContent());
+						
+						kawal.scrollTo(0, 0);
+					}
+						
 				}
 			});
 			ImageButton nastepny = (ImageButton)findViewById(R.id.next);
 			nastepny.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
-					try{
-						kawal.setText(joke.getNext());
-						joke.onNextButtonClick();
-						//licznik
-				        final TextView nr = (TextView)findViewById(R.id.nr);
-				        nr.setText(joke.getNumber());
-				        
-				        kawal.scrollTo(0, 0);
+					if (!catName.contains("Losowe")){
+							try{
+							kawal.setText(joke.getNext());
+							joke.onNextButtonClick();
+							//licznik
+					        final TextView nr = (TextView)findViewById(R.id.nr);
+					        nr.setText(joke.getNumber());
+					        
+					        kawal.scrollTo(0, 0);
+						}
+						catch(Exception e){
+							
+						}
 					}
-					catch(Exception e){
+					else{
+						joke.setRandomJoke();
+						kawal.setText(joke.getContent());
 						
+						kawal.scrollTo(0, 0);
 					}
 					
 				}
@@ -198,33 +227,51 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			if (prediction.score > 1.0) {
 				
 				if(prediction.name.contains("previous")){
-					try{				
-						kawal.setText(joke.getNext());
-						joke.onNextButtonClick();
-						//licznik
-				        final TextView nr = (TextView)findViewById(R.id.nr);
-				        nr.setText(joke.getNumber());
-				        
-				        kawal.scrollTo(0, 0);
+					if (!catName.contains("Losowe")){
+						try{				
+							kawal.setText(joke.getNext());
+							joke.onNextButtonClick();
+							//licznik
+					        final TextView nr = (TextView)findViewById(R.id.nr);
+					        nr.setText(joke.getNumber());
+					        
+					        kawal.scrollTo(0, 0);
+						}
+						catch(Exception e){
+							
+						}
 					}
-					catch(Exception e){
+					else{
+						joke.setRandomJoke();
+						kawal.setText(joke.getContent());
 						
+						kawal.scrollTo(0, 0);
 					}
+					
 					
 				}  
 				if(prediction.name.contains("next")){
-					try{				
-						kawal.setText(joke.getPrevious());
-						joke.onPreviousButtonClick();
-						//licznik
-				        final TextView nr = (TextView)findViewById(R.id.nr);
-				        nr.setText(joke.getNumber());
-				        
-				        kawal.scrollTo(0, 0);
+					if(!catName.contains("Losowe")){
+						try{				
+							kawal.setText(joke.getPrevious());
+							joke.onPreviousButtonClick();
+							//licznik
+					        final TextView nr = (TextView)findViewById(R.id.nr);
+					        nr.setText(joke.getNumber());
+					        
+					        kawal.scrollTo(0, 0);
+						}
+						catch(Exception e){
+							
+						}
 					}
-					catch(Exception e){
+					else{
+						joke.setRandomJoke();
+						kawal.setText(joke.getContent());
 						
+						kawal.scrollTo(0, 0);
 					}
+					
 				}
 			}
 		}

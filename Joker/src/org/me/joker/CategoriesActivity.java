@@ -24,6 +24,8 @@ public class CategoriesActivity extends Activity {
         
         //Buttony prowadzace do kawalow
         
+        
+        /*
         //blondynki
         ImageButton blondes = (ImageButton)findViewById(R.id.oBlondynkach);
         blondes.setOnClickListener(new OnClickListener(){
@@ -32,6 +34,7 @@ public class CategoriesActivity extends Activity {
         	}
         });
         
+        */ 
         //chuck norris
         ImageButton chuckNorris = (ImageButton)findViewById(R.id.chuckNorris);
         chuckNorris.setOnClickListener(new OnClickListener(){
@@ -40,7 +43,15 @@ public class CategoriesActivity extends Activity {
         	}
         });
         
+        ImageButton losowe = (ImageButton)findViewById(R.id.oBlondynkach);
+        losowe.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		runSecondIntent(0, "Losowe");
+        	}
+        });
+       
 	}
+	
 	
 
     //Funkcja, która tworzy nowy intent wraz z przekazywaniem informacji o kategorii. 

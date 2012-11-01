@@ -2,6 +2,8 @@ package org.me.joker;
 
 import android.content.Context;
 
+import java.util.Random;
+
 public class Joke {
 	
 	// Atrybuty
@@ -28,6 +30,11 @@ public class Joke {
 		checkNumberOfJokesInCategory();
 		refreshJoke();
 		
+	}
+	
+	public Joke(Context context){
+		setRandomJoke();
+		this.context = context;
 	}
 	
 	// Gettery i Settery
@@ -170,5 +177,14 @@ public class Joke {
 	public void deleteFromFavourites(){
 		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
 		dba.deleteJokeFromFavourites(getId());
+	}
+	
+	public String setRandomJoke(){
+		Random rand = new Random();
+		setCategory(rand.nextInt(10) + 2);
+		checkNumberOfJokesInCategory();
+		setId(rand.nextInt(getNumberOfJokesInCategory()) + 1);
+		refreshJoke();
+		return getContent();
 	}
 }
