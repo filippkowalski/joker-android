@@ -21,7 +21,6 @@
         android:key="sound"
         android:summary="Włącz lub wyłącz dźwięk podczas klikania"
         android:title="Dźwięk"
-        />
-
+        />    
  
 </PreferenceScreen>
