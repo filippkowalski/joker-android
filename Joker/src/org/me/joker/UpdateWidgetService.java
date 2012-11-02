@@ -38,7 +38,8 @@ public class UpdateWidgetService extends Service {
 	      final Joke joke;
 	      joke = new Joke(10, getApplicationContext());
 	      
-	      // ustawienie kawalu
+	      // ustawienie kawalu	      
+	      joke.setRandomTurboSucharJoke();
 	      String kawal = joke.getContent();
 	      remoteViews.setTextViewText(R.id.update, "Suchar dnia:"+'\n'+kawal);
 

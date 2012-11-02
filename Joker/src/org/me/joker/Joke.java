@@ -214,4 +214,16 @@ public class Joke {
 				
 		setContent(getJokeFromDatabase(getId()));
 	}
+	
+	public void setRandomTurboSucharJoke(){
+		Random rand = new Random();
+		
+		setCategory(10);
+		checkNumberOfJokesInCategory();
+		
+		int randomJoke = rand.nextInt(getNumberOfJokesInCategory())+1;
+		setId(randomJoke);
+				
+		setContent(getJokeFromDatabase(getId()));
+	}
 }
