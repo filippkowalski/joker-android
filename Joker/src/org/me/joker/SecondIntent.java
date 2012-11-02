@@ -166,17 +166,17 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 							joke.onPreviousButtonClick();
 							kawal.scrollTo(0, 0);
 				        	 
-				        	Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty ;(",Toast.LENGTH_SHORT);
+				        	Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty z ulubionych ;(",Toast.LENGTH_SHORT);
 					        toast.show();
 				         }
 				         catch(Exception e){
-				        	 kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");
+				        	 kawal.setText("Brak kawału do wyświetlenia w wybranej kategorii");
 				        }
 					}
 					else{
 						joke.addToFavourites();
 			             
-			            Toast toast = Toast.makeText(getBaseContext(),"Kawał został dodany!",Toast.LENGTH_SHORT);
+			            Toast toast = Toast.makeText(getBaseContext(),"Kawał został dodany do ulubionych!",Toast.LENGTH_SHORT);
 			            toast.show();
 					}
 					

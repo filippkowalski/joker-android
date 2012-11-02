@@ -36,6 +36,19 @@
         <activity 
             android:name=".SecondIntent">            
         </activity>
+        
+        <receiver android:name="WidgetActivity" >
+            <intent-filter >
+                <action 
+                    android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget" />
+        </receiver>
+        <service android:name=".UpdateWidgetService"></service> 
+
     </application>
 
 </manifest>
