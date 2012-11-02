@@ -4,7 +4,7 @@
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="internet"
-        android:summary="Ta funkcja pozwoli aktualizować na bieżaco oceny kawałów"
+        android:summary="Ta funkcja pozwoli aktualizować na bieżąco oceny kawałów"
         android:title="Połączenie z internetem"
         />
 	
@@ -15,6 +15,13 @@
         android:key="pref_list"
         android:summary="Wybierz w jakiej kolejności mają wyświetlać się kawały"
         android:title="Sortowanie" />
+    
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="sound"
+        android:summary="Włącz lub wyłącz dźwięk podczas klikania"
+        android:title="Dźwięk"
+        />
 
  
 </PreferenceScreen>

@@ -196,7 +196,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        	kawal.setText(joke.getContent());
 	         }
 	         catch(Exception e){
-	        	kawal.setText("Brak kawalu do wyswietlenia w wybranej kategorii");
+	        	kawal.setText("Brak kawału do wyświetlenia w wybranej kategorii.");
 	         }
 	         
 	        	 

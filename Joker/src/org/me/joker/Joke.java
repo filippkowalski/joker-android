@@ -34,7 +34,7 @@ public class Joke {
 	}
 	
 	public Joke(Context context){
-		checkNumberOfJokesInDatabase();
+		checkNumberOfJokesInDatabase(); // to jest potrzebne w ogole ? 
 		setRandomJoke();
 		this.context = context;
 	}
