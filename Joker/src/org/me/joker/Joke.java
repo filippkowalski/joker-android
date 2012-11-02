@@ -1,8 +1,10 @@
 package org.me.joker;
 
-import android.content.Context;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
+import android.content.Context;
 
 public class Joke {
 	
@@ -204,24 +206,14 @@ public class Joke {
 	
 	public void setRandomJoke(){
 		Random rand = new Random();
-		int random = rand.nextInt(getNumberOfJokesInDatabase()) + 1;
+		int randomCategory = rand.nextInt(10)+1;
 		
-		//sprawdzenie w ktorej kategorii jest kawal
-		int sum = 0;
-		int i = 2;
-		setCategory(i);
+		setCategory(randomCategory);
 		checkNumberOfJokesInCategory();
-		while ((sum + getNumberOfJokesInCategory()) < random){
-			sum += getNumberOfJokesInCategory();
-			i++;
-			setCategory(i);
-			checkNumberOfJokesInCategory();
-		}
-		setCategory(i - 1);
 		
-		// ustawienie
-		setId(random - sum);
-		
+		int randomJoke = rand.nextInt(getNumberOfJokesInCategory())+1;
+		setId(randomJoke);
+				
 		setContent(getJokeFromDatabase(getId()));
 	}
 }
