@@ -77,7 +77,7 @@ public class JokerActivity extends Activity{
         		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
 	        	}
         });
-        
+        /*
         //button od "zaproponuj kawal"
         ImageButton zaproponuj = (ImageButton)findViewById(R.id.zaproponujkawal);
         zaproponuj.setOnClickListener(new OnClickListener(){
@@ -94,7 +94,9 @@ public class JokerActivity extends Activity{
         		}
         	}    
         });
+        */
         
+        /*
         //button przekierowujacy do 'o nas'
         ImageButton onas = (ImageButton)findViewById(R.id.onas);
         onas.setOnClickListener(new OnClickListener(){
@@ -102,6 +104,7 @@ public class JokerActivity extends Activity{
         		setContentView(R.layout.onas);
         	}    
         });
+        */
         	        
     
         

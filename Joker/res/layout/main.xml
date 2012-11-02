@@ -11,14 +11,14 @@
             android:id="@+id/tableRow1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
+
             <ImageView
-                android:contentDescription="@string/Naglowek"
                 android:id="@+id/imageView1"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginTop="30dp"
+                android:layout_margin="30dp"
                 android:layout_weight="1"
+                android:contentDescription="@string/Naglowek"
                 android:src="@drawable/ic_launcher" />
 
         </TableRow>
@@ -27,17 +27,29 @@
             android:id="@+id/tableRow2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
+
             <ImageButton
                 android:id="@+id/kawaly"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="30dp"
+                android:layout_marginBottom="30dp"
                 android:layout_weight="1"
-                android:src="@drawable/kawalybutton"
+                android:background="@null"
                 android:contentDescription="@string/kawaly"
                 android:scaleType="fitCenter"
-                android:background="@null" />
+                android:src="@drawable/kawalybutton" />
+
+            <ImageButton
+                android:id="@+id/ocen"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:contentDescription="@string/ocen"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ocenbutton" />
 
         </TableRow>
 
@@ -46,48 +58,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp" >
-            
+            
             <ImageButton
                 android:id="@+id/ustawienia"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="30dp"
                 android:layout_weight="1"
-                android:src="@drawable/ustawieniabutton"
+                android:background="@null"
                 android:contentDescription="@string/ustawienia"
                 android:scaleType="fitCenter"
-                android:background="@null" />
+                android:src="@drawable/ustawieniabutton" />
+
+            <ImageButton
+                android:id="@+id/polubnasnafb"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:contentDescription="@string/polubnasnafb"
+                android:scaleType="fitCenter"
+                android:src="@drawable/polubnasnafbbutton" />
 
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow4"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-			<ImageButton
-                android:id="@+id/ocen"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/ocenbutton"
-                android:contentDescription="@string/ocen"
-                android:scaleType="fitCenter"
-                android:background="@null" />		 </TableRow>
+            android:layout_height="wrap_content" >		 </TableRow>
 
         <TableRow
             android:id="@+id/tableRow7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
-            <ImageButton
-                android:id="@+id/zaproponujkawal"
-                android:src="@drawable/zaproponujbutton"
-                android:contentDescription="@string/zaproponujkawal"
-                android:scaleType="fitCenter"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"  />
 
         </TableRow>
 
@@ -96,34 +100,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
-            
-            <ImageButton
-                android:id="@+id/polubnasnafb"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/polubnasnafbbutton"
-                android:contentDescription="@string/polubnasnafb"
-                android:scaleType="fitCenter"
-                android:background="@null" />
-
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
-            <ImageButton
-                android:id="@+id/onas"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:src="@drawable/onasbutton"
-                android:contentDescription="@string/onas"
-                android:scaleType="fitCenter"
-                android:background="@null" />
 
         </TableRow>
 
