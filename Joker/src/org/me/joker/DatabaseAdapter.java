@@ -13,6 +13,8 @@ public class DatabaseAdapter{
         public String DB_TABLE;
         public static final String Key_ID = "_id";
         public static final String Key_Joke = "text";
+        public static final String Key_JokeId = "jokeId";
+        public static final String Key_Cat = "category";
         public String DB_ID = "1";
        
         public static Cursor cursor;
@@ -176,11 +178,20 @@ public class DatabaseAdapter{
          * Metoda dodaje przekazany kawal do bazy danych
          */
         
-        public void addJokeToFavourites(String joke){
+        public void addJokeToFavourites(String joke, int catId, int jokeId){
         	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
+        	
+        	ContentValues update = new ContentValues();
+        	update.put("fav", "1");
+        	
+        	String strFilter = "_id=" + jokeId;
+        	
+        	db.update(DB_TABLE, update, strFilter, null);
         	
         	ContentValues values = new ContentValues();
         	values.put(Key_Joke, joke);
+        	values.put("category", catId);
+        	values.put("jokeId", jokeId);
         	
         	db.insert("ulubione", null, values);
         	db.close();
@@ -191,13 +202,55 @@ public class DatabaseAdapter{
         /*
          * Metoda usuwa kawal z ulubionych
          */
-        public void deleteJokeFromFavourites(int jokeId){
+        public void deleteJokeFromFavourites(int jokeIdInFav){
         	
         	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
         	
-        	db.execSQL("DELETE FROM ulubione WHERE _id = " + jokeId);
+        	Cursor c = db.rawQuery("SELECT category, jokeId FROM ulubione WHERE _id = " + jokeIdInFav, null);
+        	c.moveToFirst();
+        	
+        	int catId = c.getInt(c.getColumnIndex("category"));
+        	int jokeId = c.getInt(c.getColumnIndex("jokeId"));
+        	
+        	c.close();
+        	
+        	String category = getCategory(catId);
+        	String strFilter = "_id=" + jokeId;
+        	
+        	ContentValues update = new ContentValues();
+        	update.put("fav", "0");
+        	
+        	db.update(category, update, strFilter, null);
+        	
+        	db.execSQL("DELETE FROM ulubione WHERE _id = " + jokeIdInFav);
         	
         	db.close();
+        }
+        
+        public boolean checkFavourite(int jokeId){
+        	DatabaseHelper dbh = new DatabaseHelper(context);
+            dbh.openDatabase();
+           
+            String ulub;
+            db = dbh.getDatabase();
+            Cursor c = db.rawQuery("SELECT fav FROM " + DB_TABLE + " WHERE _id like " + jokeId, null);
+            c.moveToFirst();
+            if (c.isNull(c.getColumnIndex("fav"))){
+            	ulub = "0";
+            }
+            else{
+            	ulub = c.getString(c.getColumnIndex("fav"));
+            }
+           
+            
+            boolean fav = false;
+            if (ulub.equals("1"))
+            	fav = true;
+            
+            c.close();
+            dbh.close();
+            db.close();
+            return fav;
         }
 
 }

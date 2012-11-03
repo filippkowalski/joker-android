@@ -34,6 +34,7 @@
 	<string name="ocen">Oceń</string>	
 	<string name="polubnasnafb">Polub nas na FB</string>	
 	<string name="onas">O nas</string>	
-	<string name="socialshare">Share</string>
+	<string name="socialShare">Share</string>
 	<string name="zaproponujkawal">Zaproponuj kawał</string>
+	<string name="ocena">Ocena: +12</string>
 </resources>

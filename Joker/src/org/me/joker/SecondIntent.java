@@ -85,8 +85,6 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 		        SecondIntent.this.finish();
 	        }
 	        
-	      
-	        
 	        ImageButton socialshare = (ImageButton)findViewById(R.id.socialshare);
 	        socialshare.setOnClickListener(new OnClickListener(){
 	        	public void onClick(View view){
@@ -100,11 +98,53 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        	}
 	        });
 	        
+			
+			
+			final ImageButton ulub =(ImageButton)findViewById(R.id.fav);
+			ulub.setOnClickListener(new OnClickListener(){
+				public void onClick(View view){
+					
+					// Jesli jestesmy w kategorii ulubione to przycisk ten usunie kawal z tejze kategorii
+					 
+					if(catName.contains("ULUBIONE")){
+						joke.deleteFromFavourites();
+						try{
+							kawal.setText(joke.getPrevious());
+							joke.onPreviousButtonClick();
+							kawal.scrollTo(0, 0);
+				        	 
+				        	Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty z ulubionych ;(",Toast.LENGTH_SHORT);
+					        toast.show();
+					        
+					        ulub.setImageResource(R.drawable.removestar);
+				         }
+				         catch(Exception e){
+				        	 kawal.setText("Brak kawału do wyświetlenia w wybranej kategorii");
+				        }
+					}
+					else if(joke.getFavourite()){
+						joke.deleteFromFavourites();
+						
+						Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty z ulubionych ;(",Toast.LENGTH_SHORT);
+				        toast.show();
+				        
+				        ulub.setImageResource(R.drawable.favstarupdate);
+					}
+					else{
+						joke.addToFavourites();
+			             
+			            Toast toast = Toast.makeText(getBaseContext(),"Kawał został dodany do ulubionych!",Toast.LENGTH_SHORT);
+			            toast.show();
+					}
+					
+				}
+			});
+			
 			ImageButton poprzedni = (ImageButton)findViewById(R.id.previous);
 			poprzedni.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
 					if (!catName.contains("Losowe")){
-							try{				
+						try{				
 							kawal.setText(joke.getPrevious());
 							joke.onPreviousButtonClick();
 							//licznik
@@ -112,6 +152,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					        nr.setText(joke.getNumber());
 					        
 					        kawal.scrollTo(0, 0);
+					        
+					        checkGraph(ulub, joke);
 						}
 						catch(Exception e){
 							
@@ -123,6 +165,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 						kawal.setText(joke.getContent());
 						
 						kawal.scrollTo(0, 0);
+						
+						checkGraph(ulub, joke);
 					}
 						
 				}
@@ -139,6 +183,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					        nr.setText(joke.getNumber());
 					        
 					        kawal.scrollTo(0, 0);
+					        
+					        checkGraph(ulub, joke);
 						}
 						catch(Exception e){
 							
@@ -149,45 +195,16 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 						kawal.setText(joke.getContent());
 						
 						kawal.scrollTo(0, 0);
+						
+						checkGraph(ulub, joke);
 					}
 					
 				}
 			});
 			
-			ImageButton ulub =(ImageButton)findViewById(R.id.fav);
-			ulub.setOnClickListener(new OnClickListener(){
-				public void onClick(View view){
-					
-					// Jesli jestesmy w kategorii ulubione to przycisk ten usunie kawal z tejze kategorii
-					 
-					if(catName.contains("ULUBIONE")){
-						joke.deleteFromFavourites();
-						try{
-							kawal.setText(joke.getPrevious());
-							joke.onPreviousButtonClick();
-							kawal.scrollTo(0, 0);
-				        	 
-				        	Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty z ulubionych ;(",Toast.LENGTH_SHORT);
-					        toast.show();
-				         }
-				         catch(Exception e){
-				        	 kawal.setText("Brak kawału do wyświetlenia w wybranej kategorii");
-				        }
-					}
-					else{
-						joke.addToFavourites();
-			             
-			            Toast toast = Toast.makeText(getBaseContext(),"Kawał został dodany do ulubionych!",Toast.LENGTH_SHORT);
-			            toast.show();
-					}
-					
-				}
-			});
+			//zamiana grafiki ulubionych
 			
-			//zmiana buttonu ulubione
-			if(catName.contains("ULUBIONE")){
-	        	ulub.setImageResource(R.drawable.removebutton);
-	        }
+			checkGraph(ulub, joke);
 			
 			//zmiana buttonu na lewo od nazwy kategorii
 			ImageView img = new ImageView(this);
@@ -267,15 +284,27 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 		        gestures.setGestureVisible(false);
 		        gestures.addOnGesturePerformedListener(this);
 		        
+		        
+		        
+		        
 	 }
-
-
+	
+	public void checkGraph(ImageButton ulub, Joke joke){
+    	if(catName.contains("ULUBIONE") || joke.getFavourite()){
+        	ulub.setImageResource(R.drawable.removebutton);
+        }
+    	else{
+    		ulub.setImageResource(R.drawable.favstarupdate);
+    	}
+    }
+	
 	//metoda obslugujaca gesty
 	public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
 		ArrayList<Prediction> predictions = mLibrary.recognize(gesture);
 
 		final Joke joke = new Joke(catId, getApplicationContext());
         final TextView kawal = (TextView)findViewById(R.id.joke);
+        final ImageButton ulub = (ImageButton)findViewById(R.id.fav);
 		
 		if (predictions.size() > 0) {
 			Prediction prediction = predictions.get(0);
@@ -291,6 +320,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					        nr.setText(joke.getNumber());
 					        
 					        kawal.scrollTo(0, 0);
+					        
+					        checkGraph(ulub, joke);
 						}
 						catch(Exception e){
 							
@@ -301,6 +332,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 						kawal.setText(joke.getContent());
 						
 						kawal.scrollTo(0, 0);
+						
+						checkGraph(ulub, joke);
 					}
 					
 					
@@ -315,6 +348,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					        nr.setText(joke.getNumber());
 					        
 					        kawal.scrollTo(0, 0);
+					        
+					        checkGraph(ulub, joke);
 						}
 						catch(Exception e){
 							
@@ -325,6 +360,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 						kawal.setText(joke.getContent());
 						
 						kawal.scrollTo(0, 0);
+						
+						checkGraph(ulub, joke);
 					}
 					
 				}

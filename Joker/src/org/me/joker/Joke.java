@@ -15,7 +15,6 @@ public class Joke {
 	private int id;
 	private String number;
 	private int numberOfJokesInCategory;
-	private int numberOfJokesInDatabase;
 	private boolean rated;
 	private boolean favourite;
 	
@@ -34,7 +33,6 @@ public class Joke {
 	}
 	
 	public Joke(Context context){
-		checkNumberOfJokesInDatabase(); // to jest potrzebne w ogole ? 
 		setRandomJoke();
 		this.context = context;
 	}
@@ -89,14 +87,6 @@ public class Joke {
 		return number;
 	}
 	
-	public void setNumberOfJokesInDatabase(int a){
-		numberOfJokesInDatabase = a;
-	}
-	
-	public int getNumberOfJokesInDatabase(){
-		return numberOfJokesInDatabase;
-	}
-	
 	public int getNumberOfJokesInCategory(){
 		return numberOfJokesInCategory;
 	}
@@ -143,20 +133,7 @@ public class Joke {
 	public void checkNumberOfJokesInCategory(){
 		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
 		numberOfJokesInCategory = dba.getLastInsertedID();
-	}
-	
-	public void checkNumberOfJokesInDatabase(){
-		int sum = 0;
-		
-		for (int i = 2; i <= 11; i++){
-			setCategory(i);
-			checkNumberOfJokesInCategory();
-			sum += getNumberOfJokesInCategory();
-		}
-		
-		setNumberOfJokesInDatabase(sum);
-	}
-	
+	}	
 	
 	public void refreshJoke(){
 		setId(getLastReadJokeId());
@@ -164,6 +141,7 @@ public class Joke {
 		setNext(getJokeFromDatabase(getNextJokeId()));
 		setPrevious(getJokeFromDatabase(getPreviousJokeId()));
 		setNumber(getJokeNumber());
+		checkIfFavourite();
 	}
 	
 	public int getNextJokeId(){
@@ -194,12 +172,14 @@ public class Joke {
 	
 	public void addToFavourites(){
 		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
-		dba.addJokeToFavourites(getContent());
+		dba.addJokeToFavourites(getContent(), getCategory(), getId());
+		setFavourite(true);
 	}
 	
 	public void deleteFromFavourites(){
 		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
 		dba.deleteJokeFromFavourites(getId());
+		setFavourite(false);
 	}
 	
 	public void setRandomJoke(){
@@ -225,5 +205,10 @@ public class Joke {
 		setId(randomJoke);
 				
 		setContent(getJokeFromDatabase(getId()));
+	}
+	
+	public void checkIfFavourite(){
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		setFavourite(dba.checkFavourite(getId()));
 	}
 }
