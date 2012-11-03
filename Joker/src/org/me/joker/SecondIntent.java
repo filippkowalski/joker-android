@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -183,11 +184,65 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				}
 			});
 			
-			
+			//zmiana buttonu ulubione
 			if(catName.contains("ULUBIONE")){
 	        	ulub.setImageResource(R.drawable.removebutton);
 	        }
 			
+			//zmiana buttonu na lewo od nazwy kategorii
+			ImageView img = new ImageView(this);
+			if(catName.contains("Chuck Norris")){
+				img.setImageResource(R.drawable.chuck);
+			}
+			/*
+			if(catName.contains("O blondynkach")){
+				img.setImageResource(R.drawable.);
+			}
+			
+			if(catName.contains("O facetach")){
+				img.setImageResource(R.drawable.);
+			}
+			
+			if(catName.contains("O zwierzętach")){
+				img.setImageResource(R.drawable.);
+			}
+			
+			if(catName.contains("Zboczone")){
+				img.setImageResource(R.drawable.);
+			}
+			
+			if(catName.contains("Turbo Suchary")){
+				img.setImageResource(R.drawable.);
+			}
+			
+			if(catName.contains("Chamskie")){
+				img.setImageResource(R.drawable.);
+			}
+			
+			if(catName.contains("O kobietach")){
+				img.setImageResource(R.drawable.);
+			}
+			
+			if(catName.contains("O Jasiu")){
+				img.setImageResource(R.drawable.);
+			}
+	        
+			if(catName.contains("O studentach")){
+				img.setImageResource(R.drawable.);
+			}
+			
+			if(catName.contains("Losowe")){
+				img.setImageResource(R.drawable.);
+			}
+			
+			if(catName.contains("Ulubione")){
+				img.setImageResource(R.drawable.);
+			}
+			*/
+	        
+	        
+			
+		
 	        
 	        /*Otworzenie bazy danych
 	         * Pobranie kawalu do TextView
