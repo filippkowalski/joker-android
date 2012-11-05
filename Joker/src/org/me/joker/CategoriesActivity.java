@@ -43,6 +43,47 @@ public class CategoriesActivity extends Activity {
         	}
         });
         
+        //chamskie
+        ImageButton chamskie = (ImageButton)findViewById(R.id.chamskie);
+        chamskie.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		runSecondIntent(11, "Chamskie");
+        	}
+        });
+        
+        //o facetach
+        ImageButton oFacetach = (ImageButton)findViewById(R.id.ofacetach);
+        oFacetach.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		runSecondIntent(4, "o facetach");
+        	}
+        });
+        
+        //o zwierzetach
+        ImageButton oZwierzetach = (ImageButton)findViewById(R.id.ozwierzetach);
+        oZwierzetach.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		runSecondIntent(7, "O zwierzetach");
+        	}
+        });
+        
+        //o studentach
+        ImageButton oStudentach = (ImageButton)findViewById(R.id.ostudentach);
+        oStudentach.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		runSecondIntent(6, "O studentach");
+        	}
+        });
+        
+        //turbo suchary
+        ImageButton turboSuchary = (ImageButton)findViewById(R.id.turbosuchary);
+        turboSuchary.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		runSecondIntent(10, "Turbo Suchary");
+        	}
+        });
+               
+        //losowe
         ImageButton losowe = (ImageButton)findViewById(R.id.oBlondynkach);
         losowe.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
