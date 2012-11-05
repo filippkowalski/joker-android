@@ -34,7 +34,7 @@ public class CategoriesActivity extends Activity {
         	}
         });
         
-        */ 
+        
         //chuck norris
         ImageButton chuckNorris = (ImageButton)findViewById(R.id.chuckNorris);
         chuckNorris.setOnClickListener(new OnClickListener(){
@@ -82,6 +82,8 @@ public class CategoriesActivity extends Activity {
         		runSecondIntent(10, "Turbo Suchary");
         	}
         });
+        
+        */
                
         //losowe
         ImageButton losowe = (ImageButton)findViewById(R.id.oBlondynkach);
