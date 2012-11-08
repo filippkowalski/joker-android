@@ -176,9 +176,15 @@ public class Joke {
 		setFavourite(true);
 	}
 	
-	public void deleteFromFavourites(){
+	public void deleteFromFavouritesInFavourites(){
 		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
-		dba.deleteJokeFromFavourites(getId());
+		dba.deleteJokeFromFavouritesInFavourites(getId());
+		setFavourite(false);
+	}
+	
+	public void deleteFromFavouritesInOtherCategory(){
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		dba.deleteJokeFromFavouritesInOtherCategory(getCategory(), getId());
 		setFavourite(false);
 	}
 	

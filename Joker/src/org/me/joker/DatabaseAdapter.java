@@ -202,7 +202,7 @@ public class DatabaseAdapter{
         /*
          * Metoda usuwa kawal z ulubionych
          */
-        public void deleteJokeFromFavourites(int jokeIdInFav){
+        public void deleteJokeFromFavouritesInFavourites(int jokeIdInFav){
         	
         	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
         	
@@ -212,19 +212,49 @@ public class DatabaseAdapter{
         	int catId = c.getInt(c.getColumnIndex("category"));
         	int jokeId = c.getInt(c.getColumnIndex("jokeId"));
         	
-        	c.close();
-        	
         	String category = getCategory(catId);
         	String strFilter = "_id=" + jokeId;
+        	
+        	c.close();
+        	db.close();
+        	
+        	SQLiteDatabase db1;
+        	db1 = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
         	
         	ContentValues update = new ContentValues();
         	update.put("fav", "0");
         	
-        	db.update(category, update, strFilter, null);
+        	db1.update(category, update, strFilter, null);
         	
-        	db.execSQL("DELETE FROM ulubione WHERE _id = " + jokeIdInFav);
+        	db1.execSQL("DELETE FROM ulubione WHERE _id = " + jokeIdInFav);
+        	
+        	db1.close();
+        }
+        
+        public void deleteJokeFromFavouritesInOtherCategory(int catId, int jokeId){
+        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
+        	
+        	Cursor c = db.rawQuery("SELECT _id FROM ulubione WHERE category = " + catId + " AND jokeId = " + jokeId, null);
+        	c.moveToFirst();
+        	
+        	int id = c.getInt(c.getColumnIndex("_id"));
+        	
+        	db.execSQL("DELETE FROM ulubione WHERE _id = " + id);
+        	
+        	String strFilter = "_id=" + jokeId;
+        	String category = getCategory(catId);
         	
         	db.close();
+        	
+        	SQLiteDatabase db1;
+        	db1 = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
+        	
+        	ContentValues update = new ContentValues();
+        	update.put("fav", "0");
+        	
+        	db1.update(category, update, strFilter, null);
+        	
+        	db1.close();
         }
         
         public boolean checkFavourite(int jokeId){

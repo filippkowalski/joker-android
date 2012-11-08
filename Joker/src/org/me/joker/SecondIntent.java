@@ -107,7 +107,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					// Jesli jestesmy w kategorii ulubione to przycisk ten usunie kawal z tejze kategorii
 					 
 					if(catName.contains("ULUBIONE")){
-						joke.deleteFromFavourites();
+						joke.deleteFromFavouritesInFavourites();
 						try{
 							kawal.setText(joke.getPrevious());
 							joke.onPreviousButtonClick();
@@ -115,15 +115,15 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				        	 
 				        	Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty z ulubionych ;(",Toast.LENGTH_SHORT);
 					        toast.show();
-					        
-					        ulub.setImageResource(R.drawable.removestar);
+					    
+					        ulub.setImageResource(R.drawable.removebutton);
 				         }
 				         catch(Exception e){
 				        	 kawal.setText("Brak kawału do wyświetlenia w wybranej kategorii");
 				        }
 					}
 					else if(joke.getFavourite()){
-						joke.deleteFromFavourites();
+						joke.deleteFromFavouritesInOtherCategory();
 						
 						Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty z ulubionych ;(",Toast.LENGTH_SHORT);
 				        toast.show();
@@ -135,6 +135,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			             
 			            Toast toast = Toast.makeText(getBaseContext(),"Kawał został dodany do ulubionych!",Toast.LENGTH_SHORT);
 			            toast.show();
+			            
+			            ulub.setImageResource(R.drawable.removebutton);
 					}
 					
 				}
