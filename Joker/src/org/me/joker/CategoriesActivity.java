@@ -25,7 +25,7 @@ public class CategoriesActivity extends Activity {
         //Buttony prowadzace do kawalow
         
         
-        /*
+      
         //blondynki
         ImageButton blondes = (ImageButton)findViewById(R.id.oBlondynkach);
         blondes.setOnClickListener(new OnClickListener(){
@@ -74,7 +74,7 @@ public class CategoriesActivity extends Activity {
         		runSecondIntent(6, "O studentach");
         	}
         });
-        
+        /*
         //turbo suchary
         ImageButton turboSuchary = (ImageButton)findViewById(R.id.turbosuchary);
         turboSuchary.setOnClickListener(new OnClickListener(){
