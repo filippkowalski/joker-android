@@ -209,35 +209,51 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			checkGraph(ulub, joke);
 			
 			//zmiana buttonu na lewo od nazwy kategorii
-			ImageView img = new ImageView(this);
+			ImageView img = (ImageView) findViewById(R.id.changingImage);			
+			
 			if(catName.contains("Chuck Norris")){
 				img.setImageResource(R.drawable.chuck);
 			}
+			
+			if(catName.contains("O studentach")){
+				img.setImageResource(R.drawable.ostudentach);
+			}
+			
+			if(catName.contains("O facetach")){
+				img.setImageResource(R.drawable.ofacetach);
+			}
+			
+			if(catName.contains("O zwierzętach")){
+				img.setImageResource(R.drawable.ozwierzetach);
+			}
+			
+			if(catName.contains("Turbo Suchary")){
+				img.setImageResource(R.drawable.turbosuchary);
+			}
+			
+			if(catName.contains("Chamskie")){
+				img.setImageResource(R.drawable.chamskie);
+			}
+			
+			if(catName.contains("Losowe")){
+				img.setImageResource(R.drawable.random);
+			}
+			
+			if(catName.contains("Ulubione")){
+				img.setImageResource(R.drawable.heart);
+			}
+			
 			/*
 			if(catName.contains("O blondynkach")){
 				img.setImageResource(R.drawable.);
 			}
-			
-			if(catName.contains("O facetach")){
-				img.setImageResource(R.drawable.);
-			}
-			
-			if(catName.contains("O zwierzętach")){
-				img.setImageResource(R.drawable.);
-			}
+						
 			
 			if(catName.contains("Zboczone")){
 				img.setImageResource(R.drawable.);
-			}
-			
-			if(catName.contains("Turbo Suchary")){
-				img.setImageResource(R.drawable.);
-			}
-			
-			if(catName.contains("Chamskie")){
-				img.setImageResource(R.drawable.);
-			}
-			
+			}		
+						
+						
 			if(catName.contains("O kobietach")){
 				img.setImageResource(R.drawable.);
 			}
@@ -246,19 +262,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				img.setImageResource(R.drawable.);
 			}
 	        
-			if(catName.contains("O studentach")){
-				img.setImageResource(R.drawable.);
-			}
-			
-			if(catName.contains("Losowe")){
-				img.setImageResource(R.drawable.);
-			}
-			
-			if(catName.contains("Ulubione")){
-				img.setImageResource(R.drawable.);
-			}
-			*/
-	        
+	        */
 	        
 			
 		

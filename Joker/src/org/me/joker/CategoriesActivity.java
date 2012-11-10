@@ -25,7 +25,7 @@ public class CategoriesActivity extends Activity {
         //Buttony prowadzace do kawalow
         
         
-      
+    /*  
         //blondynki
         ImageButton blondes = (ImageButton)findViewById(R.id.oBlondynkach);
         blondes.setOnClickListener(new OnClickListener(){
@@ -33,13 +33,21 @@ public class CategoriesActivity extends Activity {
         		runSecondIntent(3, "O Blondynkach");
         	}
         });
-        
+      */  
         
         //chuck norris
         ImageButton chuckNorris = (ImageButton)findViewById(R.id.chuckNorris);
         chuckNorris.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
         		runSecondIntent(8, "Chuck Norris");
+        	}
+        });
+        
+        //ulubione
+        ImageButton ulubione = (ImageButton)findViewById(R.id.ulubione);
+        ulubione.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		runSecondIntent(1, "Ulubione");
         	}
         });
         
@@ -55,7 +63,7 @@ public class CategoriesActivity extends Activity {
         ImageButton oFacetach = (ImageButton)findViewById(R.id.ofacetach);
         oFacetach.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
-        		runSecondIntent(4, "o facetach");
+        		runSecondIntent(4, "O facetach");
         	}
         });
         
@@ -63,7 +71,7 @@ public class CategoriesActivity extends Activity {
         ImageButton oZwierzetach = (ImageButton)findViewById(R.id.ozwierzetach);
         oZwierzetach.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
-        		runSecondIntent(7, "O zwierzetach");
+        		runSecondIntent(7, "O zwierzêtach");
         	}
         });
         
@@ -74,25 +82,24 @@ public class CategoriesActivity extends Activity {
         		runSecondIntent(6, "O studentach");
         	}
         });
-        /*
+
         //turbo suchary
-        ImageButton turboSuchary = (ImageButton)findViewById(R.id.turbosuchary);
+        ImageButton turboSuchary = (ImageButton)findViewById(R.id.turboSuchary);
         turboSuchary.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
         		runSecondIntent(10, "Turbo Suchary");
         	}
-        });
-        
-        */
+        });       
+
                
         //losowe
-        ImageButton losowe = (ImageButton)findViewById(R.id.oBlondynkach);
+        ImageButton losowe = (ImageButton)findViewById(R.id.losowe);
         losowe.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
         		runSecondIntent(0, "Losowe");
         	}
         });
-       
+    
 	}
 	
 	
