@@ -30,7 +30,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	private String catName = "Kategoria";
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) throws CursorIndexOutOfBoundsException{
+	public void onCreate(Bundle savedInstanceState){
 	        super.onCreate(savedInstanceState);
 	        
 	        requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -38,7 +38,6 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	        
 	        setContentView(R.layout.second); 
-	     
 	       
 	        /*
 	         * Przejecie danych z pierwszego okna
@@ -48,254 +47,262 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        catName = bundle.getString("CATEGORY");
 	        
 	        final Joke joke;
-	        
-	        if (catId == 0){
-	        	joke = new Joke(getApplicationContext());
-	        }
-	        else{
-	        	joke = new Joke(catId, getApplicationContext());
-	        }
-	        
-	      
-	        
-	        /*
-	         * Stworzenie view oraz wpisanie kategorii w naglowek
-	         */
-	        final TextView kat = (TextView)findViewById(R.id.category);
-	        kat.setText(catName);
-	        
-	        final TextView kawal = (TextView)findViewById(R.id.joke);
-	        /*
-	         * Sprawienie, ze pole tekstowe mozna przewijac
-	         */
-	        kawal.setMovementMethod(new ScrollingMovementMethod());
-	        
-     
-	        //licznik
-	        try{
-	        	final TextView nr = (TextView)findViewById(R.id.nr);
-	        	if (!catName.contains("Losowe")){
-	        		nr.setText(joke.getNumber());
-	        	}
-	        	else
-	        		nr.setText("");
-	        }
-	        catch(Exception e){
-	        	Toast toast = Toast.makeText(getBaseContext(),"Brak ulubionych kawałów",Toast.LENGTH_SHORT);
-		        toast.show();
-		        SecondIntent.this.finish();
-	        }
-	        
-	        ImageButton socialshare = (ImageButton)findViewById(R.id.socialshare);
-	        socialshare.setOnClickListener(new OnClickListener(){
-	        	public void onClick(View view){
-	        		
-	        		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-	        		sharingIntent.setType("text/plain");
-	        		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, joke.getContent() +'\n'+"Kawał znaleziony w aplikacji Joker - http://bitly.com/TxgVn6");
-	        		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Dobry kawał ;)");
-	        		startActivity(Intent.createChooser(sharingIntent, "Share using:"));
-	        		// czemu to nie dziala ? ? -> database.close();
-	        	}
-	        });
-	        
-			
-			
-			final ImageButton ulub =(ImageButton)findViewById(R.id.fav);
-			ulub.setOnClickListener(new OnClickListener(){
-				public void onClick(View view){
-					
-					// Jesli jestesmy w kategorii ulubione to przycisk ten usunie kawal z tejze kategorii
-					try{
-						if(catName.contains("Ulubione")){
-							joke.deleteFromFavouritesInFavourites();
-							try{
-								kawal.setText(joke.getPrevious());
-								joke.onPreviousButtonClick();
-								kawal.scrollTo(0, 0);
-					        	 
-					        	Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty z ulubionych ;(",Toast.LENGTH_SHORT);
-						        toast.show();
-						    
-						        ulub.setImageResource(R.drawable.removebutton);
-					         }
-					         catch(Exception e){
-					        	 kawal.setText("Brak kawału do wyświetlenia w wybranej kategorii");
-					        }
-						}
-						else if(joke.getFavourite()){
-							joke.deleteFromFavouritesInOtherCategory();
-							
-							Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty z ulubionych ;(",Toast.LENGTH_SHORT);
-					        toast.show();
-					        
-					        ulub.setImageResource(R.drawable.favstarupdate);
-						}
-						else{
-							joke.addToFavourites();
-				             
-				            Toast toast = Toast.makeText(getBaseContext(),"Kawał został dodany do ulubionych!",Toast.LENGTH_SHORT);
-				            toast.show();
-				            
-				            ulub.setImageResource(R.drawable.removebutton);
-						}
-					}
-					catch (Exception e){
-						
-					}
-					
-					
-				}
-			});
-			
-			ImageButton poprzedni = (ImageButton)findViewById(R.id.previous);
-			poprzedni.setOnClickListener(new OnClickListener(){
-				public void onClick(View view){
-					if (!catName.contains("Losowe")){
-						try{				
-							kawal.setText(joke.getPrevious());
-							joke.onPreviousButtonClick();
-							//licznik
-					        final TextView nr = (TextView)findViewById(R.id.nr);
-					        nr.setText(joke.getNumber());
-					        
-					        kawal.scrollTo(0, 0);
-					        
-					        checkGraph(ulub, joke);
-						}
-						catch(Exception e){
-							
-						}
-					}
-					
-					else{
-						joke.setRandomJoke();
-						kawal.setText(joke.getContent());
-						
-						kawal.scrollTo(0, 0);
-						
-						checkGraph(ulub, joke);
-					}
-						
-				}
-			});
-			ImageButton nastepny = (ImageButton)findViewById(R.id.next);
-			nastepny.setOnClickListener(new OnClickListener(){
-				public void onClick(View view){
-					if (!catName.contains("Losowe")){
-							try{
-							kawal.setText(joke.getNext());
-							joke.onNextButtonClick();
-							//licznik
-					        final TextView nr = (TextView)findViewById(R.id.nr);
-					        nr.setText(joke.getNumber());
-					        
-					        kawal.scrollTo(0, 0);
-					        
-					        checkGraph(ulub, joke);
-						}
-						catch(Exception e){
-							
-						}
-					}
-					else{
-						joke.setRandomJoke();
-						kawal.setText(joke.getContent());
-						
-						kawal.scrollTo(0, 0);
-						
-						checkGraph(ulub, joke);
-					}
-					
-				}
-			});
-			
-			//zamiana grafiki ulubionych
-			
-			checkGraph(ulub, joke);
-			
-			//zmiana buttonu na lewo od nazwy kategorii
-			ImageView img = (ImageView) findViewById(R.id.changingImage);			
-			
-			if(catName.contains("Chuck Norris")){
-				img.setImageResource(R.drawable.chuck);
-			}
-			
-			if(catName.contains("O studentach")){
-				img.setImageResource(R.drawable.ostudentach);
-			}
-			
-			if(catName.contains("O facetach")){
-				img.setImageResource(R.drawable.ofacetach);
-			}
-			
-			if(catName.contains("O zwierzętach")){
-				img.setImageResource(R.drawable.ozwierzetach);
-			}
-			
-			if(catName.contains("Turbo Suchary")){
-				img.setImageResource(R.drawable.turbosuchary);
-			}
-			
-			if(catName.contains("Chamskie")){
-				img.setImageResource(R.drawable.chamskie);
-			}
-			
-			if(catName.contains("Losowe")){
-				img.setImageResource(R.drawable.random);
-			}
-			
-			if(catName.contains("Ulubione")){
-				img.setImageResource(R.drawable.heart);
-			}
-			
-			/*
-			if(catName.contains("O blondynkach")){
-				img.setImageResource(R.drawable.);
-			}
-						
-			
-			if(catName.contains("Zboczone")){
-				img.setImageResource(R.drawable.);
-			}		
-						
-						
-			if(catName.contains("O kobietach")){
-				img.setImageResource(R.drawable.);
-			}
-			
-			if(catName.contains("O Jasiu")){
-				img.setImageResource(R.drawable.);
-			}
-	        
-	        */
-	        
-			
-		
-	        
-	        /*Otworzenie bazy danych
-	         * Pobranie kawalu do TextView
-	         */
-	         try{
-	        	kawal.setText(joke.getContent());
-	         }
-	         catch(Exception e){
-	        	kawal.setText("Brak kawału do wyświetlenia w wybranej kategorii.");
-	         }
-	         
-	        	 
-			 
-		     
-		   //wczytanie biblioteki gestów
-		        mLibrary = GestureLibraries.fromRawResource(this, R.raw.gestures);
-		        if (!mLibrary.load()) {
-		        	finish();
+
+		        try {	               
+		        
+		        if (catId == 0){
+		        	joke = new Joke(getApplicationContext());
+		        }	     
+		        else{	        	
+		        	joke = new Joke(catId, getApplicationContext());
 		        }
 		        
-		        GestureOverlayView gestures = (GestureOverlayView) findViewById(R.id.gestures);
-		        gestures.setGestureVisible(false);
-		        gestures.addOnGesturePerformedListener(this);
+		        /*
+		         * Stworzenie view oraz wpisanie kategorii w naglowek
+		         */
+		        final TextView kat = (TextView)findViewById(R.id.category);
+		        kat.setText(catName);
 		        
+		        final TextView kawal = (TextView)findViewById(R.id.joke);
+		        /*
+		         * Sprawienie, ze pole tekstowe mozna przewijac
+		         */
+		        kawal.setMovementMethod(new ScrollingMovementMethod());
+		        
+	
+		        
+		        //licznik
+		        try{
+		        	final TextView nr = (TextView)findViewById(R.id.nr);
+		        	if (!catName.contains("Losowe")){
+		        		nr.setText(joke.getNumber());
+		        	}
+		        	else
+		        		nr.setText("");
+		        }
+		        catch(Exception e){
+		        	Toast toast = Toast.makeText(getBaseContext(),"Brak ulubionych kawałów",Toast.LENGTH_SHORT);
+			        toast.show();
+			        SecondIntent.this.finish();
+		        }
+		        
+		        ImageButton socialshare = (ImageButton)findViewById(R.id.socialshare);
+		        socialshare.setOnClickListener(new OnClickListener(){
+		        	public void onClick(View view){
+		        		
+		        		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+		        		sharingIntent.setType("text/plain");
+		        		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, joke.getContent() +'\n'+"Kawał znaleziony w aplikacji Joker - http://bitly.com/TxgVn6");
+		        		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Dobry kawał ;)");
+		        		startActivity(Intent.createChooser(sharingIntent, "Share using:"));
+		        	}
+		        });
+		        
+				
+				
+				final ImageButton ulub =(ImageButton)findViewById(R.id.fav);
+				ulub.setOnClickListener(new OnClickListener(){
+					public void onClick(View view){
+						
+						// Jesli jestesmy w kategorii ulubione to przycisk ten usunie kawal z tejze kategorii
+						try{
+							if(catName.contains("Ulubione")){
+								joke.deleteFromFavouritesInFavourites();
+								try{
+									kawal.setText(joke.getPrevious());
+									joke.onPreviousButtonClick();
+									kawal.scrollTo(0, 0);
+						        	 
+						        	Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty z ulubionych ;(",Toast.LENGTH_SHORT);
+							        toast.show();
+							    
+							        ulub.setImageResource(R.drawable.removebutton);
+						         }
+						         catch(Exception e){
+						        	 kawal.setText("Brak kawału do wyświetlenia w wybranej kategorii");
+						        }
+							}
+							else if(joke.getFavourite()){
+								joke.deleteFromFavouritesInOtherCategory();
+								
+								Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty z ulubionych ;(",Toast.LENGTH_SHORT);
+						        toast.show();
+						        
+						        ulub.setImageResource(R.drawable.favstarupdate);
+							}
+							else{
+								joke.addToFavourites();
+					             
+					            Toast toast = Toast.makeText(getBaseContext(),"Kawał został dodany do ulubionych!",Toast.LENGTH_SHORT);
+					            toast.show();
+					            
+					            ulub.setImageResource(R.drawable.removebutton);
+							}
+						}
+						catch (Exception e){
+							
+						}
+						
+						
+					}
+				});
+				
+				ImageButton poprzedni = (ImageButton)findViewById(R.id.previous);
+				poprzedni.setOnClickListener(new OnClickListener(){
+					public void onClick(View view){
+						if (!catName.contains("Losowe")){
+							try{				
+								kawal.setText(joke.getPrevious());
+								joke.onPreviousButtonClick();
+								//licznik
+						        final TextView nr = (TextView)findViewById(R.id.nr);
+						        nr.setText(joke.getNumber());
+						        
+						        kawal.scrollTo(0, 0);
+						        
+						        checkGraph(ulub, joke);
+							}
+							catch(Exception e){
+								
+							}
+						}
+						
+						else{
+							joke.setRandomJoke();
+							kawal.setText(joke.getContent());
+							
+							kawal.scrollTo(0, 0);
+							
+							checkGraph(ulub, joke);
+						}
+							
+					}
+				});
+				ImageButton nastepny = (ImageButton)findViewById(R.id.next);
+				nastepny.setOnClickListener(new OnClickListener(){
+					public void onClick(View view){
+						if (!catName.contains("Losowe")){
+								try{
+								kawal.setText(joke.getNext());
+								joke.onNextButtonClick();
+								//licznik
+						        final TextView nr = (TextView)findViewById(R.id.nr);
+						        nr.setText(joke.getNumber());
+						        
+						        kawal.scrollTo(0, 0);
+						        
+						        checkGraph(ulub, joke);
+							}
+							catch(Exception e){
+								
+							}
+						}
+						else{
+							joke.setRandomJoke();
+							kawal.setText(joke.getContent());
+							
+							kawal.scrollTo(0, 0);
+							
+							checkGraph(ulub, joke);
+						}
+						
+					}
+				});
+				
+				//zamiana grafiki ulubionych
+				
+				checkGraph(ulub, joke);
+				
+				//zmiana buttonu na lewo od nazwy kategorii
+				ImageView img = (ImageView) findViewById(R.id.changingImage);			
+				
+				if(catName.contains("Chuck Norris")){
+					img.setImageResource(R.drawable.chuck);
+				}
+				
+				if(catName.contains("O studentach")){
+					img.setImageResource(R.drawable.ostudentach);
+				}
+				
+				if(catName.contains("O facetach")){
+					img.setImageResource(R.drawable.ofacetach);
+				}
+				
+				if(catName.contains("O zwierzętach")){
+					img.setImageResource(R.drawable.ozwierzetach);
+				}
+				
+				if(catName.contains("Turbo Suchary")){
+					img.setImageResource(R.drawable.turbosuchary);
+				}
+				
+				if(catName.contains("Chamskie")){
+					img.setImageResource(R.drawable.chamskie);
+				}
+				
+				if(catName.contains("Losowe")){
+					img.setImageResource(R.drawable.random);
+				}
+				
+				if(catName.contains("Ulubione")){
+					img.setImageResource(R.drawable.heart);
+				}
+				
+				/*
+				if(catName.contains("O blondynkach")){
+					img.setImageResource(R.drawable.);
+				}
+							
+				
+				if(catName.contains("Zboczone")){
+					img.setImageResource(R.drawable.);
+				}		
+							
+							
+				if(catName.contains("O kobietach")){
+					img.setImageResource(R.drawable.);
+				}
+				
+				if(catName.contains("O Jasiu")){
+					img.setImageResource(R.drawable.);
+				}
+		        
+		        */
+		        
+				
+			
+		        
+		        /*Otworzenie bazy danych
+		         * Pobranie kawalu do TextView
+		         */
+		         try{
+		        	kawal.setText(joke.getContent());
+		         }
+		         catch(Exception e){
+		        	kawal.setText("Brak kawału do wyświetlenia w wybranej kategorii.");
+		         }
+		         
+		        	 
+				 
+			     
+			   //wczytanie biblioteki gestów
+			        mLibrary = GestureLibraries.fromRawResource(this, R.raw.gestures);
+			        if (!mLibrary.load()) {
+			        	finish();
+			        }
+			        
+			        GestureOverlayView gestures = (GestureOverlayView) findViewById(R.id.gestures);
+			        gestures.setGestureVisible(false);
+			        gestures.addOnGesturePerformedListener(this);
+			        
+		        
+		        
+	        }
+ 	        catch(CursorIndexOutOfBoundsException e){
+ 	        	Toast toast = Toast.makeText(getBaseContext(),"Brak kawałów dodanych do ulubionych.",Toast.LENGTH_SHORT);
+ 		        toast.show();
+ 		        SecondIntent.this.finish();
+ 	        }
 		        
 		        
 		        

@@ -28,8 +28,7 @@ public class Joke {
 		setCategory(catId);
 		this.context = context;
 		checkNumberOfJokesInCategory();
-		refreshJoke();
-		
+		refreshJoke();		
 	}
 	
 	public Joke(Context context){
