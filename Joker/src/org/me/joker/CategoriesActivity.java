@@ -107,9 +107,9 @@ public class CategoriesActivity extends Activity {
     //Funkcja, która tworzy nowy intent wraz z przekazywaniem informacji o kategorii. 
     
     private void runSecondIntent(int catId, String catName){
-    	Intent intent = new Intent(getApplicationContext(), SecondIntent.class);
+	    Intent intent = new Intent(getApplicationContext(), SecondIntent.class);
 		intent.putExtra("ID", (int)catId);
 		intent.putExtra("CATEGORY", catName);
-    	startActivity(intent);
+	   	startActivity(intent);
     }
 }

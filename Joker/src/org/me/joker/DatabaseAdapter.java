@@ -258,28 +258,36 @@ public class DatabaseAdapter{
         }
         
         public boolean checkFavourite(int jokeId){
-        	DatabaseHelper dbh = new DatabaseHelper(context);
-            dbh.openDatabase();
-           
             String ulub;
-            db = dbh.getDatabase();
-            Cursor c = db.rawQuery("SELECT fav FROM " + DB_TABLE + " WHERE _id like " + jokeId, null);
-            c.moveToFirst();
-            if (c.isNull(c.getColumnIndex("fav"))){
-            	ulub = "0";
+            
+            if(!DB_TABLE.contains("ulubione")){
+	            DatabaseHelper dbh = new DatabaseHelper(context);
+	            dbh.openDatabase();
+	           
+	            db = dbh.getDatabase();
+	            Cursor c = db.rawQuery("SELECT fav FROM " + DB_TABLE + " WHERE _id like " + jokeId, null);
+	            c.moveToFirst();
+	            
+	            if (c.isNull(c.getColumnIndex("fav"))){
+	            	ulub = "0";
+	            }
+	            else{
+	            	ulub = c.getString(c.getColumnIndex("fav"));
+		        }
+	            
+	            c.close();
+	            dbh.close();
+	            db.close();
             }
-            else{
-            	ulub = c.getString(c.getColumnIndex("fav"));
-            }
+            else
+            	ulub = "1";
+        	
            
             
             boolean fav = false;
             if (ulub.equals("1"))
             	fav = true;
             
-            c.close();
-            dbh.close();
-            db.close();
             return fav;
         }
 

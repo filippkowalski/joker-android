@@ -23,7 +23,7 @@ public class Joke {
 	
 	// Konstruktor
 	
-	public Joke(int catId, Context context){
+	public Joke(int catId, Context context) throws RuntimeException{
 		
 		setCategory(catId);
 		this.context = context;

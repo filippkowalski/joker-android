@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.CursorIndexOutOfBoundsException;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
@@ -29,7 +30,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	private String catName = "Kategoria";
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) throws CursorIndexOutOfBoundsException{
 	        super.onCreate(savedInstanceState);
 	        
 	        requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -105,39 +106,44 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				public void onClick(View view){
 					
 					// Jesli jestesmy w kategorii ulubione to przycisk ten usunie kawal z tejze kategorii
-					 
-					if(catName.contains("ULUBIONE")){
-						joke.deleteFromFavouritesInFavourites();
-						try{
-							kawal.setText(joke.getPrevious());
-							joke.onPreviousButtonClick();
-							kawal.scrollTo(0, 0);
-				        	 
-				        	Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty z ulubionych ;(",Toast.LENGTH_SHORT);
+					try{
+						if(catName.contains("Ulubione")){
+							joke.deleteFromFavouritesInFavourites();
+							try{
+								kawal.setText(joke.getPrevious());
+								joke.onPreviousButtonClick();
+								kawal.scrollTo(0, 0);
+					        	 
+					        	Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty z ulubionych ;(",Toast.LENGTH_SHORT);
+						        toast.show();
+						    
+						        ulub.setImageResource(R.drawable.removebutton);
+					         }
+					         catch(Exception e){
+					        	 kawal.setText("Brak kawału do wyświetlenia w wybranej kategorii");
+					        }
+						}
+						else if(joke.getFavourite()){
+							joke.deleteFromFavouritesInOtherCategory();
+							
+							Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty z ulubionych ;(",Toast.LENGTH_SHORT);
 					        toast.show();
-					    
-					        ulub.setImageResource(R.drawable.removebutton);
-				         }
-				         catch(Exception e){
-				        	 kawal.setText("Brak kawału do wyświetlenia w wybranej kategorii");
-				        }
+					        
+					        ulub.setImageResource(R.drawable.favstarupdate);
+						}
+						else{
+							joke.addToFavourites();
+				             
+				            Toast toast = Toast.makeText(getBaseContext(),"Kawał został dodany do ulubionych!",Toast.LENGTH_SHORT);
+				            toast.show();
+				            
+				            ulub.setImageResource(R.drawable.removebutton);
+						}
 					}
-					else if(joke.getFavourite()){
-						joke.deleteFromFavouritesInOtherCategory();
+					catch (Exception e){
 						
-						Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty z ulubionych ;(",Toast.LENGTH_SHORT);
-				        toast.show();
-				        
-				        ulub.setImageResource(R.drawable.favstarupdate);
 					}
-					else{
-						joke.addToFavourites();
-			             
-			            Toast toast = Toast.makeText(getBaseContext(),"Kawał został dodany do ulubionych!",Toast.LENGTH_SHORT);
-			            toast.show();
-			            
-			            ulub.setImageResource(R.drawable.removebutton);
-					}
+					
 					
 				}
 			});
@@ -308,7 +314,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
 		ArrayList<Prediction> predictions = mLibrary.recognize(gesture);
 
-		final Joke joke = new Joke(catId, getApplicationContext());
+		final Joke joke = new Joke(getApplicationContext());
         final TextView kawal = (TextView)findViewById(R.id.joke);
         final ImageButton ulub = (ImageButton)findViewById(R.id.fav);
 		
