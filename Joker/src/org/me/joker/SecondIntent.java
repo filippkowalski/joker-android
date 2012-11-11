@@ -48,8 +48,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        
 	        final Joke joke;
 
-		        try {	               
-		        
+
 		        if (catId == 0){
 		        	joke = new Joke(getApplicationContext());
 		        }	     
@@ -295,14 +294,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			        gestures.setGestureVisible(false);
 			        gestures.addOnGesturePerformedListener(this);
 			        
-		        
-		        
-	        }
- 	        catch(CursorIndexOutOfBoundsException e){
- 	        	Toast toast = Toast.makeText(getBaseContext(),"Brak kawałów dodanych do ulubionych.",Toast.LENGTH_SHORT);
- 		        toast.show();
- 		        SecondIntent.this.finish();
- 	        }
+
+
 		        
 		        
 		        
