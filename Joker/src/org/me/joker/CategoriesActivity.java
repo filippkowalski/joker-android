@@ -35,6 +35,14 @@ public class CategoriesActivity extends Activity {
         	}
         });
       */  
+               
+        //ulubione
+        ImageButton ulubione = (ImageButton)findViewById(R.id.ulubione);
+        ulubione.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		runSecondIntent(1, "Ulubione");
+        	}
+        });
         
         //chuck norris
         ImageButton chuckNorris = (ImageButton)findViewById(R.id.chuckNorris);
@@ -44,11 +52,27 @@ public class CategoriesActivity extends Activity {
         	}
         });
         
-        //ulubione
-        ImageButton ulubione = (ImageButton)findViewById(R.id.ulubione);
-        ulubione.setOnClickListener(new OnClickListener(){
+        //o kobietach
+        ImageButton oKobietach = (ImageButton)findViewById(R.id.oKobietach);
+        oKobietach.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
-        		runSecondIntent(1, "Ulubione");
+        		runSecondIntent(5, "O Kobietach");
+        	}
+        });
+        
+        //zboczone
+        ImageButton zboczone = (ImageButton)findViewById(R.id.zboczone);
+        zboczone.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		runSecondIntent(9, "Zboczone");
+        	}
+        });
+        
+        //o jasiu
+        ImageButton oJasiu = (ImageButton)findViewById(R.id.oJasiu);
+        oJasiu.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		runSecondIntent(2, "O Jasiu");
         	}
         });
         

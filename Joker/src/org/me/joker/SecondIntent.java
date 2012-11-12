@@ -251,22 +251,22 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				if(catName.contains("O blondynkach")){
 					img.setImageResource(R.drawable.);
 				}
-							
+				*/			
 				
 				if(catName.contains("Zboczone")){
-					img.setImageResource(R.drawable.);
+					img.setImageResource(R.drawable.zboczone);
 				}		
 							
 							
 				if(catName.contains("O kobietach")){
-					img.setImageResource(R.drawable.);
+					img.setImageResource(R.drawable.kobiety);
 				}
 				
 				if(catName.contains("O Jasiu")){
-					img.setImageResource(R.drawable.);
+					img.setImageResource(R.drawable.johnny);
 				}
 		        
-		        */
+		        
 		        
 				
 			
