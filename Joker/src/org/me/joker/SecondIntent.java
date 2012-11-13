@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.CursorIndexOutOfBoundsException;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
@@ -313,8 +312,15 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	//metoda obslugujaca gesty
 	public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
 		ArrayList<Prediction> predictions = mLibrary.recognize(gesture);
-
-		final Joke joke = new Joke(getApplicationContext());
+		
+		final Joke joke;
+		if (!catName.contains("Losowe")){
+			joke = new Joke(catId, getApplicationContext());
+		}
+		else{
+			joke = new Joke(getApplicationContext());
+		}
+			
         final TextView kawal = (TextView)findViewById(R.id.joke);
         final ImageButton ulub = (ImageButton)findViewById(R.id.fav);
 		
