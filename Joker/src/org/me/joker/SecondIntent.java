@@ -257,7 +257,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				}		
 							
 							
-				if(catName.contains("O kobietach")){
+				if(catName.contains("O Kobietach")){
 					img.setImageResource(R.drawable.kobiety);
 				}
 				
@@ -324,66 +324,78 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
         final TextView kawal = (TextView)findViewById(R.id.joke);
         final ImageButton ulub = (ImageButton)findViewById(R.id.fav);
 		
-		if (predictions.size() > 0) {
-			Prediction prediction = predictions.get(0);
-			if (prediction.score > 1.0) {
-				
-				if(prediction.name.contains("previous")){
-					if (!catName.contains("Losowe")){
-						try{				
-							kawal.setText(joke.getNext());
-							joke.onNextButtonClick();
-							//licznik
-					        final TextView nr = (TextView)findViewById(R.id.nr);
-					        nr.setText(joke.getNumber());
-					        
-					        kawal.scrollTo(0, 0);
-					        
-					        checkGraph(ulub, joke);
+        
+        try{	
+			if (predictions.size() > 0) {
+				Prediction prediction = predictions.get(0);
+				if (prediction.score > 1.0) {
+					
+					if(prediction.name.contains("previous")){
+						if (!catName.contains("Losowe")){
+							try{				
+								kawal.setText(joke.getNext());
+								joke.onNextButtonClick();
+								//licznik
+						        final TextView nr = (TextView)findViewById(R.id.nr);
+						        nr.setText(joke.getNumber());
+						        
+						        kawal.scrollTo(0, 0);
+						        
+						        checkGraph(ulub, joke);
+							}
+							catch(Exception e){
+								
+							}
 						}
-						catch(Exception e){
+						else{
+							joke.setRandomJoke();
+							kawal.setText(joke.getContent());
 							
-						}
-					}
-					else{
-						joke.setRandomJoke();
-						kawal.setText(joke.getContent());
-						
-						kawal.scrollTo(0, 0);
-						
-						checkGraph(ulub, joke);
-					}
-					
-					
-				}  
-				if(prediction.name.contains("next")){
-					if(!catName.contains("Losowe")){
-						try{				
-							kawal.setText(joke.getPrevious());
-							joke.onPreviousButtonClick();
-							//licznik
-					        final TextView nr = (TextView)findViewById(R.id.nr);
-					        nr.setText(joke.getNumber());
-					        
-					        kawal.scrollTo(0, 0);
-					        
-					        checkGraph(ulub, joke);
-						}
-						catch(Exception e){
+							kawal.scrollTo(0, 0);
 							
+							checkGraph(ulub, joke);
 						}
-					}
-					else{
-						joke.setRandomJoke();
-						kawal.setText(joke.getContent());
 						
-						kawal.scrollTo(0, 0);
 						
-						checkGraph(ulub, joke);
+					}  
+					if(prediction.name.contains("next")){
+						if(!catName.contains("Losowe")){
+							try{				
+								kawal.setText(joke.getPrevious());
+								joke.onPreviousButtonClick();
+								//licznik
+						        final TextView nr = (TextView)findViewById(R.id.nr);
+						        nr.setText(joke.getNumber());
+						        
+						        kawal.scrollTo(0, 0);
+						        
+						        checkGraph(ulub, joke);
+							}
+							catch(Exception e){
+								
+							}
+						}
+						else{
+							joke.setRandomJoke();
+							kawal.setText(joke.getContent());
+							
+							kawal.scrollTo(0, 0);
+							
+							checkGraph(ulub, joke);
+						}
+						
 					}
-					
 				}
 			}
 		}
+		catch(NullPointerException e){
+			joke.setRandomJoke();
+			kawal.setText(joke.getContent());
+			
+			kawal.scrollTo(0, 0);
+			
+			checkGraph(ulub, joke);	
+		}
+
 	}
 }
