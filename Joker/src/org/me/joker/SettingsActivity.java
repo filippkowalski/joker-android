@@ -16,7 +16,7 @@ public class SettingsActivity extends PreferenceActivity implements OnClickListe
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.xml.preference);
+		addPreferencesFromResource(R.xml.preference);
 
 		checkbox = (CheckBox) findViewById(R.id.checkBoxInternet);
 		checkbox.setOnClickListener(this);

@@ -16,6 +16,7 @@ public class DatabaseAdapter{
         public static final String Key_JokeId = "jokeId";
         public static final String Key_Cat = "category";
         public String DB_ID = "1";
+        public int sort = 4;
        
         public static Cursor cursor;
        
@@ -24,7 +25,7 @@ public class DatabaseAdapter{
         private SQLiteDatabase db;
        
        
-        public DatabaseAdapter(int category, Context context){
+        public DatabaseAdapter(int category, Context context, int sort){
                 DB_TABLE = getCategory(category);
                 this.context = context;
                 DBHelper = new DatabaseHelper(context);
@@ -40,8 +41,21 @@ public class DatabaseAdapter{
                
                 String joke = null;
                 db = dbh.getDatabase();
-                Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + getLastJokeId(id), null);
-       
+                
+                Cursor c;
+                if (sort == 1){
+                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + getLastJokeId(id) + " ORDER BY rating DESC", null);
+                }
+                else if (sort == 2){
+                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + getLastJokeId(id) + " ORDER BY rating", null);
+                }
+                else if (sort == 3){
+                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + getLastJokeId(id) + " ORDER BY _id DESC", null);
+                }
+                else{
+                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + getLastJokeId(id), null);
+                }
+                
                 c.moveToFirst();
                 joke = c.getString(c.getColumnIndex("text"));
                 c.close();
@@ -60,7 +74,19 @@ public class DatabaseAdapter{
            
             String joke = null;
             db = dbh.getDatabase();
-            Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + jokeId, null);
+            Cursor c;
+            if (sort == 1){
+            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + jokeId + " ORDER BY rating DESC", null);
+            }
+            else if (sort == 2){
+            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + jokeId + " ORDER BY rating", null);
+            }
+            else if (sort == 3){
+            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + jokeId + " ORDER BY _id DESC", null);
+            }
+            else{
+            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + jokeId, null);
+            }
    
             c.moveToFirst();
             joke = c.getString(c.getColumnIndex("text"));

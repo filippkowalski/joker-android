@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 <string-array name="sortingList">
-    <item>Sortowanie malejąco (wdg ocen)</item>
-    <item>Sortowanie rosnąco (wdg ocen)</item>
-    <item>Sortowanie malejąco (wdg daty)</item>
-    <item>Sortowanie rosnąco (wdg daty)</item>
+    <item name="desc_rate">Sortowanie malejąco (wdg ocen)</item>
+    <item name="asc_rate">Sortowanie rosnąco (wdg ocen)</item>
+    <item name="desc_date">Sortowanie malejąco (wdg daty)</item>
+    <item name="asc_date">Sortowanie rosnąco (wdg daty)</item>
 </string-array>
 <string-array name="sortingValues">
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-    <item>4</item>
+    <item name="desc_rate">1</item>
+    <item name="asc_rate">2</item>
+    <item name="desc_date">3</item>
+    <item name="asc_date">4</item>
 </string-array>
 </resources>

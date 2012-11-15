@@ -1,13 +1,10 @@
 package org.me.joker;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
@@ -24,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.preference.PreferenceManager;
 
 public class SecondIntent extends Activity implements OnGesturePerformedListener{
 	
@@ -37,7 +35,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	static final String KEY_ID = "Joke"; // parent node
 	static final String GUID = "JokeId"; 
 	static final String VOTESUP = "VotesUp";
-	static final String VOTESDOWN = "VotesDown";		
+	static final String VOTESDOWN = "VotesDown";
+	public int sort = 4;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -48,7 +47,11 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	        
 	        setContentView(R.layout.second); 
-	       
+	        
+	        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+	        
+	        sort = Integer.parseInt(sharedPref.getString("Sortowanie", "4"));
+	        
 	        /*
 	         * Przejecie danych z pierwszego okna
 	         */
@@ -63,7 +66,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 		        	joke = new Joke(getApplicationContext());
 		        }	     
 		        else{	        	
-		        	joke = new Joke(catId, getApplicationContext());
+		        	joke = new Joke(catId, getApplicationContext(), sort);
 		        }
 		        
 		        /*
@@ -321,7 +324,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 		
 		final Joke joke;
 		if (!catName.contains("Losowe")){
-			joke = new Joke(catId, getApplicationContext());
+			joke = new Joke(catId, getApplicationContext(), sort);
 		}
 		else{
 			joke = new Joke(getApplicationContext());

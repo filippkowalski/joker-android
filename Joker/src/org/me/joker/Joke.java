@@ -1,29 +1,9 @@
 package org.me.joker;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
+
 import java.util.Random;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
 import android.content.Context;
-import android.sax.Element;
-import android.util.Log;
 
 public class Joke {
 	
@@ -41,14 +21,18 @@ public class Joke {
 	
 	private final Context context;
 	
+	public int sort = 4;
+	
 	
 	// Konstruktor
 	
-	public Joke(int catId, Context context) throws RuntimeException{
+	public Joke(int catId, Context context, int sort) throws RuntimeException{
 		
 		setCategory(catId);
 		this.context = context;
 		checkNumberOfJokesInCategory();
+		this.sort = sort;
+		
 		refreshJoke();		
 	}
 	
@@ -130,17 +114,17 @@ public class Joke {
 	// Metody
 	
 	public int getLastReadJokeId(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
 		return dba.getLastJokeId(getCategory());
 	}
 	
 	public String getContentFromDatabase(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
 		return dba.loadLastJoke(getCategory());
 	}
 	
 	public String getJokeFromDatabase(int jokeId){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
 		return dba.loadJoke(getCategory(), jokeId);
 	}
 	
@@ -151,7 +135,7 @@ public class Joke {
 	}
 	
 	public void checkNumberOfJokesInCategory(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
 		numberOfJokesInCategory = dba.getLastInsertedID();
 	}	
 	
@@ -179,31 +163,31 @@ public class Joke {
 	}
 	
 	public void onNextButtonClick(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
 		dba.setLastJokePlus(getCategory());
 		refreshJoke();
 	}
 	
 	public void onPreviousButtonClick(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
 		dba.setLastJokeMinus(getCategory());
 		refreshJoke();
 	}
 	
 	public void addToFavourites(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
 		dba.addJokeToFavourites(getContent(), getCategory(), getId());
 		setFavourite(true);
 	}
 	
 	public void deleteFromFavouritesInFavourites(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
 		dba.deleteJokeFromFavouritesInFavourites(getId());
 		setFavourite(false);
 	}
 	
 	public void deleteFromFavouritesInOtherCategory(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
 		dba.deleteJokeFromFavouritesInOtherCategory(getCategory(), getId());
 		setFavourite(false);
 	}
@@ -234,7 +218,7 @@ public class Joke {
 	}
 	
 	public void checkIfFavourite(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
 		setFavourite(dba.checkFavourite(getId()));
 	}
 	
