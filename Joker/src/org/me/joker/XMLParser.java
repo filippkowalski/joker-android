@@ -56,78 +56,78 @@ public class XMLParser {
     }
 
     // This class represents a single entry (post) in the XML feed.
-    // It includes the data members "title," "link," and "summary."
+    // It includes the data members "guid," "voteUp," and "voteDown."
     public static class Entry {
-        public final String title;
-        public final String link;
-        public final String summary;
+        public final String guid;
+        public final String voteUp;
+        public final String voteDown;
 
-        private Entry(String title, String summary, String link) {
-            this.title = title;
-            this.summary = summary;
-            this.link = link;
+        private Entry(String guid, String voteDown, String voteUp) {
+            this.guid = guid;
+            this.voteDown = voteDown;
+            this.voteUp = voteUp;
         }
     }
 
-    // Parses the contents of an entry. If it encounters a title, summary, or link tag, hands them
+    // Parses the contents of an entry. If it encounters a guid, voteDown, or voteUp tag, hands them
     // off
     // to their respective &quot;read&quot; methods for processing. Otherwise, skips the tag.
     private Entry readEntry(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "entry");
-        String title = null;
-        String summary = null;
-        String link = null;
+        String guid = null;
+        String voteDown = null;
+        String voteUp = null;
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
             String name = parser.getName();
-            if (name.equals("title")) {
-                title = readTitle(parser);
-            } else if (name.equals("summary")) {
-                summary = readSummary(parser);
-            } else if (name.equals("link")) {
-                link = readLink(parser);
+            if (name.equals("guid")) {
+                guid = readGuid(parser);
+            } else if (name.equals("voteDown")) {
+                voteDown = readVoteDown(parser);
+            } else if (name.equals("voteUp")) {
+                voteUp = readVoteUp(parser);
             } else {
                 skip(parser);
             }
         }
-        return new Entry(title, summary, link);
+        return new Entry(guid, voteDown, voteUp);
     }
 
-    // Processes title tags in the feed.
-    private String readTitle(XmlPullParser parser) throws IOException, XmlPullParserException {
-        parser.require(XmlPullParser.START_TAG, ns, "title");
-        String title = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "title");
-        return title;
+    // Processes guid tags in the feed.
+    private String readGuid(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "guid");
+        String guid = readText(parser);
+        parser.require(XmlPullParser.END_TAG, ns, "guid");
+        return guid;
     }
 
-    // Processes link tags in the feed.
-    private String readLink(XmlPullParser parser) throws IOException, XmlPullParserException {
-        String link = "";
-        parser.require(XmlPullParser.START_TAG, ns, "link");
+    // Processes voteUp tags in the feed.
+    private String readVoteUp(XmlPullParser parser) throws IOException, XmlPullParserException {
+        String voteUp = "";
+        parser.require(XmlPullParser.START_TAG, ns, "voteUp");
         String tag = parser.getName();
         String relType = parser.getAttributeValue(null, "rel");
-        if (tag.equals("link")) {
+        if (tag.equals("voteUp")) {
             if (relType.equals("alternate")) {
-                link = parser.getAttributeValue(null, "href");
+                voteUp = parser.getAttributeValue(null, "href");
                 parser.nextTag();
             }
         }
-        parser.require(XmlPullParser.END_TAG, ns, "link");
-        return link;
+        parser.require(XmlPullParser.END_TAG, ns, "voteUp");
+        return voteUp;
     }
 
-    // Processes summary tags in the feed.
-    private String readSummary(XmlPullParser parser) throws IOException, XmlPullParserException {
-        parser.require(XmlPullParser.START_TAG, ns, "summary");
-        String summary = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "summary");
-        return summary;
+    // Processes voteDown tags in the feed.
+    private String readVoteDown(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "voteDown");
+        String voteDown = readText(parser);
+        parser.require(XmlPullParser.END_TAG, ns, "voteDown");
+        return voteDown;
     }
 
-    // For the tags title and summary, extracts their text values.
+    // For the tags guid and voteDown, extracts their text values.
     private String readText(XmlPullParser parser) throws IOException, XmlPullParserException {
         String result = "";
         if (parser.next() == XmlPullParser.TEXT) {
