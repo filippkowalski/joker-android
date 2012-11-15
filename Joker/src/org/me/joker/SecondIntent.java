@@ -1,7 +1,11 @@
 package org.me.joker;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import android.app.Activity;
 import android.content.Intent;
 import android.gesture.Gesture;
@@ -27,6 +31,13 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	
 	private int catId = 1;
 	private String catName = "Kategoria";
+	
+	// All static variables
+	// XML node keys
+	static final String KEY_ID = "Joke"; // parent node
+	static final String GUID = "JokeId"; 
+	static final String VOTESUP = "VotesUp";
+	static final String VOTESDOWN = "VotesDown";		
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -264,11 +275,11 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				if(catName.contains("O Jasiu")){
 					img.setImageResource(R.drawable.johnny);
 				}
-		        
-		        
-		        
-				
-			
+   
+				//pobieranie danych z xml
+
+
+
 		        
 		        /*Otworzenie bazy danych
 		         * Pobranie kawalu do TextView
@@ -276,7 +287,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 		         try{
 		        	kawal.setText(joke.getContent());
 		         }
-		         catch(Exception e){
+		         catch(Exception e1){
 		        	kawal.setText("Brak kawału do wyświetlenia w wybranej kategorii.");
 		         }
 		         
@@ -292,13 +303,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			        GestureOverlayView gestures = (GestureOverlayView) findViewById(R.id.gestures);
 			        gestures.setGestureVisible(false);
 			        gestures.addOnGesturePerformedListener(this);
-			        
-
-
-		        
-		        
-		        
-	 }
+	        
+}
 	
 	public void checkGraph(ImageButton ulub, Joke joke){
     	if(catName.contains("ULUBIONE") || joke.getFavourite()){
