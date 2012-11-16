@@ -3,7 +3,7 @@
 	    xmlns:tools="http://schemas.android.com/tools"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
-	    android:background="@drawable/jokerbckg"
+	    android:background="@drawable/mainbckg"
 	    android:orientation="horizontal"
 	    android:gravity="center" >
 
@@ -11,15 +11,28 @@
             android:id="@+id/tableRow1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_margin="30dp"
+
+            <ImageButton
+                android:id="@+id/kawaly"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="@string/Naglowek"
-                android:src="@drawable/ic_launcher" />
+                android:background="@null"
+                android:contentDescription="@string/kawaly"
+                android:paddingTop="160dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/kawalybutton" />
+
+            <ImageButton
+                android:id="@+id/ocen"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:contentDescription="@string/ocen"
+                android:paddingTop="160dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ocenbutton" />
 
         </TableRow>
 
@@ -29,83 +42,26 @@
             android:layout_height="wrap_content" >
 
             <ImageButton
-                android:id="@+id/kawaly"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_margin="30dp"
-                android:layout_marginBottom="30dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:contentDescription="@string/kawaly"
-                android:scaleType="fitCenter"
-                android:src="@drawable/kawalybutton" />
-
-            <ImageButton
-                android:id="@+id/ocen"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_margin="30dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:contentDescription="@string/ocen"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ocenbutton" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp" >
-            
-            <ImageButton
                 android:id="@+id/ustawienia"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_margin="30dp"
                 android:layout_weight="1"
                 android:background="@null"
                 android:contentDescription="@string/ustawienia"
+                android:paddingTop="10dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ustawieniabutton" />
-
+
             <ImageButton
                 android:id="@+id/polubnasnafb"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_margin="30dp"
                 android:layout_weight="1"
                 android:background="@null"
                 android:contentDescription="@string/polubnasnafb"
+                android:paddingTop="10dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/polubnasnafbbutton" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >		 </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
 
         </TableRow>
 
