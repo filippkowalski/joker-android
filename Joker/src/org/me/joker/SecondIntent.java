@@ -2,6 +2,10 @@ package org.me.joker;
 
 import java.util.ArrayList;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +16,7 @@ import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.gesture.Prediction;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,7 +26,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.preference.PreferenceManager;
 
 public class SecondIntent extends Activity implements OnGesturePerformedListener{
 	
@@ -31,11 +35,12 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	private String catName = "Kategoria";
 	
 	// All static variables
+	static final String URL = "http://joker.dkowalski.com.hostingasp.pl/api/jokes?format=xml";
 	// XML node keys
-	static final String KEY_ID = "Joke"; // parent node
-	static final String GUID = "JokeId"; 
-	static final String VOTESUP = "VotesUp";
+	static final String KEY_ITEM = "Joke"; // parent node
+	static final String KEY_NAME = "JokeId";
 	static final String VOTESDOWN = "VotesDown";
+	static final String VOTESUP = "VotesUp";
 	public int sort = 4;
 
 	@Override
@@ -280,8 +285,23 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 				}
    
 				//pobieranie danych z xml
-
-
+				XMLParser parser = new XMLParser();
+				String xml = parser.getXmlFromUrl(URL); // getting XML
+				Document doc = parser.getDomElement(xml); // getting DOM element
+				 
+				NodeList nl = doc.getElementsByTagName(KEY_ITEM);
+				 
+				// looping through all item nodes <item>
+				//for (int i = 0; i < nl.getLength(); i++) {
+					Element e = (Element) nl.item(1);
+					
+				    //String votesUp = parser.getValue(e, VOTESUP); // name child value
+				    //String votesDown = parser.getValue(e, VOTESDOWN); // cost child value
+				    //String keyName = parser.getValue(e, KEY_NAME); // description child value
+				    
+				    Toast toast = Toast.makeText(getBaseContext()," ",Toast.LENGTH_SHORT);
+			        toast.show();
+				//}
 
 		        
 		        /*Otworzenie bazy danych

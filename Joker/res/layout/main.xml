@@ -11,10 +11,10 @@
             android:id="@+id/tableRow1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
+
             <ImageButton
                 android:id="@+id/kawaly"
-                android:layout_width="0dip"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
@@ -22,10 +22,10 @@
                 android:paddingTop="160dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/kawalybutton" />
-
+
             <ImageButton
                 android:id="@+id/ocen"
-                android:layout_width="0dip"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
@@ -40,10 +40,10 @@
             android:id="@+id/tableRow2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
+
             <ImageButton
                 android:id="@+id/ustawienia"
-                android:layout_width="0dip"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
@@ -51,10 +51,10 @@
                 android:paddingTop="10dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ustawieniabutton" />
-
+
             <ImageButton
                 android:id="@+id/polubnasnafb"
-                android:layout_width="0dip"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
