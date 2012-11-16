@@ -284,6 +284,24 @@ public class DatabaseAdapter{
 		    dbh.close();
 		    return votedown;
         }
+		
+		/*
+		 * metoda zapisuje wskazan¹ dan¹ do wskazanej kolumny
+		 */
+		public void saveToDb(String kolumna, String zmienna, int catID, String tableName){
+        	DatabaseHelper dbh = new DatabaseHelper(context);
+    		dbh.openDatabase();
+    		db = dbh.getDatabase();
+    		    				
+    		ContentValues data = new ContentValues();
+    		data.put(kolumna, zmienna);
+    		
+    		String myPath = DB_PATH + DB_NAME;
+    		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+    		db.update(tableName, data, "_id=" + catID, null);
+    		dbh.close();
+    		db.close();
+        }
         
         
         

@@ -35,7 +35,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	private String catName = "Kategoria";
 	
 	// All static variables
-	static final String URL = "http://joker.dkowalski.com.hostingasp.pl/api/jokes/?format=xml";
+	static final String URL = "http://joker.dkowalski.com.hostingasp.pl/api/jokes/";
 	// XML node keys
 	static final String KEY_ITEM = "Joke"; // parent node
 	static final String KEY_NAME = "JokeId";
@@ -291,23 +291,23 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			 
 			NodeList nl = doc.getElementsByTagName(KEY_ITEM);
 			
-			String votesUp = "";
-			String votesDown = "";
+			String votesUp = joke.getVoteUpFromDb();
+			String votesDown = joke.getVoteDownFromDb();
 			String guidLocal = joke.getGuidFromDb();
 			String guidServer = "";
 			
 			
 			// wyszukanie guid kawału z bazy xml
-			do {
-				Element e = (Element) nl.item(1);
+			//do {
+				Element e = (Element) nl.item(0);
 				
 			    votesUp = parser.getValue(e, VOTESUP); 
 			    votesDown = parser.getValue(e, VOTESDOWN); 
 			    guidServer = parser.getValue(e, KEY_NAME);
 			    
-			    Toast toast = Toast.makeText(getBaseContext()," ",Toast.LENGTH_SHORT);
+			    Toast toast = Toast.makeText(getBaseContext(),votesUp,Toast.LENGTH_SHORT);
 		        toast.show();
-			}
+		        /*}
 		    while (guidLocal != guidServer);
 			
 			
@@ -319,16 +319,16 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			int srednia = (votesUpInt/votesDownInt);
 			
 			//ustawienie sredniej oceny
-			if (srednia > 0 ){
+			if (srednia > 0){
 				ocena.setText("+"+srednia);
 			}
-			else if (srednia < 0 ){
+			else if (srednia < 0){
 				ocena.setText("-"+srednia);
 			}
 			else{
 				ocena.setText(srednia);
 			}
-			
+			*/
 
 	        
 	        /*Otworzenie bazy danych
