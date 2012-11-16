@@ -36,6 +36,7 @@
 	<string name="onas">O nas</string>	
 	<string name="socialShare">Share</string>
 	<string name="zaproponujkawal">Zaproponuj kawał</string>
-	<string name="ocena">Ocena: +12</string>
+	<string name="ocena">0</string>
+	<string name="ocenaTekst">Ocena : </string>
 	<string name="losowe">Losowe</string>
 </resources>

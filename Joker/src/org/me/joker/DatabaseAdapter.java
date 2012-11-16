@@ -183,21 +183,20 @@ public class DatabaseAdapter{
          * o zadanym id z bazy danych
          */
         
-        public String getCategory(int id){
-                 
-                DatabaseHelper dbh = new DatabaseHelper(context);
-                dbh.openDatabase();
-               
-                String category = null;
-                db = dbh.getDatabase();
-                Cursor c = db.rawQuery("SELECT kategoria FROM kategorie WHERE _id like " + id, null);
-                c.moveToFirst();
-               
-                category = c.getString(c.getColumnIndex("kategoria"));
-                c.close();
-                dbh.close();
-                db.close();
-                return category;
+        public String getCategory(int id){                 
+            DatabaseHelper dbh = new DatabaseHelper(context);
+            dbh.openDatabase();
+           
+            String category = null;
+            db = dbh.getDatabase();
+            Cursor c = db.rawQuery("SELECT kategoria FROM kategorie WHERE _id like " + id, null);
+            c.moveToFirst();
+           
+            category = c.getString(c.getColumnIndex("kategoria"));
+            c.close();
+            dbh.close();
+            db.close();
+            return category;
         }
         
         /*
@@ -221,6 +220,69 @@ public class DatabaseAdapter{
         	
         	db.insert("ulubione", null, values);
         	db.close();
+        }
+        
+        //metoda zwaraca guid kawa³u
+		public String loadGuid(int catId, int jokeId){
+		            
+            DatabaseHelper dbh = new DatabaseHelper(context);
+           
+            dbh.openDatabase();
+           
+            String guid = null;
+            db = dbh.getDatabase();
+            Cursor c;
+          	c = db.rawQuery("SELECT guid FROM " + DB_TABLE + " WHERE _id like " + jokeId, null);
+            c.moveToFirst();
+            
+            guid = c.getString(c.getColumnIndex("guid"));
+            
+            c.close();
+            db.close();
+            dbh.close();
+            return guid;
+		 }
+		
+        //metoda zwaraca voteup kawa³u
+		public String loadVoteUp(int catId, int jokeId){
+            
+		    DatabaseHelper dbh = new DatabaseHelper(context);
+		   
+		    dbh.openDatabase();
+		   
+		    String voteup = null;
+		    db = dbh.getDatabase();
+		    Cursor c;
+		  	c = db.rawQuery("SELECT voteup FROM " + DB_TABLE + " WHERE _id like " + jokeId, null);
+		    c.moveToFirst();
+		    
+		    voteup = c.getString(c.getColumnIndex("voteup"));
+		    
+		    c.close();
+		    db.close();
+		    dbh.close();
+		    return voteup;
+        }
+		
+        //metoda zwaraca vote down kawa³u
+		public String loadVoteDown(int catId, int jokeId){
+            
+		    DatabaseHelper dbh = new DatabaseHelper(context);
+		   
+		    dbh.openDatabase();
+		   
+		    String votedown = null;
+		    db = dbh.getDatabase();
+		    Cursor c;
+		  	c = db.rawQuery("SELECT votedown FROM " + DB_TABLE + " WHERE _id like " + jokeId, null);
+		    c.moveToFirst();
+		    
+		    votedown = c.getString(c.getColumnIndex("votedown"));
+		    
+		    c.close();
+		    db.close();
+		    dbh.close();
+		    return votedown;
         }
         
         

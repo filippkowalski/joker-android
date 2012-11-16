@@ -14,6 +14,7 @@ public class Joke {
 	private String previous;
 	private int category;
 	private int id;
+	private int guid;
 	private String number;
 	private int numberOfJokesInCategory;
 	private boolean rated;
@@ -83,6 +84,14 @@ public class Joke {
 		return id;
 	}
 	
+	public void setGuid(int a){
+		guid = a;
+	}
+	
+	public int getGuid(){
+		return guid;
+	}
+	
 	public void setNumber(String a){
 		number = a;
 	}
@@ -132,6 +141,21 @@ public class Joke {
 		String number = Integer.toString(getId());
         String lastNumber = Integer.toString(getNumberOfJokesInCategory());
         return number + "/" + lastNumber;
+	}
+	
+	public String getGuidFromDb(){
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
+		return dba.loadGuid(getCategory(), getId());
+	}
+	
+	public String getVoteUpFromDb(){
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
+		return dba.loadVoteUp(getCategory(), getId());
+	}
+	
+	public String getVoteDownFromDb(){
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
+		return dba.loadVoteDown(getCategory(), getId());
 	}
 	
 	public void checkNumberOfJokesInCategory(){
