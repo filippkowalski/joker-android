@@ -80,7 +80,8 @@ public class JokerActivity extends Activity{
         
         //pobieranie aktualnej wersji bazy danych z serwera
         //if(opcjaWUstawieniach=jestWlaczona && i jest polaczenie internetowe){
-        	
+        	NetworkActivity networkManager = new NetworkActivity();
+        	networkManager.updateSqliteVoteDb();
         //}
     
         

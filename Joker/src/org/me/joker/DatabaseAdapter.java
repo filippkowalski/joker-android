@@ -29,13 +29,7 @@ public class DatabaseAdapter{
                 DB_TABLE = getCategory(category);
                 this.context = context;
                 DBHelper = new DatabaseHelper(context);
-        }
-        
-        public DatabaseAdapter(Context context){
-        	
-        	this.context = context;
-        }
-       
+        }    
         
         // Metoda zwraca ostatnio ogladany kawal z kategorii o podanym ID
         public String loadLastJoke(int id){
@@ -293,17 +287,17 @@ public class DatabaseAdapter{
 		/*
 		 * metoda zapisuje wskazan¹ dan¹ do wskazanej kolumny
 		 */
-		public void saveToDb(String kolumna, String zmienna, int catID, String tableName){
+		public void saveToDb(String kolumna, String voteValue, int jokeId, int catId){
         	DatabaseHelper dbh = new DatabaseHelper(context);
     		dbh.openDatabase();
     		db = dbh.getDatabase();
     		    				
     		ContentValues data = new ContentValues();
-    		data.put(kolumna, zmienna);
+    		data.put(kolumna, voteValue);
     		
     		String myPath = DB_PATH + DB_NAME;
     		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
-    		db.update(tableName, data, "_id=" + catID, null);
+    		db.update(getCategory(catId), data, "_id=" + jokeId, null);
     		dbh.close();
     		db.close();
         }

@@ -20,7 +20,7 @@ public class NetworkActivity {
 	static final String VOTESDOWN = "VotesDown";
 	static final String VOTESUP = "VotesUp";
 	
-	public void getAndSaveXmlData(){
+	public void updateSqliteVoteDb(){
 		
 		//pobieranie danych
 		XMLParser parser = new XMLParser();
@@ -29,23 +29,32 @@ public class NetworkActivity {
 		 
 		NodeList nl = doc.getElementsByTagName(KEY_ITEM);
 		
-		//zmienne
+		//zmienne String
 		String votesUp = "";
 		String votesDown = "";
-		String guidLocal = "";
 		String guidServer = "";
 		
+		//zmienne int
+		int catId = 2;		
+				
 		//zapisanie danych do tablicy e
 		for (int i = 0; i < nl.getLength(); i++) {
-	    	Element e = (Element) nl.item(1);
+			//otworzenie bazy
+			DatabaseAdapter dba = new DatabaseAdapter(catId, null, 0);
+			
+	    	Element e = (Element) nl.item(i);
 			
 		    votesUp = parser.getValue(e, VOTESUP); 
 		    votesDown = parser.getValue(e, VOTESDOWN); 
 		    guidServer = parser.getValue(e, KEY_NAME);
+		    int k = dba.getLastInsertedID();
+			    for(int nrKawalu = 1; nrKawalu <= k; nrKawalu++){
+			    	if(dba.loadGuid(catId, nrKawalu).equals(guidServer)){
+			    		//zapisanie do bazy danych 
+			    		dba.saveToDb("voteup", votesUp, nrKawalu, catId);	
+			    		dba.saveToDb("votedown", votesDown, nrKawalu, catId);
+			    	}
+			    }
 	    }		
-		
-		//zapisanie danych do bazy
-		DatabaseAdapter dba = new DatabaseAdapter(0, null, 0);
-		dba.saveToDb("voteup", votesUp, 9, "zboczone");
 	}
 }
