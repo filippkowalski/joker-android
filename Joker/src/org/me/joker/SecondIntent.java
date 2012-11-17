@@ -41,6 +41,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	static final String KEY_NAME = "JokeId";
 	static final String VOTESDOWN = "VotesDown";
 	static final String VOTESUP = "VotesUp";
+
 	public int sort = 4;
 
 	@Override
@@ -85,6 +86,26 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	         * Sprawienie, ze pole tekstowe mozna przewijac
 	         */
 	        kawal.setMovementMethod(new ScrollingMovementMethod());
+	        
+	        
+	        /*
+			 * średnia ocena
+			 */
+			final TextView ocena  = (TextView)findViewById(R.id.ocena); 
+			
+			//przerabia na int
+			int sredniaInt = (Integer.parseInt(joke.getVoteUpFromDb())-Integer.parseInt(joke.getVoteDownFromDb()));
+			
+			//ustawienie sredniej oceny
+			if (sredniaInt > 0){
+				ocena.setText("+"+Integer.toString(sredniaInt));
+			}
+			else if (sredniaInt < 0){
+				ocena.setText(Integer.toString(sredniaInt));
+			}
+			else if (sredniaInt == 0){
+				ocena.setText("0");
+			}
 	        
 
 	        
@@ -175,6 +196,25 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 					        final TextView nr = (TextView)findViewById(R.id.nr);
 					        nr.setText(joke.getNumber());
 					        
+					        /*
+							 * średnia ocena
+							 */
+							final TextView ocena  = (TextView)findViewById(R.id.ocena); 
+							
+							//przerabia na int
+							int sredniaInt = (Integer.parseInt(joke.getVoteUpFromDb())-Integer.parseInt(joke.getVoteDownFromDb()));
+							
+							//ustawienie sredniej oceny
+							if (sredniaInt > 0){
+								ocena.setText("+"+Integer.toString(sredniaInt));
+							}
+							else if (sredniaInt < 0){
+								ocena.setText(Integer.toString(sredniaInt));
+							}
+							else if (sredniaInt == 0){
+								ocena.setText("0");
+							}
+					        
 					        kawal.scrollTo(0, 0);
 					        
 					        checkGraph(ulub, joke);
@@ -205,6 +245,25 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 							//licznik
 					        final TextView nr = (TextView)findViewById(R.id.nr);
 					        nr.setText(joke.getNumber());
+					        
+					        /*
+							 * średnia ocena
+							 */
+							final TextView ocena  = (TextView)findViewById(R.id.ocena); 
+							
+							//przerabia na int
+							int sredniaInt = (Integer.parseInt(joke.getVoteUpFromDb())-Integer.parseInt(joke.getVoteDownFromDb()));
+							
+							//ustawienie sredniej oceny
+							if (sredniaInt > 0){
+								ocena.setText("+"+Integer.toString(sredniaInt));
+							}
+							else if (sredniaInt < 0){
+								ocena.setText(Integer.toString(sredniaInt));
+							}
+							else if (sredniaInt == 0){
+								ocena.setText("0");
+							}
 					        
 					        kawal.scrollTo(0, 0);
 					        
@@ -283,52 +342,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			if(catName.contains("O Jasiu")){
 					img.setImageResource(R.drawable.johnny);
 				}
-   
-			//pobieranie danych z xml
-			XMLParser parser = new XMLParser();
-			String xml = parser.getXmlFromUrl(URL); // getting XML
-			Document doc = parser.getDomElement(xml); // getting DOM element
-			 
-			NodeList nl = doc.getElementsByTagName(KEY_ITEM);
-			
-			String votesUp = joke.getVoteUpFromDb();
-			String votesDown = joke.getVoteDownFromDb();
-			String guidLocal = joke.getGuidFromDb();
-			String guidServer = "";
-			
-			
-			// wyszukanie guid kawału z bazy xml
-			//do {
-				Element e = (Element) nl.item(0);
-				
-			    votesUp = parser.getValue(e, VOTESUP); 
-			    votesDown = parser.getValue(e, VOTESDOWN); 
-			    guidServer = parser.getValue(e, KEY_NAME);
-			    
-			    Toast toast = Toast.makeText(getBaseContext(),votesUp,Toast.LENGTH_SHORT);
-		        toast.show();
-		        /*}
-		    while (guidLocal != guidServer);
-			
-			
-			final TextView ocena  = (TextView)findViewById(R.id.ocena); 
-			
-			//przerabia na int
-			int votesUpInt = Integer.parseInt(votesUp);
-			int votesDownInt = Integer.parseInt(votesDown);
-			int srednia = (votesUpInt/votesDownInt);
-			
-			//ustawienie sredniej oceny
-			if (srednia > 0){
-				ocena.setText("+"+srednia);
-			}
-			else if (srednia < 0){
-				ocena.setText("-"+srednia);
-			}
-			else{
-				ocena.setText(srednia);
-			}
-			*/
+		
 
 	        
 	        /*Otworzenie bazy danych
@@ -397,6 +411,25 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 						        final TextView nr = (TextView)findViewById(R.id.nr);
 						        nr.setText(joke.getNumber());
 						        
+						        /*
+								 * średnia ocena
+								 */
+								final TextView ocena  = (TextView)findViewById(R.id.ocena); 
+								
+								//przerabia na int
+								int sredniaInt = (Integer.parseInt(joke.getVoteUpFromDb())-Integer.parseInt(joke.getVoteDownFromDb()));
+								
+								//ustawienie sredniej oceny
+								if (sredniaInt > 0){
+									ocena.setText("+"+Integer.toString(sredniaInt));
+								}
+								else if (sredniaInt < 0){
+									ocena.setText(Integer.toString(sredniaInt));
+								}
+								else if (sredniaInt == 0){
+									ocena.setText("0");
+								}
+						        
 						        kawal.scrollTo(0, 0);
 						        
 						        checkGraph(ulub, joke);
@@ -424,6 +457,25 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 								//licznik
 						        final TextView nr = (TextView)findViewById(R.id.nr);
 						        nr.setText(joke.getNumber());
+						        
+						        /*
+								 * średnia ocena
+								 */
+								final TextView ocena  = (TextView)findViewById(R.id.ocena); 
+								
+								//przerabia na int
+								int sredniaInt = (Integer.parseInt(joke.getVoteUpFromDb())-Integer.parseInt(joke.getVoteDownFromDb()));
+								
+								//ustawienie sredniej oceny
+								if (sredniaInt > 0){
+									ocena.setText("+"+Integer.toString(sredniaInt));
+								}
+								else if (sredniaInt < 0){
+									ocena.setText(Integer.toString(sredniaInt));
+								}
+								else if (sredniaInt == 0){
+									ocena.setText("0");
+								}
 						        
 						        kawal.scrollTo(0, 0);
 						        

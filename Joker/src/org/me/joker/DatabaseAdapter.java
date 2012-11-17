@@ -30,6 +30,11 @@ public class DatabaseAdapter{
                 this.context = context;
                 DBHelper = new DatabaseHelper(context);
         }
+        
+        public DatabaseAdapter(Context context){
+        	
+        	this.context = context;
+        }
        
         
         // Metoda zwraca ostatnio ogladany kawal z kategorii o podanym ID

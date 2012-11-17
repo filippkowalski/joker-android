@@ -229,6 +229,7 @@ public class Joke {
 		setContent(getJokeFromDatabase(getId()));
 	}
 	
+	//metoda potrzebna do widgetu
 	public void setRandomTurboSucharJoke(){
 		Random rand = new Random();
 		

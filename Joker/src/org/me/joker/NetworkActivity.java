@@ -13,7 +13,7 @@ import org.w3c.dom.NodeList;
 public class NetworkActivity {
 	
 	// All static variables
-	static final String URL = "http://joker.dkowalski.com.hostingasp.pl/api/jokes/?format=xml";
+	static final String URL = "http://joker.dkowalski.com.hostingasp.pl/api/jokes/";
 	// XML node keys
 	static final String KEY_ITEM = "Joke"; // parent node
 	static final String KEY_NAME = "JokeId";
@@ -45,6 +45,7 @@ public class NetworkActivity {
 	    }		
 		
 		//zapisanie danych do bazy
-		
+		DatabaseAdapter dba = new DatabaseAdapter(0, null, 0);
+		dba.saveToDb("voteup", votesUp, 9, "zboczone");
 	}
 }
