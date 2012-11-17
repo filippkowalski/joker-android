@@ -1,5 +1,14 @@
 package org.me.joker;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -20,8 +29,7 @@ public class NetworkActivity {
 	static final String VOTESDOWN = "VotesDown";
 	static final String VOTESUP = "VotesUp";
 	
-	public void updateSqliteVoteDb(){
-		
+	public void updateSqliteVoteDb(){		
 		//pobieranie danych
 		XMLParser parser = new XMLParser();
 		String xml = parser.getXmlFromUrl(URL); // getting XML
@@ -35,26 +43,63 @@ public class NetworkActivity {
 		String guidServer = "";
 		
 		//zmienne int
-		int catId = 2;		
+		int catId = 2;
+		
+		//flaga
+		boolean trafiony = false;
 				
 		//zapisanie danych do tablicy e
 		for (int i = 0; i < nl.getLength(); i++) {
-			//otworzenie bazy
-			DatabaseAdapter dba = new DatabaseAdapter(catId, null, 0);
-			
 	    	Element e = (Element) nl.item(i);
 			
 		    votesUp = parser.getValue(e, VOTESUP); 
 		    votesDown = parser.getValue(e, VOTESDOWN); 
 		    guidServer = parser.getValue(e, KEY_NAME);
-		    int k = dba.getLastInsertedID();
+
+		    catId = 2;
+		    
+		    do{
+		    	//otworzenie bazy
+				DatabaseAdapter dba = new DatabaseAdapter(catId, null, 0);
+			    int k = dba.getLastInsertedID();
+			    
+			    //pêtla przeszukuj¹ca bazê w poszukiwaniu odpowiedniego miejsca
 			    for(int nrKawalu = 1; nrKawalu <= k; nrKawalu++){
 			    	if(dba.loadGuid(catId, nrKawalu).equals(guidServer)){
 			    		//zapisanie do bazy danych 
 			    		dba.saveToDb("voteup", votesUp, nrKawalu, catId);	
 			    		dba.saveToDb("votedown", votesDown, nrKawalu, catId);
+			    		trafiony = true;
+			    		break;
 			    	}
 			    }
+			    catId++;
+		    }
+		    while(trafiony != true);
 	    }		
+	}
+	
+	public void voteUploadPlus(String guid){
+		String xml = "Joke";
+		try {
+            // defaultHttpClient
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpPut httpPut = new HttpPut(URL+guid+"/?VoteUp=true");  
+            
+            HttpEntity entity = new StringEntity(xml);
+            httpPut.setEntity(entity);
+            
+            //wysy³anie danych
+            httpPut.setHeader("Content-Type", "application/xml");
+ 
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	public void voteUploadMinus(int vote){
+
 	}
 }

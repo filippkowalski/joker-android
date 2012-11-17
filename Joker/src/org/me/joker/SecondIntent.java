@@ -34,14 +34,6 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	private int catId = 1;
 	private String catName = "Kategoria";
 	
-	// All static variables
-	static final String URL = "http://joker.dkowalski.com.hostingasp.pl/api/jokes/";
-	// XML node keys
-	static final String KEY_ITEM = "Joke"; // parent node
-	static final String KEY_NAME = "JokeId";
-	static final String VOTESDOWN = "VotesDown";
-	static final String VOTESUP = "VotesUp";
-
 	public int sort = 4;
 
 	@Override
@@ -282,6 +274,14 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 						checkGraph(ulub, joke);
 					}
 					
+				}
+			});
+			
+			ImageButton ocen = (ImageButton)findViewById(R.id.ocen);
+			ocen.setOnClickListener(new OnClickListener(){
+				public void onClick(View view){
+					NetworkActivity networkManager = new NetworkActivity();
+		        	networkManager.voteUploadPlus(joke.getGuidFromDb());
 				}
 			});
 			
