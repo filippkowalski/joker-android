@@ -280,8 +280,14 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			ImageButton ocen = (ImageButton)findViewById(R.id.ocen);
 			ocen.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
+					//DialogActivity dialog = new DialogActivity();
+					//dialog.showRateDialog();
+					
 					NetworkActivity networkManager = new NetworkActivity();
 		        	networkManager.voteUploadPlus(joke.getGuidFromDb());
+		        	
+		        	Toast toast = Toast.makeText(getBaseContext(),"Przesłano ocenę, dziękujemy.",Toast.LENGTH_SHORT);
+			        toast.show();
 				}
 			});
 			

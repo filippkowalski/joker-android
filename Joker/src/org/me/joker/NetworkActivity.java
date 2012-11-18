@@ -80,7 +80,7 @@ public class NetworkActivity {
 	}
 	
 	public void voteUploadPlus(String guid){
-		String xml = "Joke";
+		String xml = " ";
 		try {
             // defaultHttpClient
             DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -88,18 +88,40 @@ public class NetworkActivity {
             
             HttpEntity entity = new StringEntity(xml);
             httpPut.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPut);
             
             //wysy³anie danych
             httpPut.setHeader("Content-Type", "application/xml");
  
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 	}
 	
-	public void voteUploadMinus(int vote){
-
+	public void voteUploadMinus(String guid){
+		String xml = " ";
+		try {
+            // defaultHttpClient
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpPut httpPut = new HttpPut(URL+guid+"/?VoteUp=false");  
+            
+            HttpEntity entity = new StringEntity(xml);
+            httpPut.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPut);
+            
+            //wysy³anie danych
+            httpPut.setHeader("Content-Type", "application/xml");
+ 
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 }
