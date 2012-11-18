@@ -2,10 +2,6 @@ package org.me.joker;
 
 import java.util.ArrayList;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,7 +44,7 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        
 	        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 	        
-	        sort = Integer.parseInt(sharedPref.getString("Sortowanie", "4"));
+	        sort = Integer.parseInt(sharedPref.getString("pref_list", "4"));
 	        
 	        /*
 	         * Przejecie danych z pierwszego okna

@@ -29,6 +29,7 @@ public class DatabaseAdapter{
                 DB_TABLE = getCategory(category);
                 this.context = context;
                 DBHelper = new DatabaseHelper(context);
+                this.sort = sort;
         }    
         
         // Metoda zwraca ostatnio ogladany kawal z kategorii o podanym ID
@@ -43,19 +44,20 @@ public class DatabaseAdapter{
                 
                 Cursor c;
                 if (sort == 1){
-                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + getLastJokeId(id) + " ORDER BY rating DESC", null);
+                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY rating DESC", null);
                 }
                 else if (sort == 2){
-                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + getLastJokeId(id) + " ORDER BY rating", null);
+                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY rating", null);
                 }
                 else if (sort == 3){
-                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + getLastJokeId(id) + " ORDER BY _id DESC", null);
+                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY _id DESC", null);
                 }
                 else{
-                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + getLastJokeId(id), null);
+                	c = db.rawQuery("SELECT text FROM " + DB_TABLE, null);
                 }
                 
-                c.moveToFirst();
+                
+                c.moveToPosition(getLastJokeId(id) - 1);
                 joke = c.getString(c.getColumnIndex("text"));
                 c.close();
                 db.close();
@@ -75,19 +77,19 @@ public class DatabaseAdapter{
             db = dbh.getDatabase();
             Cursor c;
             if (sort == 1){
-            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + jokeId + " ORDER BY rating DESC", null);
+            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY rating DESC", null);
             }
             else if (sort == 2){
-            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + jokeId + " ORDER BY rating", null);
+            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY rating", null);
             }
             else if (sort == 3){
-            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + jokeId + " ORDER BY _id DESC", null);
+            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY _id DESC", null);
             }
             else{
-            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id like " + jokeId, null);
+            	c = db.rawQuery("SELECT text FROM " + DB_TABLE, null);
             }
-   
-            c.moveToFirst();
+            
+            c.moveToPosition(jokeId - 1);
             joke = c.getString(c.getColumnIndex("text"));
             c.close();
             db.close();

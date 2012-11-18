@@ -3,7 +3,7 @@
 
     <CheckBoxPreference
         android:id="@+id/checkBoxInternet"
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:key="internet"
         android:summary="Ta funkcja pozwoli aktualizować na bieżąco oceny kawałów"
         android:title="Połączenie z internetem"
