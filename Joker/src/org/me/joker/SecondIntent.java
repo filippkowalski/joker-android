@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.KeyEvent;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -510,4 +511,127 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 		}
 
 	}
+	
+	
+	
+	//Metoda przesuwajaca kawaly na przycisniecie volume 
+	
+	
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		
+		final Joke joke;
+		if (!catName.contains("Losowe")){
+			joke = new Joke(catId, getApplicationContext(), sort);
+		}
+		else{
+			joke = new Joke(getApplicationContext());
+		}
+			
+        final TextView kawal = (TextView)findViewById(R.id.joke);
+        final ImageButton ulub = (ImageButton)findViewById(R.id.fav);
+        
+	    int action = event.getAction();
+	    int keyCode = event.getKeyCode();
+	        switch (keyCode) {
+	        case KeyEvent.KEYCODE_VOLUME_UP:
+	            if (action == KeyEvent.ACTION_UP) {
+	                //TODO
+	            	if (!catName.contains("Losowe")){
+						try{				
+							kawal.setText(joke.getNext());
+							joke.onNextButtonClick();
+							//licznik
+					        final TextView nr = (TextView)findViewById(R.id.nr);
+					        nr.setText(joke.getNumber());
+					        
+					        /*
+							 * średnia ocena
+							 */
+							final TextView ocena  = (TextView)findViewById(R.id.ocena); 
+							
+							//przerabia na int
+							int sredniaInt = (Integer.parseInt(joke.getVoteUpFromDb())-Integer.parseInt(joke.getVoteDownFromDb()));
+							
+							//ustawienie sredniej oceny
+							if (sredniaInt > 0){
+								ocena.setText("+"+Integer.toString(sredniaInt));
+							}
+							else if (sredniaInt < 0){
+								ocena.setText(Integer.toString(sredniaInt));
+							}
+							else if (sredniaInt == 0){
+								ocena.setText("0");
+							}
+					        
+					        kawal.scrollTo(0, 0);
+					        
+					        checkGraph(ulub, joke);
+						}
+						catch(Exception e){
+							
+						}
+					}
+					else{
+						joke.setRandomJoke();
+						kawal.setText(joke.getContent());
+						
+						kawal.scrollTo(0, 0);
+						
+						checkGraph(ulub, joke);
+					}
+	            }
+	            return true;
+	        case KeyEvent.KEYCODE_VOLUME_DOWN:
+	            if (action == KeyEvent.ACTION_DOWN) {
+	                //TODO
+	            	if(!catName.contains("Losowe")){
+						try{				
+							kawal.setText(joke.getPrevious());
+							joke.onPreviousButtonClick();
+							//licznik
+					        final TextView nr = (TextView)findViewById(R.id.nr);
+					        nr.setText(joke.getNumber());
+					        
+					        /*
+							 * średnia ocena
+							 */
+							final TextView ocena  = (TextView)findViewById(R.id.ocena); 
+							
+							//przerabia na int
+							int sredniaInt = (Integer.parseInt(joke.getVoteUpFromDb())-Integer.parseInt(joke.getVoteDownFromDb()));
+							
+							//ustawienie sredniej oceny
+							if (sredniaInt > 0){
+								ocena.setText("+"+Integer.toString(sredniaInt));
+							}
+							else if (sredniaInt < 0){
+								ocena.setText(Integer.toString(sredniaInt));
+							}
+							else if (sredniaInt == 0){
+								ocena.setText("0");
+							}
+					        
+					        kawal.scrollTo(0, 0);
+					        
+					        checkGraph(ulub, joke);
+						}
+						catch(Exception e){
+							
+						}
+					}
+					else{
+						joke.setRandomJoke();
+						kawal.setText(joke.getContent());
+						
+						kawal.scrollTo(0, 0);
+						
+						checkGraph(ulub, joke);
+					}
+	            }
+	            return true;
+	        default:
+	            return super.dispatchKeyEvent(event);
+	        }
+	    }
 }
