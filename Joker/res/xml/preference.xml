@@ -17,11 +17,5 @@
         android:summary="Wybierz w jakiej kolejności mają wyświetlać się kawały"
         android:title="Sortowanie" />
     
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="sound"
-        android:summary="Włącz lub wyłącz dźwięk podczas klikania"
-        android:title="Dźwięk"
-        />    
  
 </PreferenceScreen>

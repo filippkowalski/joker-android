@@ -4,13 +4,16 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 
  
@@ -79,10 +82,19 @@ public class JokerActivity extends Activity{
 
         
         //pobieranie aktualnej wersji bazy danych z serwera
-        //if(opcjaWUstawieniach=jestWlaczona && i jest polaczenie internetowe){
+        
+	        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+	        
+	        boolean connectionAllow = sharedPref.getBoolean("internet", true);
+        
         	NetworkActivity networkManager = new NetworkActivity();
-        	networkManager.updateSqliteVoteDb();
-        //}
+        	if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){
+            	networkManager.updateSqliteVoteDb();
+        	}
+        	else{
+        		Toast toast = Toast.makeText(getBaseContext(),"Brak po³¹czenia z internetem, oceny mog¹ byc nieaktualne",Toast.LENGTH_SHORT);
+		        toast.show();
+        	}
     
         
     }

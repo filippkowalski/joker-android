@@ -13,6 +13,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.content.Context;
+
 /*
  * 
  * Klasa ta po wywo³aniu ma pobraæ najnowsz¹ baze danych i zapisaæ j¹ do bazy SQlite
@@ -123,5 +127,22 @@ public class NetworkActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+	}
+	
+	public boolean haveNetworkConnection(Context context) {
+	    boolean haveConnectedWifi = false;
+	    boolean haveConnectedMobile = false;
+
+	    ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+	    for (NetworkInfo ni : netInfo) {
+	        if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+	            if (ni.isConnected())
+	                haveConnectedWifi = true;
+	        if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+	            if (ni.isConnected())
+	                haveConnectedMobile = true;
+	    }
+	    return haveConnectedWifi || haveConnectedMobile;
 	}
 }
