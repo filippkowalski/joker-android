@@ -1,39 +1,50 @@
 package org.me.joker;
 
-import android.app.Activity;
 import android.app.Dialog;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Context;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.widget.Toast;
 
-public class DialogActivity extends Activity {
+public class DialogActivity extends DialogFragment {
 	
-	final Context context = this;
-    		
-    public void showRateDialog(){
-    	// custom dialog
-		final Dialog dialog = new Dialog(context);
-		dialog.setContentView(R.layout.dialog);
-		dialog.setTitle("Title...");
-	 
-		// set the custom dialog components - text, image and button
-		TextView text = (TextView) dialog.findViewById(R.id.text);
-		text.setText("Android custom dialog example!");
-		
-		ImageView image = (ImageView) dialog.findViewById(R.id.image);
-		image.setImageResource(R.drawable.ic_launcher);
-	 	Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-	 	
-	 	// if button is clicked, close the custom dialog
-		dialogButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-		});
-	 
-			dialog.show();
-     }
+	private Joke joke;
+	private Context context;
+	
+	public DialogActivity(Joke joke, Context context){
+		this.joke = joke;
+		this.context = context;
+	}
+	
+	public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.ocenianie)
+               .setPositiveButton(R.string.tak, new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                	   NetworkActivity networkManager = new NetworkActivity();
+   		        		networkManager.voteUploadPlus(joke.getGuidFromDb());
+   		        	
+   		        		Toast toast = Toast.makeText(context,"Przes³ano ocenê, dziêkujemy.",Toast.LENGTH_SHORT);
+   		        		toast.show();
+                   }
+               })
+               .setNegativeButton(R.string.anuluj, new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                	   
+                   }
+               })
+               .setNeutralButton(R.string.nie, new DialogInterface.OnClickListener() {
+            	   public void onClick(DialogInterface dialog, int id) {
+            		   NetworkActivity networkManager = new NetworkActivity();
+  		        		networkManager.voteUploadMinus(joke.getGuidFromDb());
+  		        	
+  		        		Toast toast = Toast.makeText(context,"Przes³ano ocenê, dziêkujemy.",Toast.LENGTH_SHORT);
+  		        		toast.show();
+				}
+			});
+        
+        return builder.create();
+	}
 }

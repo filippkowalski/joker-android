@@ -39,4 +39,8 @@
 	<string name="ocena">0</string>
 	<string name="ocenaTekst">Ocena : </string>
 	<string name="losowe">Losowe</string>
+	<string name="ocenianie">Spodobał Ci się kawał?</string>
+	<string name="tak">Dobry</string>
+	<string name="nie">Słaby</string>
+	<string name="anuluj">Anuluj</string>
 </resources>

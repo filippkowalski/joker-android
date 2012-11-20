@@ -2,7 +2,6 @@ package org.me.joker;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.gesture.Gesture;
@@ -23,8 +22,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 
-public class SecondIntent extends Activity implements OnGesturePerformedListener{
+public class SecondIntent extends FragmentActivity implements OnGesturePerformedListener{
 	
 	private GestureLibrary mLibrary;
 	
@@ -277,14 +278,8 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 			ImageButton ocen = (ImageButton)findViewById(R.id.ocen);
 			ocen.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
-					//DialogActivity dialog = new DialogActivity();
-					//dialog.showRateDialog();
-					
-					NetworkActivity networkManager = new NetworkActivity();
-		        	networkManager.voteUploadPlus(joke.getGuidFromDb());
-		        	
-		        	Toast toast = Toast.makeText(getBaseContext(),"Przesłano ocenę, dziękujemy.",Toast.LENGTH_SHORT);
-			        toast.show();
+					DialogFragment newFragment = new DialogActivity(joke, getBaseContext());
+					newFragment.show(getSupportFragmentManager(), "ocenianie");
 				}
 			});
 			
@@ -536,7 +531,6 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	        switch (keyCode) {
 	        case KeyEvent.KEYCODE_VOLUME_UP:
 	            if (action == KeyEvent.ACTION_UP) {
-	                //TODO
 	            	if (!catName.contains("Losowe")){
 						try{				
 							kawal.setText(joke.getNext());
@@ -584,7 +578,6 @@ public class SecondIntent extends Activity implements OnGesturePerformedListener
 	            return true;
 	        case KeyEvent.KEYCODE_VOLUME_DOWN:
 	            if (action == KeyEvent.ACTION_DOWN) {
-	                //TODO
 	            	if(!catName.contains("Losowe")){
 						try{				
 							kawal.setText(joke.getPrevious());
