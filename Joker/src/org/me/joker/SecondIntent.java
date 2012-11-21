@@ -13,7 +13,9 @@ import android.gesture.Prediction;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.method.ScrollingMovementMethod;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
@@ -114,8 +116,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	        		nr.setText("");
 	        }
 	        catch(Exception e){
-	        	Toast toast = Toast.makeText(getBaseContext(),"Brak ulubionych kawałów",Toast.LENGTH_SHORT);
-		        toast.show();
+	        	makeToast("Brak ulubionych kawałów");
 		        SecondIntent.this.finish();
 	        }
 	        
@@ -146,8 +147,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 								joke.onPreviousButtonClick();
 								kawal.scrollTo(0, 0);
 					        	 
-					        	Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty z ulubionych ;(",Toast.LENGTH_SHORT);
-						        toast.show();
+					        	makeToast("Kawał został usunięty z ulubionych");
 						    
 						        ulub.setImageResource(R.drawable.removebutton);
 					         }
@@ -158,16 +158,14 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 						else if(joke.getFavourite()){
 							joke.deleteFromFavouritesInOtherCategory();
 							
-							Toast toast = Toast.makeText(getBaseContext(),"Kawał został usunięty z ulubionych ;(",Toast.LENGTH_SHORT);
-					        toast.show();
+							makeToast("Kawał został usunięty z ulubionych");
 					        
 					        ulub.setImageResource(R.drawable.favstarupdate);
 						}
 						else{
 							joke.addToFavourites();
 				             
-				            Toast toast = Toast.makeText(getBaseContext(),"Kawał został dodany do ulubionych!",Toast.LENGTH_SHORT);
-				            toast.show();
+							makeToast("Kawał został dodany do ulubionych!");
 				            
 				            ulub.setImageResource(R.drawable.removebutton);
 						}
@@ -289,12 +287,11 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 			        
 			        NetworkActivity networkManager = new NetworkActivity();
 			        if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){
-		            	DialogFragment newFragment = new DialogActivity(joke, getBaseContext(), networkManager);
+		            	DialogFragment newFragment = new DialogActivity(joke, networkManager);
 		            	newFragment.show(getSupportFragmentManager(), "ocenianie");
 		        	}
 		        	else{
-		        		Toast toast = Toast.makeText(getBaseContext(),"Nie można ocenić - brak łączności, lub nieaktywna opcja",Toast.LENGTH_SHORT);
-				        toast.show();
+		        		makeToast("Nie można ocenić - brak łączności, lub nieaktywna opcja");
 		        	}
 					
 				}
@@ -382,7 +379,6 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 		        gestures.addOnGesturePerformedListener(this);
         
 }
-	
 	
 	
 	public void checkGraph(ImageButton ulub, Joke joke){
@@ -642,4 +638,18 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	            return super.dispatchKeyEvent(event);
 	        }
 	    }
+	
+	public void makeToast(String text){
+		Toast toast = Toast.makeText(getApplicationContext(), text,Toast.LENGTH_SHORT);
+   		
+   		LayoutInflater inflater = getLayoutInflater();
+   		View toastView = inflater.inflate(R.layout.toast, (ViewGroup)findViewById(R.id.toast));
+   		
+   		TextView toastText = (TextView)toastView.findViewById(R.id.textView1);
+   		
+   		toastText.setText(text);
+   		
+   		toast.setView(toastView);
+   		toast.show();
+	}
 }

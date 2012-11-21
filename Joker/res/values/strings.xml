@@ -43,4 +43,5 @@
 	<string name="tak">Dobry</string>
 	<string name="nie">Słaby</string>
 	<string name="anuluj">Anuluj</string>
+	<string name="toast">Toast</string>
 </resources>

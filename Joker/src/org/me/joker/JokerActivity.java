@@ -8,12 +8,15 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import android.widget.TextView;
 
 
  
@@ -93,7 +96,16 @@ public class JokerActivity extends Activity{
         	}
         	else{
         		Toast toast = Toast.makeText(getBaseContext(),"Brak po³¹czenia z internetem, oceny mog¹ byc nieaktualne",Toast.LENGTH_SHORT);
-		        toast.show();
+        		
+        		LayoutInflater inflater = getLayoutInflater();
+        		View toastView = inflater.inflate(R.layout.toast, (ViewGroup)findViewById(R.id.toast));
+        		
+        		TextView toastText = (TextView)toastView.findViewById(R.id.textView1);
+        		
+        		toastText.setText("Brak po³¹czenia z internetem, oceny mog¹ byc nieaktualne");
+        		
+        		toast.setView(toastView);
+        		toast.show();
         	}
     
         
