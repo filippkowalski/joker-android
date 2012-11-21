@@ -16,7 +16,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
-
+
+
+
+
+
+
+
                 <ImageButton
                     android:id="@+id/kawaly"
                     android:layout_width="wrap_content"
@@ -30,7 +36,8 @@
                     android:paddingTop="160dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/kawalybutton" />
-                
+                
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -40,12 +47,18 @@
                     android:textColor="#000000" />
 
             </LinearLayout>
-
+
+
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
-
+
+
+
+
+
                 <ImageButton
                     android:id="@+id/ocen"
                     android:layout_width="match_parent"
@@ -59,7 +72,9 @@
                     android:paddingTop="160dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ocenbutton" />
-
+
+
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -81,7 +96,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
-
+
+
+
+
                 <ImageButton
                     android:id="@+id/ustawienia"
                     android:layout_width="wrap_content"
@@ -95,7 +113,8 @@
                     android:paddingTop="10dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ustawieniabutton" />
-
+
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -110,7 +129,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
-
+
+
+
                 <ImageButton
                     android:id="@+id/polubnasnafb"
                     android:layout_width="wrap_content"
@@ -124,7 +145,8 @@
                     android:paddingTop="10dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/polubnasnafbbutton" />
-
+
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

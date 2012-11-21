@@ -12,4 +12,16 @@
     <item name="desc_date">3</item>
     <item name="asc_date">4</item>
 </string-array>
+<string-array name="fontList">
+    <item name="small">Mała</item>
+    <item name="normal">Średnia</item>
+    <item name="large">Duża</item>
+    <item name="xlarge">Bardzo duża</item>
+</string-array>
+<string-array name="fontValues">
+    <item name="small">16.0</item>
+    <item name="normal">20.0</item>
+    <item name="large">24.0</item>
+    <item name="xlarge">30.0</item>
+</string-array>
 </resources>

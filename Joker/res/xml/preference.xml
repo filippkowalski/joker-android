@@ -17,5 +17,13 @@
         android:summary="Wybierz w jakiej kolejności mają wyświetlać się kawały"
         android:title="Sortowanie" />
     
+    <ListPreference
+        android:dialogTitle="Rozmiar Czcionki"
+        android:entries="@array/fontList"
+        android:entryValues="@array/fontValues"
+        android:key="font_list"
+        android:summary="Wybierz rozmiar czcionki wyświetlania kawału"
+        android:title="Czcionki" />
+    
  
 </PreferenceScreen>

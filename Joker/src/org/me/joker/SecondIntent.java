@@ -48,6 +48,10 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	        
 	        sort = Integer.parseInt(sharedPref.getString("pref_list", "4"));
 	        
+	        float fontSize = Float.parseFloat(sharedPref.getString("font_list", "Medium"));
+	        
+	        
+	        
 	        /*
 	         * Przejecie danych z pierwszego okna
 	         */
@@ -76,6 +80,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	         * Sprawienie, ze pole tekstowe mozna przewijac
 	         */
 	        kawal.setMovementMethod(new ScrollingMovementMethod());
+	        kawal.setTextSize(fontSize);
 	        
 	        
 	        /*
