@@ -36,15 +36,13 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/ostudentach" />
 
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="@string/oStudentach"
-                android:textColor="#ffffff" />
+                android:textColor="#2F4F2F" />
 
         </LinearLayout>
 
@@ -75,7 +73,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="@string/oJasiu"
-                android:textColor="#ffffff" />
+                android:textColor="#2F4F2F" />
 
 
 
@@ -98,16 +96,13 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/ozwierzetach" />
 
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="@string/oZwierzetach"
-                android:textColor="#ffffff" />
-
-
+                android:textColor="#2F4F2F" />
 
         </LinearLayout>
 
@@ -135,15 +130,13 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/kobiety" />
 
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="@string/oKobietach"
-                android:textColor="#ffffff" />
+                android:textColor="#2F4F2F" />
 
         </LinearLayout>
 
@@ -165,15 +158,13 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/ofacetach" />
 
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="@string/oFacetach"
-                android:textColor="#ffffff" />
+                android:textColor="#2F4F2F" />
 
         </LinearLayout>
 
@@ -194,15 +185,13 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/chuck" />
 
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="@string/chuckNorris"
-                android:textColor="#ffffff" />
+                android:textColor="#2F4F2F" />
 
         </LinearLayout>
 
@@ -240,7 +229,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="@string/chamskie"
-                android:textColor="#ffffff" />
+                android:textColor="#2F4F2F" />
 
 
         </LinearLayout>
@@ -268,7 +257,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="@string/turboSuchary"
-                android:textColor="#ffffff" />
+                android:textColor="#2F4F2F" />
 
 
         </LinearLayout>
@@ -295,7 +284,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="@string/zboczone"
-                android:textColor="#ffffff" />
+                android:textColor="#2F4F2F" />
 
 
         </LinearLayout>
@@ -362,7 +351,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="@string/oBlondynkach"
-                android:textColor="#000000" />
+                android:textColor="#2F4F2F" />
 
 
         </LinearLayout>

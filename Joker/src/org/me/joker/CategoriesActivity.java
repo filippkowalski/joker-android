@@ -26,7 +26,6 @@ public class CategoriesActivity extends Activity {
         //Buttony prowadzace do kawalow
         
         
-    /*  
         //blondynki
         ImageButton blondes = (ImageButton)findViewById(R.id.oBlondynkach);
         blondes.setOnClickListener(new OnClickListener(){
@@ -34,7 +33,6 @@ public class CategoriesActivity extends Activity {
         		runSecondIntent(3, "O Blondynkach");
         	}
         });
-      */  
                
         //ulubione
         ImageButton ulubione = (ImageButton)findViewById(R.id.ulubione);

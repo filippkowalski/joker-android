@@ -283,8 +283,20 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 			ImageButton ocen = (ImageButton)findViewById(R.id.ocen);
 			ocen.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
-					DialogFragment newFragment = new DialogActivity(joke, getBaseContext());
-					newFragment.show(getSupportFragmentManager(), "ocenianie");
+					SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+			        
+			        boolean connectionAllow = sharedPref.getBoolean("internet", true);
+			        
+			        NetworkActivity networkManager = new NetworkActivity();
+			        if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){
+		            	DialogFragment newFragment = new DialogActivity(joke, getBaseContext(), networkManager);
+		            	newFragment.show(getSupportFragmentManager(), "ocenianie");
+		        	}
+		        	else{
+		        		Toast toast = Toast.makeText(getBaseContext(),"Nie można ocenić - brak łączności, lub nieaktywna opcja",Toast.LENGTH_SHORT);
+				        toast.show();
+		        	}
+					
 				}
 			});
 			
@@ -327,11 +339,9 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 				img.setImageResource(R.drawable.heart);
 			}
 			
-			/*
-			if(catName.contains("O blondynkach")){
-				img.setImageResource(R.drawable.);
-			}
-			*/			
+			if(catName.contains("O Blondynkach")){
+				img.setImageResource(R.drawable.blondynka);
+			}		
 			
 			if(catName.contains("Zboczone")){
 				img.setImageResource(R.drawable.zboczone);

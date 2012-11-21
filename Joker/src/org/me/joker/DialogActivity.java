@@ -12,10 +12,12 @@ public class DialogActivity extends DialogFragment {
 	
 	private Joke joke;
 	private Context context;
+	private NetworkActivity networkManager;
 	
-	public DialogActivity(Joke joke, Context context){
+	public DialogActivity(Joke joke, Context context, NetworkActivity nM){
 		this.joke = joke;
 		this.context = context;
+		networkManager = nM;
 	}
 	
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -23,7 +25,6 @@ public class DialogActivity extends DialogFragment {
         builder.setMessage(R.string.ocenianie)
                .setPositiveButton(R.string.tak, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
-                	   NetworkActivity networkManager = new NetworkActivity();
    		        		networkManager.voteUploadPlus(joke.getGuidFromDb());
    		        	
    		        		Toast toast = Toast.makeText(context,"Przes³ano ocenê, dziêkujemy.",Toast.LENGTH_SHORT);
@@ -37,7 +38,6 @@ public class DialogActivity extends DialogFragment {
                })
                .setNeutralButton(R.string.nie, new DialogInterface.OnClickListener() {
             	   public void onClick(DialogInterface dialog, int id) {
-            		   NetworkActivity networkManager = new NetworkActivity();
   		        		networkManager.voteUploadMinus(joke.getGuidFromDb());
   		        	
   		        		Toast toast = Toast.makeText(context,"Przes³ano ocenê, dziêkujemy.",Toast.LENGTH_SHORT);
