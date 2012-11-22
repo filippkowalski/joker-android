@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:text="	Joker to aplikacja zawierająca samodzielnie wybrane, najlepsze według nas kawały. Dla polepszenia selekcji kawałów wprowadziliśmy ocenianie oraz sortowanie według ocen. Jednakże, wymagane jest połączenie z internetem aby posiadać najnowsze kawały. Polecamy przewijać kawały używając przycisku od głośności. Jeśli podoba Ci się aplikacja będziemy wdzięczni za ocenę." />
+            android:text="	Joker to aplikacja zawierająca samodzielnie wybrane, najlepsze według nas kawały. Dla polepszenia selekcji kawałów wprowadziliśmy ocenianie oraz sortowanie według ocen. Jednakże, wymagane jest połączenie z internetem aby posiadać najnowsze oceny do kawałów. Polecamy przewijać kawały używając przycisku od głośności. Jeśli podoba Ci się aplikacja będziemy wdzięczni za ocenę." />
 
     </TableRow>
 
