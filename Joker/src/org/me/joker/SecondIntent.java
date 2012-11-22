@@ -50,7 +50,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	        
 	        sort = Integer.parseInt(sharedPref.getString("pref_list", "4"));
 	        
-	        float fontSize = Float.parseFloat(sharedPref.getString("font_list", "Medium"));
+	        float fontSize = Float.parseFloat(sharedPref.getString("font_list", "20.0"));
 	        
 	        
 	        
@@ -122,8 +122,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	        
 	        ImageButton socialshare = (ImageButton)findViewById(R.id.socialshare);
 	        socialshare.setOnClickListener(new OnClickListener(){
-	        	public void onClick(View view){
-	        		
+	        	public void onClick(View view){	        		
 	        		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 	        		sharingIntent.setType("text/plain");
 	        		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, joke.getContent() +'\n'+"Kawał znaleziony w aplikacji Joker - http://bitly.com/TxgVn6");

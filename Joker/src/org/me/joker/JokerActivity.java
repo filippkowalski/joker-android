@@ -9,21 +9,71 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.Toast;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
  
 public class JokerActivity extends Activity{
 	
 	private final static String APP_PNAME = "org.me.joker";  
-  
+	
+	
+	
+	//przy kliknieciu 'menu'
+	@Override
+	 public boolean onCreateOptionsMenu(Menu menu) {
+	     getMenuInflater().inflate(R.menu.menu, menu);
+	     return true;
+	}
+	
+	//obsluga przyciskow menu
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+		
+        int itemId = item.getItemId();
+        
+		if (itemId == R.id.item1) {
+			Intent i1 = new Intent(Intent.ACTION_SEND);
+    		i1.setType("message/rfc822");
+    		i1.putExtra(Intent.EXTRA_EMAIL  , new String[]{"void.studio7@gmail.com"});
+    		i1.putExtra(Intent.EXTRA_SUBJECT, "Propozycja kawa³u dla aplikacji Joker");
+    		i1.putExtra(Intent.EXTRA_TEXT   , "Zaproponuj nam kawa³ - jeœli bêdzie dobry, uwzglêdnimy go w kolejnym updeacie, a Tobie damy o tym znaæ ;)");
+    		try {
+    			startActivity(Intent.createChooser(i1, "Wysy³anie maila..."));
+    		} catch (android.content.ActivityNotFoundException ex) {
+    			Toast.makeText(JokerActivity.this, "Nie masz ¿adnych klientów pocztowych do wykonania tej akcji...", Toast.LENGTH_SHORT).show();
+    		}
+		} else if (itemId == R.id.item2) {
+        	setContentView(R.layout.poradnik); 
+		} else if (itemId == R.id.item3) {
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pub:VoidStudio")));
+		} else if (itemId == R.id.item4){
+			Intent i1 = new Intent(Intent.ACTION_SEND);
+    		i1.setType("message/rfc822");
+    		i1.putExtra(Intent.EXTRA_EMAIL  , new String[]{"void.studio7@gmail.com"});
+    		i1.putExtra(Intent.EXTRA_SUBJECT, "Sugestie odnoœnie aplikacji Joker");
+    		i1.putExtra(Intent.EXTRA_TEXT   , "Bêdziemy wdziêczni za ka¿de sugestie dotycz¹ce aplikacji. Dziêkujemy;).");
+    		try {
+    			startActivity(Intent.createChooser(i1, "Wysy³anie maila..."));
+    		} catch (android.content.ActivityNotFoundException ex) {
+    			Toast.makeText(JokerActivity.this, "Nie masz ¿adnych klientów pocztowych do wykonania tej akcji...", Toast.LENGTH_SHORT).show();
+    		}
+		}
+		
+ 
+        return true;
+    }
+ 
+	//g³ówne okno
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,9 +156,6 @@ public class JokerActivity extends Activity{
         		
         		toast.setView(toastView);
         		toast.show();
-        	}
-    
-        
-    }
-   
+        	}           
+    }  
 }

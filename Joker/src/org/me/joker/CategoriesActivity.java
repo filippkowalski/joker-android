@@ -135,4 +135,6 @@ public class CategoriesActivity extends Activity {
 		intent.putExtra("CATEGORY", catName);
 		startActivity(intent);
     }
+    
+    
 }
