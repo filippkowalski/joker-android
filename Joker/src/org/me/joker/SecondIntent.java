@@ -66,7 +66,19 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 
 	        if (catId == 0){
 	        	joke = new Joke(getApplicationContext());
-	        }	     
+	        }	
+	        else if(catId == 1){
+	        	joke = new Joke(getApplicationContext(),sort);
+	        	try{
+	        		joke.checkNumberOfJokesInCategory();
+	        		joke.refreshJoke();
+	        	}
+	        	catch(Exception e){
+	        		makeToast("Brak ulubionych kawałów");
+			        SecondIntent.this.finish();
+	        	}
+	        	
+	        }
 	        else{	        	
 	        	joke = new Joke(catId, getApplicationContext(), sort);
 	        }
@@ -107,18 +119,14 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 
 	        
 	        //licznik
-	        try{
+
 	        	final TextView nr = (TextView)findViewById(R.id.nr);
 	        	if (!catName.contains("Losowe")){
 	        		nr.setText(joke.getNumber());
 	        	}
 	        	else
 	        		nr.setText("");
-	        }
-	        catch(Exception e){
-	        	makeToast("Brak ulubionych kawałów");
-		        SecondIntent.this.finish();
-	        }
+	        
 	        
 	        ImageButton socialshare = (ImageButton)findViewById(R.id.socialshare);
 	        socialshare.setOnClickListener(new OnClickListener(){
@@ -143,6 +151,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 							joke.deleteFromFavouritesInFavourites();
 							try{
 								kawal.setText(joke.getPrevious());
+								joke.checkNumberOfJokesInCategory();
 								joke.onPreviousButtonClick();
 								kawal.scrollTo(0, 0);
 					        	 

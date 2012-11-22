@@ -246,20 +246,46 @@ public class DatabaseAdapter{
 		
         //metoda zwaraca voteup kawa³u
 		public String loadVoteUp(int catId, int jokeId){
-            
-		    DatabaseHelper dbh = new DatabaseHelper(context);
-		   
+			DatabaseHelper dbh = new DatabaseHelper(context);
+			   
 		    dbh.openDatabase();
 		   
-		    String voteup = null;
+		    String voteup = "0";
 		    db = dbh.getDatabase();
+		    
 		    Cursor c;
-		  	c = db.rawQuery("SELECT voteup FROM " + DB_TABLE + " WHERE _id like " + jokeId, null);
-		    c.moveToFirst();
-		    
-		    voteup = c.getString(c.getColumnIndex("voteup"));
-		    
-		    c.close();
+			if (!DB_TABLE.contains("ulubione")){
+            
+			    c = db.rawQuery("SELECT voteup FROM " + DB_TABLE + " WHERE _id like " + jokeId, null);
+			    c.moveToFirst();
+			    
+			    voteup = c.getString(c.getColumnIndex("voteup"));
+			    
+			    
+			}
+			else {
+				c = db.rawQuery("SELECT category, jokeId FROM ulubione WHERE _id = " + jokeId, null);
+				try{
+		        	c.moveToFirst();
+		        	
+		        	int categId = c.getInt(c.getColumnIndex("category"));
+		        	int jokeID = c.getInt(c.getColumnIndex("jokeId"));
+		        	
+		        	String category = getCategory(categId);
+		        	
+		        	Cursor cursor = db.rawQuery("SELECT voteup FROM " + category + " WHERE _id like " + jokeID, null);
+				    cursor.moveToFirst();
+				    
+				    voteup = cursor.getString(cursor.getColumnIndex("voteup"));
+				    
+				    cursor.close();
+				}
+				catch(Exception e){
+					
+				}
+				
+			}
+			c.close();
 		    db.close();
 		    dbh.close();
 		    return voteup;
@@ -272,13 +298,40 @@ public class DatabaseAdapter{
 		   
 		    dbh.openDatabase();
 		   
-		    String votedown = null;
+		    String votedown = "0";
 		    db = dbh.getDatabase();
-		    Cursor c;
-		  	c = db.rawQuery("SELECT votedown FROM " + DB_TABLE + " WHERE _id like " + jokeId, null);
-		    c.moveToFirst();
 		    
-		    votedown = c.getString(c.getColumnIndex("votedown"));
+		    Cursor c;
+		    if (!DB_TABLE.contains("ulubione")){
+	            
+			    c = db.rawQuery("SELECT votedown FROM " + DB_TABLE + " WHERE _id like " + jokeId, null);
+			    c.moveToFirst();
+			    
+			    votedown = c.getString(c.getColumnIndex("votedown"));
+			    
+			}
+			else {
+				c = db.rawQuery("SELECT category, jokeId FROM ulubione WHERE _id = " + jokeId, null);
+				try{
+					c.moveToFirst();
+		        	
+		        	int categId = c.getInt(c.getColumnIndex("category"));
+		        	int jokeID = c.getInt(c.getColumnIndex("jokeId"));
+		        	
+		        	String category = getCategory(categId);
+		        	
+		        	Cursor cursor = db.rawQuery("SELECT votedown FROM " + category + " WHERE _id like " + jokeID, null);
+				    cursor.moveToFirst();
+				    
+				    votedown = cursor.getString(cursor.getColumnIndex("votedown"));
+				    
+				    cursor.close();
+				}
+				catch (Exception e){
+					
+				}
+	        	
+			}
 		    
 		    c.close();
 		    db.close();

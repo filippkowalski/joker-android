@@ -27,7 +27,7 @@ public class Joke {
 	
 	// Konstruktor
 	
-	public Joke(int catId, Context context, int sort) throws RuntimeException{
+	public Joke(int catId, Context context, int sort){
 		
 		setCategory(catId);
 		this.context = context;
@@ -37,6 +37,16 @@ public class Joke {
 		refreshJoke();		
 	}
 	
+	//Konstruktor dla kawalow ulubionych do sprawdzenia czy istnieja jakiekolwiek kawaly w tej kategorii
+	
+	public Joke(Context context, int sort){
+		this.context = context;
+		this.sort = sort;
+		setCategory(1);
+	}
+	
+	
+	//Konstruktor dla losowych kawalow
 	public Joke(Context context){
 		setRandomJoke();
 		this.context = context;
@@ -169,7 +179,13 @@ public class Joke {
 		setNext(getJokeFromDatabase(getNextJokeId()));
 		setPrevious(getJokeFromDatabase(getPreviousJokeId()));
 		setNumber(getJokeNumber());
-		checkIfFavourite();
+		try{
+			checkIfFavourite();
+		}
+		catch (Exception e){
+			setFavourite(true);
+		}
+		
 	}
 	
 	public int getNextJokeId(){
