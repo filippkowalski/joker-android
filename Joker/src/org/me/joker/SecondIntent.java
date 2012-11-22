@@ -151,8 +151,12 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 							joke.deleteFromFavouritesInFavourites();
 							try{
 								kawal.setText(joke.getPrevious());
+								
 								joke.checkNumberOfJokesInCategory();
+								TextView nr = (TextView)findViewById(R.id.nr);
+						        nr.setText(joke.getNumber());
 								joke.onPreviousButtonClick();
+								
 								kawal.scrollTo(0, 0);
 					        	 
 					        	makeToast("Kawał został usunięty z ulubionych");
