@@ -1,6 +1,7 @@
 package org.me.joker;
 
 import java.io.IOException;
+import java.lang.Thread;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -140,9 +141,14 @@ public class JokerActivity extends Activity{
 	        
 	        boolean connectionAllow = sharedPref.getBoolean("internet", true);
         
-        	NetworkActivity networkManager = new NetworkActivity();
+        	final NetworkActivity networkManager = new NetworkActivity();
         	if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){
-            	networkManager.updateSqliteVoteDb();
+        		Thread t = new Thread(){
+        			public void run(){
+        				networkManager.updateSqliteVoteDb();
+        			}
+        		};
+        		t.start();
         	}
         	else{
         		Toast toast = Toast.makeText(getBaseContext(),"Brak po³¹czenia z internetem, oceny mog¹ byc nieaktualne",Toast.LENGTH_SHORT);
