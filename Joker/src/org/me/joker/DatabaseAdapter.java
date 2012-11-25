@@ -212,12 +212,6 @@ public class DatabaseAdapter{
         	
         	db.update(DB_TABLE, update, strFilter, null);
         	
-        	ContentValues values = new ContentValues();
-        	values.put(Key_Joke, joke);
-        	values.put("category", catId);
-        	values.put("jokeId", jokeId);
-        	
-        	db.insert("ulubione", null, values);
         	db.close();
         }
         
@@ -446,12 +440,12 @@ public class DatabaseAdapter{
             return fav;
         }
 
-        public int getNumberOfFavsInCategory(){
+        public int getNumberOfFavsInCategory(int catId){
         	int numberOfFavs = 0;
         	
         	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
         	
-        	Cursor c = db.rawQuery("SELECT _id FROM " + DB_TABLE + " WHERE fav LIKE 1", null);
+        	Cursor c = db.rawQuery("SELECT _id FROM " + getCategory(catId) + " WHERE fav LIKE 1", null);
         	
         	numberOfFavs = c.getCount();
         	
@@ -460,14 +454,14 @@ public class DatabaseAdapter{
         	return numberOfFavs;
         }
         
-        public String getLastFavouriteJoke(int jokeId){
+        public String getLastFavouriteJoke(int catId, int jokeId){
         	String joke = "";
         	
         	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
         	
-        	Cursor c = db.rawQuery("SELECT text FROM sqlite_master WHERE fav LIKE 1", null);
+        	Cursor c = db.rawQuery("SELECT text FROM " + getCategory(catId) + " WHERE fav LIKE 1", null);
         	
-        	c.moveToPosition(jokeId);
+        	c.moveToPosition(jokeId - 1);
         	
         	joke = c.getString(c.getColumnIndex("text"));
         	
