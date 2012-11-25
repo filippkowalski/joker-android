@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:background="@drawable/jokerbckg"
+	    android:orientation="horizontal"
+	    android:gravity="center" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Informacje"
+        android:textColor="#ffffff"
+        android:textSize="50sp" />
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </TableRow>
+    
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="	Joker to aplikacja zawierająca samodzielnie wybrane, najlepsze według nas kawały. Dla polepszenia selekcji kawałów wprowadziliśmy ocenianie oraz sortowanie według ocen. Jednakże, wymagane jest połączenie z internetem aby posiadać najnowsze oceny do kawałów. Polecamy przewijać kawały używając przycisku od głośności. Jeśli podoba Ci się aplikacja będziemy wdzięczni za ocenę."
+            android:textColor="#000000"
+            android:textSize="30sp" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </TableRow>
+
+</TableLayout>

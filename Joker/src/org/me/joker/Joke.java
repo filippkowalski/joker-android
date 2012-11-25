@@ -13,10 +13,12 @@ public class Joke {
 	private String next;
 	private String previous;
 	private int category;
+	private int categoryFromFavourites;
 	private int id;
 	private int guid;
 	private String number;
 	private int numberOfJokesInCategory;
+	private int numberOfJokesInFavourites = 0;
 	private boolean rated;
 	private boolean favourite;
 	
@@ -37,7 +39,7 @@ public class Joke {
 		refreshJoke();		
 	}
 	
-	//Konstruktor dla kawalow ulubionych do sprawdzenia czy istnieja jakiekolwiek kawaly w tej kategorii
+	//Konstruktor dla kawalow ulubionych
 	
 	public Joke(Context context, int sort){
 		this.context = context;
@@ -86,6 +88,14 @@ public class Joke {
 		return category;
 	}
 	
+	public void setCategoryFromFavourites(int a){
+		categoryFromFavourites = a;
+	}
+	
+	public int getCategoryFromFavourites(){
+		return categoryFromFavourites;
+	}
+	
 	public void setId(int a){
 		id = a;
 	}
@@ -110,8 +120,20 @@ public class Joke {
 		return number;
 	}
 	
+	public void setNumberOfJokesInCategory(int a){
+		numberOfJokesInCategory = a;
+	}
+	
 	public int getNumberOfJokesInCategory(){
 		return numberOfJokesInCategory;
+	}
+	
+	public void setNumberOfJokesInFavourites(int a){
+		numberOfJokesInFavourites = a;
+	}
+	
+	public int getNumberOfJokesInFavourites(){
+		return numberOfJokesInFavourites;
 	}
 	
 	public void setRated(boolean a){
@@ -149,7 +171,14 @@ public class Joke {
 	
 	public String getJokeNumber(){
 		String number = Integer.toString(getId());
-        String lastNumber = Integer.toString(getNumberOfJokesInCategory());
+		String lastNumber;
+		if (getCategory() != 1){
+			lastNumber = Integer.toString(getNumberOfJokesInCategory());
+		}
+		else {
+			lastNumber = Integer.toString(getNumberOfJokesInFavourites());
+		}
+        
         return number + "/" + lastNumber;
 	}
 	
@@ -170,7 +199,7 @@ public class Joke {
 	
 	public void checkNumberOfJokesInCategory(){
 		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
-		numberOfJokesInCategory = dba.getLastInsertedID();
+		setNumberOfJokesInCategory(dba.getLastInsertedID());
 	}	
 	
 	public void refreshJoke(){
@@ -179,13 +208,13 @@ public class Joke {
 		setNext(getJokeFromDatabase(getNextJokeId()));
 		setPrevious(getJokeFromDatabase(getPreviousJokeId()));
 		setNumber(getJokeNumber());
-		try{
-			checkIfFavourite();
-		}
-		catch (Exception e){
-			setFavourite(true);
-		}
+		checkIfFavourite();
 		
+	}
+	
+	public void  refreshFavouriteJoke(){
+		setId(getLastReadJokeId());
+		setContent(getLastFavouriteJoke());
 	}
 	
 	public int getNextJokeId(){
@@ -261,6 +290,39 @@ public class Joke {
 	public void checkIfFavourite(){
 		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
 		setFavourite(dba.checkFavourite(getId()));
+	}
+	
+	public int getNumberOfFavsInCategory(){
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
+		return dba.getNumberOfFavsInCategory();
+	}
+	
+	public void checkNumberOfJokesInFavourites(int catId){
+		for (int i = 2; i <= 11; i++){
+			setCategory(i);
+			setNumberOfJokesInFavourites(getNumberOfJokesInFavourites() + getNumberOfFavsInCategory());
+		}
+		setCategory(catId);
+	}
+	
+	public int checkCategory(int jokeId){
+		setCategory(2);
+		int tmp = 0;
+		while (jokeId < getNumberOfJokesInFavourites() && tmp < jokeId){
+			tmp += getNumberOfJokesInCategory();
+			setCategory(getCategory() + 1);
+		}
+		tmp = getCategory();
+		setCategory(1);
+		return tmp;
+	}
+	
+	public String getLastFavouriteJoke(){
+		String joke = "";
+		
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
+		
+		return joke;
 	}
 	
 }

@@ -21,14 +21,12 @@ public class DatabaseAdapter{
         public static Cursor cursor;
        
         private final Context context;
-        public DatabaseHelper DBHelper;
         private SQLiteDatabase db;
        
        
         public DatabaseAdapter(int category, Context context, int sort){
                 DB_TABLE = getCategory(category);
                 this.context = context;
-                DBHelper = new DatabaseHelper(context);
                 this.sort = sort;
         }    
         
@@ -399,6 +397,8 @@ public class DatabaseAdapter{
         	
         	int id = c.getInt(c.getColumnIndex("_id"));
         	
+        	c.close();
+        	
         	db.execSQL("DELETE FROM ulubione WHERE _id = " + id);
         	
         	String strFilter = "_id=" + jokeId;
@@ -428,12 +428,7 @@ public class DatabaseAdapter{
 	            Cursor c = db.rawQuery("SELECT fav FROM " + DB_TABLE + " WHERE _id like " + jokeId, null);
 	            c.moveToFirst();
 	            
-	            if (c.isNull(c.getColumnIndex("fav"))){
-	            	ulub = "0";
-	            }
-	            else{
-	            	ulub = c.getString(c.getColumnIndex("fav"));
-		        }
+	            ulub = c.getString(c.getColumnIndex("fav"));
 	            
 	            c.close();
 	            dbh.close();
@@ -451,4 +446,33 @@ public class DatabaseAdapter{
             return fav;
         }
 
+        public int getNumberOfFavsInCategory(){
+        	int numberOfFavs = 0;
+        	
+        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
+        	
+        	Cursor c = db.rawQuery("SELECT _id FROM " + DB_TABLE + " WHERE fav LIKE 1", null);
+        	
+        	numberOfFavs = c.getCount();
+        	
+        	c.close();
+        	db.close();
+        	return numberOfFavs;
+        }
+        
+        public String getLastFavouriteJoke(int jokeId){
+        	String joke = "";
+        	
+        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
+        	
+        	Cursor c = db.rawQuery("SELECT text FROM sqlite_master WHERE fav LIKE 1", null);
+        	
+        	c.moveToPosition(jokeId);
+        	
+        	joke = c.getString(c.getColumnIndex("text"));
+        	
+        	c.close();
+        	db.close();
+        	return joke;
+        }
 }
