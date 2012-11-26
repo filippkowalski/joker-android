@@ -9,7 +9,7 @@
     <item
         android:id="@+id/item2"
         android:orderInCategory="2"
-        android:title="Pordnik po aplikacji">
+        android:title="Poradnik po aplikacji">
     </item>
     <item
         android:id="@+id/item3"

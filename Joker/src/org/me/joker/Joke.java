@@ -294,7 +294,7 @@ public class Joke {
 	
 	public void setRandomJoke(){
 		Random rand = new Random();
-		int randomCategory = rand.nextInt(10)+1;
+		int randomCategory = rand.nextInt(9)+2;
 		
 		setCategory(randomCategory);
 		checkNumberOfJokesInCategory();

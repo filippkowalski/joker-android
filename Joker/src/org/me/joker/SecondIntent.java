@@ -294,15 +294,18 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 				public void onClick(View view){
 					SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 			        
+					//sprawdzenie czy jest włączona opcja połączenia z internetem
 			        boolean connectionAllow = sharedPref.getBoolean("internet", true);
 			        
 			        NetworkActivity networkManager = new NetworkActivity();
+			        
+			        //sprawdzenie czy jest połączenie 
 			        if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){
 		            	DialogFragment newFragment = new DialogActivity(joke, networkManager);
 		            	newFragment.show(getSupportFragmentManager(), "ocenianie");
 		        	}
 		        	else{
-		        		makeToast("Nie można ocenić - brak łączności, lub nieaktywna opcja");
+		        		makeToast("Nie można ocenić - brak łączności, lub nieaktywna opcja.");
 		        	}
 					
 				}
