@@ -439,6 +439,32 @@ public class DatabaseAdapter{
             
             return fav;
         }
+        
+        public String checkVoted(int catId, int jokeId){
+        	DatabaseHelper dbh = new DatabaseHelper(context);
+			   
+		    dbh.openDatabase();
+		   
+		    String voted = "0";
+		    db = dbh.getDatabase();
+		    
+		    Cursor c;
+			if (!DB_TABLE.contains("ulubione")){
+            
+			    c = db.rawQuery("SELECT voted FROM " + DB_TABLE + " WHERE _id like " + jokeId, null);
+			    c.moveToFirst();
+			    
+			    voted = c.getString(c.getColumnIndex("voted"));		    
+			    c.close();
+			}
+			else {
+				voted = "1";				
+			}
+			
+		    db.close();
+		    dbh.close();
+		    return voted;
+        }
 
         public int getNumberOfFavsInCategory(int catId){
         	int numberOfFavs = 0;

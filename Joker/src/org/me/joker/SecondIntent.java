@@ -12,22 +12,22 @@ import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.gesture.Prediction;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.method.ScrollingMovementMethod;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.KeyEvent;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 
-public class SecondIntent extends FragmentActivity implements OnGesturePerformedListener{
+public class SecondIntent extends FragmentActivity implements OnGesturePerformedListener, DialogActivity.NoticeDialogListener{
 	
 	private GestureLibrary mLibrary;
 	
@@ -103,6 +103,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 			
 			//przerabia na int
 			int sredniaInt = (Integer.parseInt(joke.getVoteUpFromDb())-Integer.parseInt(joke.getVoteDownFromDb()));
+			
 			
 			//ustawienie sredniej oceny
 			if (sredniaInt > 0){
@@ -288,26 +289,33 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 					
 				}
 			});
+    
 			
+			//button oceniania
 			ImageButton ocen = (ImageButton)findViewById(R.id.ocen);
 			ocen.setOnClickListener(new OnClickListener(){
 				public void onClick(View view){
 					SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-			        
-					//sprawdzenie czy jest włączona opcja połączenia z internetem
-			        boolean connectionAllow = sharedPref.getBoolean("internet", true);
-			        
-			        NetworkActivity networkManager = new NetworkActivity();
-			        
-			        //sprawdzenie czy jest połączenie 
-			        if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){
-		            	DialogFragment newFragment = new DialogActivity(joke, networkManager);
-		            	newFragment.show(getSupportFragmentManager(), "ocenianie");
-		        	}
-		        	else{
-		        		makeToast("Nie można ocenić - brak łączności, lub nieaktywna opcja.");
-		        	}
-					
+				        
+				    boolean connectionAllow = sharedPref.getBoolean("internet", true);
+				    NetworkActivity networkManager = new NetworkActivity();
+				    
+			        if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){  
+						//pobranie informacji o tym czy użytkownik głosował czy nie
+						String voted = joke.checkIfVoted();					
+						//sprawdzenie czy już głosowano
+						if(voted.equals("0")){  
+				        
+					        //sprawdzenie czy jest połączenie 
+					        if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){
+					        	showNoticeDialog();
+				            	            	
+				        	}
+				        	else makeToast("Nie można ocenić - brak łączności, lub nieaktywna opcja.");
+						}
+						else makeToast("Już zagłosowałeś na ten kawał. Zobaczysz swoją ocenę przy następnej aktualizacji bazy.");					
+			        }
+			        else makeToast("Nie możesz głosować, ponieważ nie masz połączenia z internetem lub nie włączyłeś opcji oceniania.");
 				}
 			});
 			
@@ -393,8 +401,8 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 		        gestures.addOnGesturePerformedListener(this);
         
 }
-	
-	
+		
+
 	public void checkGraph(ImageButton ulub, Joke joke){
     	if(catName.contains("ULUBIONE") || joke.getFavourite()){
         	ulub.setImageResource(R.drawable.removebutton);
@@ -665,5 +673,34 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
    		
    		toast.setView(toastView);
    		toast.show();
+	}
+	
+	
+	
+	/*
+	 * 3 metody odpowiadające za reakcje na pojawiający się dialog
+	 */
+	public void showNoticeDialog() {
+		NetworkActivity networkManager = new NetworkActivity();
+		Joke joke = new Joke(getApplicationContext());
+		
+		DialogFragment newFragment = new DialogActivity(joke, networkManager);
+    	newFragment.show(getSupportFragmentManager(), "ocenianie");
+    }
+
+
+	public void onDialogPositiveClick(DialogFragment dialog) {
+		DatabaseAdapter dba = new DatabaseAdapter(catId, null, 0);
+		final Joke joke;
+		joke = new Joke(getApplicationContext());
+    	dba.saveToDb("voted", "1", joke.getId(), catId);		
+	}
+
+
+	public void onDialogNegativeClick(DialogFragment dialog) {
+		DatabaseAdapter dba = new DatabaseAdapter(catId, null, 0);
+		final Joke joke;
+		joke = new Joke(getApplicationContext());
+    	dba.saveToDb("voted", "1", joke.getId(), catId);		
 	}
 }

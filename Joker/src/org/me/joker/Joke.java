@@ -164,6 +164,7 @@ public class Joke {
 		return favourite;
 	}
 	
+	
 	// Metody
 	
 	public int getLastReadJokeId(){
@@ -321,6 +322,12 @@ public class Joke {
 	public void checkIfFavourite(){
 		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
 		setFavourite(dba.checkFavourite(getId()));
+	}
+	
+	//sprawdza czy w bazie czy flaga jest ustawiona na voted
+	public String checkIfVoted(){
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
+		return dba.checkVoted(getCategory(), getId());
 	}
 	
 	public int getNumberOfFavsInCategory(){
