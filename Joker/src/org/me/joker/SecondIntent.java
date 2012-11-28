@@ -35,6 +35,8 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	private String catName = "Kategoria";
 	
 	public int sort = 4;
+	
+	Joke joke;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -60,8 +62,6 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	        Bundle bundle = getIntent().getExtras();
 	        catId = bundle.getInt("ID");
 	        catName = bundle.getString("CATEGORY");
-	        
-	        final Joke joke;
 
 
 	        if (catId == 0){
@@ -330,50 +330,50 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 				img.setImageResource(R.drawable.chuck);
 			}
 			
-			if(catName.contains("O studentach")){
+			else if(catName.contains("O studentach")){
 				img.setImageResource(R.drawable.ostudentach);
 			}
 			
-			if(catName.contains("O facetach")){
+			else if(catName.contains("O facetach")){
 				img.setImageResource(R.drawable.ofacetach);
 			}
 			
-			if(catName.contains("O zwierzętach")){
+			else if(catName.contains("O zwierzętach")){
 				img.setImageResource(R.drawable.ozwierzetach);
 			}
 			
-			if(catName.contains("Turbo Suchary")){
+			else if(catName.contains("Turbo Suchary")){
 				img.setImageResource(R.drawable.turbosuchary);
 			}
 			
-			if(catName.contains("Chamskie")){
+			else if(catName.contains("Chamskie")){
 				img.setImageResource(R.drawable.chamskie);
 			}
 			
-			if(catName.contains("Losowe")){
+			else if(catName.contains("Losowe")){
 				img.setImageResource(R.drawable.random);
 			}
 			
-			if(catName.contains("Ulubione")){
+			else if(catName.contains("Ulubione")){
 				img.setImageResource(R.drawable.heart);
 			}
 			
-			if(catName.contains("O Blondynkach")){
+			else if(catName.contains("O Blondynkach")){
 				img.setImageResource(R.drawable.blondynka);
 			}		
 			
-			if(catName.contains("Zboczone")){
+			else if(catName.contains("Zboczone")){
 				img.setImageResource(R.drawable.zboczone);
 			}		
 						
 						
-			if(catName.contains("O Kobietach")){
+			else if(catName.contains("O Kobietach")){
 				img.setImageResource(R.drawable.kobiety);
 			}
 			
-			if(catName.contains("O Jasiu")){
+			else if(catName.contains("O Jasiu")){
 					img.setImageResource(R.drawable.johnny);
-				}
+			}
 		
 
 	        
@@ -415,14 +415,6 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	//metoda obslugujaca gesty
 	public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
 		ArrayList<Prediction> predictions = mLibrary.recognize(gesture);
-		
-		final Joke joke;
-		if (!catName.contains("Losowe")){
-			joke = new Joke(catId, getApplicationContext(), sort);
-		}
-		else{
-			joke = new Joke(getApplicationContext());
-		}
 			
         final TextView kawal = (TextView)findViewById(R.id.joke);
         final ImageButton ulub = (ImageButton)findViewById(R.id.fav);
@@ -547,14 +539,6 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
-		
-		final Joke joke;
-		if (!catName.contains("Losowe")){
-			joke = new Joke(catId, getApplicationContext(), sort);
-		}
-		else{
-			joke = new Joke(getApplicationContext());
-		}
 			
         final TextView kawal = (TextView)findViewById(R.id.joke);
         final ImageButton ulub = (ImageButton)findViewById(R.id.fav);
@@ -682,7 +666,6 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	 */
 	public void showNoticeDialog() {
 		NetworkActivity networkManager = new NetworkActivity();
-		Joke joke = new Joke(getApplicationContext());
 		
 		DialogFragment newFragment = new DialogActivity(joke, networkManager);
     	newFragment.show(getSupportFragmentManager(), "ocenianie");
@@ -691,16 +674,14 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 
 	public void onDialogPositiveClick(DialogFragment dialog) {
 		DatabaseAdapter dba = new DatabaseAdapter(catId, null, 0);
-		final Joke joke;
-		joke = new Joke(getApplicationContext());
-    	dba.saveToDb("voted", "1", joke.getId(), catId);		
+    	dba.saveToDb("voted", "1", joke.getId(), catId);	
+    	makeToast("Dziękujemy za ocenienie kawału.");
 	}
 
 
 	public void onDialogNegativeClick(DialogFragment dialog) {
 		DatabaseAdapter dba = new DatabaseAdapter(catId, null, 0);
-		final Joke joke;
-		joke = new Joke(getApplicationContext());
-    	dba.saveToDb("voted", "1", joke.getId(), catId);		
+    	dba.saveToDb("voted", "1", joke.getId(), catId);	
+    	makeToast("Dziękujemy za ocenienie kawału.");
 	}
 }

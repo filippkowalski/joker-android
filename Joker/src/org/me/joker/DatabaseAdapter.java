@@ -480,7 +480,7 @@ public class DatabaseAdapter{
         	return numberOfFavs;
         }
         
-        public String getLastFavouriteJoke(int catId, int jokeId){
+        public String getFavouriteJoke(int catId, int jokeId){
         	String joke = "";
         	
         	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
