@@ -47,6 +47,7 @@ public class Joke {
 		this.sort = sort;
 		setCategory(1);
 		checkNumberOfJokesInFavourites();
+		setFavourite(true);
 		
 		refreshFavouriteJoke();
 	}
@@ -231,6 +232,7 @@ public class Joke {
 		setContent(getLastFavouriteJoke());
 		setNext(getFavouriteJoke(getNextJokeId()));
 		setPrevious(getFavouriteJoke(getPreviousJokeId()));
+		setNumber(getJokeNumber());
 	}
 	
 	public int getNextJokeId(){
@@ -268,30 +270,41 @@ public class Joke {
 	public void onNextButtonClick(){
 		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
 		dba.setLastJokePlus(getCategory());
-		refreshJoke();
+		if (getCategory() != 1){
+			refreshJoke();
+		}
+		else {
+			refreshFavouriteJoke();
+		}
 	}
 	
 	public void onPreviousButtonClick(){
 		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
 		dba.setLastJokeMinus(getCategory());
-		refreshJoke();
+		if (getCategory() != 1){
+			refreshJoke();
+		}
+		else {
+			refreshFavouriteJoke();
+		}
 	}
 	
 	public void addToFavourites(){
 		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
-		dba.addJokeToFavourites(getContent(), getCategory(), getId());
+		dba.addJokeToFavourites(getId());
 		setFavourite(true);
 	}
 	
-	public void deleteFromFavouritesInFavourites(){
+	public void deleteFromFavourites(){
 		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
-		dba.deleteJokeFromFavouritesInFavourites(getId());
-		setFavourite(false);
-	}
-	
-	public void deleteFromFavouritesInOtherCategory(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
-		dba.deleteJokeFromFavouritesInOtherCategory(getCategory(), getId());
+		
+		if (getCategory() != 1){
+			dba.deleteJokeFromFavourites(getCategory(), getId());
+		}
+		else{
+			dba.deleteJokeFromFavourites(getCategoryFromFavourites(), getId());
+		}
+		
 		setFavourite(false);
 	}
 	

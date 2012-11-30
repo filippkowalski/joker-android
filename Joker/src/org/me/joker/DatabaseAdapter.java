@@ -96,7 +96,7 @@ public class DatabaseAdapter{
         }
         
        /*
-        * Metoda zwraca ID ostatniego ogladanego ID
+        * Metoda zwraca ID ostatniego ogladanego kawalu
         */
        
         int getLastJokeId(int id) {
@@ -111,6 +111,26 @@ public class DatabaseAdapter{
             c.close();
             dbh.close();
             db.close();
+            
+            if(DB_TABLE.contains("ulubione")){
+            	int favs = 0;
+            	
+            	for (int i = 2; i <= 11; i++){
+        			favs += getNumberOfFavsInCategory(i);
+        		}
+            	if (ostatni > favs){
+                	ContentValues update = new ContentValues();
+                	update.put("ostatni", "" + favs);
+                	
+                	String strFilter = "_id=" + 1;
+                	
+                	db.update("kategorie", update, strFilter, null);
+                	
+                	db.close();
+                	
+                	ostatni = favs;
+            	}
+            }
             
             return ostatni;
         }
@@ -168,13 +188,22 @@ public class DatabaseAdapter{
          */
         
         public int getLastInsertedID(){
-        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
-        	Cursor c = db.query(DB_TABLE, new String[] {"_id"}, null, null, null, null, null);
-        	c.moveToLast();
-        	int lastID = (int)c.getLong(c.getColumnIndex("_id"));
-        	db.close();
-        	c.close();
+        	int lastID = 0;
+        	if (!DB_TABLE.contains("ulubione")){
+	        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
+	        	Cursor c = db.query(DB_TABLE, new String[] {"_id"}, null, null, null, null, null);
+	        	c.moveToLast();
+	        	lastID = (int)c.getLong(c.getColumnIndex("_id"));
+	        	db.close();
+	        	c.close();
+        	}
+        	else{
+        		for (int i = 2; i <= 11; i++){
+        			lastID += getNumberOfFavsInCategory(i);
+        		}
+        	}
         	return lastID;
+        	
         }
  
         /*
@@ -198,22 +227,7 @@ public class DatabaseAdapter{
             return category;
         }
         
-        /*
-         * Metoda dodaje przekazany kawal do bazy danych
-         */
-        
-        public void addJokeToFavourites(String joke, int catId, int jokeId){
-        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
-        	
-        	ContentValues update = new ContentValues();
-        	update.put("fav", "1");
-        	
-        	String strFilter = "_id=" + jokeId;
-        	
-        	db.update(DB_TABLE, update, strFilter, null);
-        	
-        	db.close();
-        }
+       
         
         //metoda zwaraca guid kawa³u
 		public String loadGuid(int catId, int jokeId){
@@ -348,67 +362,41 @@ public class DatabaseAdapter{
     		dbh.close();
     		db.close();
         }
+		
+		 /*
+         * Metoda dodaje przekazany kawal do ulubionych
+         */
+        
+        public void addJokeToFavourites(int jokeId){
+        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
+        	
+        	ContentValues update = new ContentValues();
+        	update.put("fav", "1");
+        	
+        	String strFilter = "_id=" + jokeId;
+        	
+        	db.update(DB_TABLE, update, strFilter, null);
+        	
+        	db.close();
+        }
         
         
         
         /*
          * Metoda usuwa kawal z ulubionych
          */
-        public void deleteJokeFromFavouritesInFavourites(int jokeIdInFav){
+        public void deleteJokeFromFavourites(int catId, int jokeId){
         	
         	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
-        	
-        	Cursor c = db.rawQuery("SELECT category, jokeId FROM ulubione WHERE _id = " + jokeIdInFav, null);
-        	c.moveToFirst();
-        	
-        	int catId = c.getInt(c.getColumnIndex("category"));
-        	int jokeId = c.getInt(c.getColumnIndex("jokeId"));
-        	
-        	String category = getCategory(catId);
-        	String strFilter = "_id=" + jokeId;
-        	
-        	c.close();
-        	db.close();
-        	
-        	SQLiteDatabase db1;
-        	db1 = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
         	
         	ContentValues update = new ContentValues();
         	update.put("fav", "0");
         	
-        	db1.update(category, update, strFilter, null);
-        	
-        	db1.execSQL("DELETE FROM ulubione WHERE _id = " + jokeIdInFav);
-        	
-        	db1.close();
-        }
-        
-        public void deleteJokeFromFavouritesInOtherCategory(int catId, int jokeId){
-        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
-        	
-        	Cursor c = db.rawQuery("SELECT _id FROM ulubione WHERE category = " + catId + " AND jokeId = " + jokeId, null);
-        	c.moveToFirst();
-        	
-        	int id = c.getInt(c.getColumnIndex("_id"));
-        	
-        	c.close();
-        	
-        	db.execSQL("DELETE FROM ulubione WHERE _id = " + id);
-        	
         	String strFilter = "_id=" + jokeId;
-        	String category = getCategory(catId);
+        	
+        	db.update(getCategory(catId), update, strFilter, null);
         	
         	db.close();
-        	
-        	SQLiteDatabase db1;
-        	db1 = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
-        	
-        	ContentValues update = new ContentValues();
-        	update.put("fav", "0");
-        	
-        	db1.update(category, update, strFilter, null);
-        	
-        	db1.close();
         }
         
         public boolean checkFavourite(int jokeId){

@@ -148,11 +148,11 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 					// Jesli jestesmy w kategorii ulubione to przycisk ten usunie kawal z tejze kategorii
 					try{
 						if(catName.contains("Ulubione")){
-							joke.deleteFromFavouritesInFavourites();
+							joke.deleteFromFavourites();
 							try{
 								kawal.setText(joke.getPrevious());
 								
-								joke.checkNumberOfJokesInCategory();
+								joke.checkNumberOfJokesInFavourites();
 								TextView nr = (TextView)findViewById(R.id.nr);
 						        nr.setText(joke.getNumber());
 								joke.onPreviousButtonClick();
@@ -168,7 +168,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 					        }
 						}
 						else if(joke.getFavourite()){
-							joke.deleteFromFavouritesInOtherCategory();
+							joke.deleteFromFavourites();
 							
 							makeToast("Kawał został usunięty z ulubionych");
 					        
