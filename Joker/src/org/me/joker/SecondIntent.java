@@ -99,7 +99,15 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 			final TextView ocena  = (TextView)findViewById(R.id.ocena); 
 			
 			//przerabia na int
-			int sredniaInt = (Integer.parseInt(joke.getVoteUpFromDb())-Integer.parseInt(joke.getVoteDownFromDb()));
+			int sredniaInt = 0;
+			
+			try{
+				sredniaInt = (Integer.parseInt(joke.getVoteUpFromDb())-Integer.parseInt(joke.getVoteDownFromDb()));
+			}
+			catch (Exception e){
+				
+			}
+			
 			
 			
 			
