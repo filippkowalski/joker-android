@@ -69,10 +69,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	        }	
 	        else if(catId == 1){
 	        	joke = new Joke(getApplicationContext(),sort);
-	        	try{
-	        		joke.refreshFavouriteJoke();
-	        	}
-	        	catch(Exception e){
+	        	if(joke.getNumberOfJokesInFavourites() == 0){
 	        		makeToast("Brak ulubionych kawałów");
 			        SecondIntent.this.finish();
 	        	}
@@ -103,6 +100,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 			
 			//przerabia na int
 			int sredniaInt = (Integer.parseInt(joke.getVoteUpFromDb())-Integer.parseInt(joke.getVoteDownFromDb()));
+			
 			
 			
 			//ustawienie sredniej oceny
@@ -149,23 +147,22 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 					try{
 						if(catName.contains("Ulubione")){
 							joke.deleteFromFavourites();
-							try{
+								
+							joke.checkNumberOfJokesInFavourites();
+							if (joke.getNumberOfJokesInFavourites() != 0){
 								kawal.setText(joke.getPrevious());
-								
-								joke.checkNumberOfJokesInFavourites();
 								TextView nr = (TextView)findViewById(R.id.nr);
-						        nr.setText(joke.getNumber());
+							    nr.setText(joke.getNumber());
 								joke.onPreviousButtonClick();
-								
+									
 								kawal.scrollTo(0, 0);
-					        	 
-					        	makeToast("Kawał został usunięty z ulubionych");
-						    
-						        ulub.setImageResource(R.drawable.removebutton);
-					         }
-					         catch(Exception e){
-					        	 kawal.setText("Brak kawału do wyświetlenia w wybranej kategorii");
-					        }
+						        	 
+						        makeToast("Kawał został usunięty z ulubionych");
+							}
+							else {
+								makeToast("Brak ulubionych kawałów");
+						        finish();
+							}
 						}
 						else if(joke.getFavourite()){
 							joke.deleteFromFavourites();
@@ -674,14 +671,28 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 
 	public void onDialogPositiveClick(DialogFragment dialog) {
 		DatabaseAdapter dba = new DatabaseAdapter(catId, null, 0);
-    	dba.saveToDb("voted", "1", joke.getId(), catId);	
+		
+		if (joke.getCategory() != 1){
+			dba.saveToDb("voted", "1", joke.getId(), catId);
+		}
+		else{
+			dba.saveToDb("voted", "1", joke.getIdFromFavourites(), joke.getCategoryFromFavourites());
+		}
+    		
     	makeToast("Dziękujemy za ocenienie kawału.");
 	}
 
 
 	public void onDialogNegativeClick(DialogFragment dialog) {
 		DatabaseAdapter dba = new DatabaseAdapter(catId, null, 0);
-    	dba.saveToDb("voted", "1", joke.getId(), catId);	
+		
+		if (joke.getCategory() != 1){
+			dba.saveToDb("voted", "1", joke.getId(), catId);
+		}
+		else{
+			dba.saveToDb("voted", "1", joke.getIdFromFavourites(), joke.getCategoryFromFavourites());
+		}
+		
     	makeToast("Dziękujemy za ocenienie kawału.");
 	}
 }

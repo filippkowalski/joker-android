@@ -49,7 +49,9 @@ public class Joke {
 		checkNumberOfJokesInFavourites();
 		setFavourite(true);
 		
-		refreshFavouriteJoke();
+		if (getNumberOfJokesInFavourites() != 0){
+			refreshFavouriteJoke();
+		}
 	}
 	
 	
@@ -198,17 +200,33 @@ public class Joke {
 	
 	public String getGuidFromDb(){
 		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
-		return dba.loadGuid(getCategory(), getId());
+		if (getCategory() != 1){
+			return dba.loadGuid(getCategory(), getId());
+		}
+		else{
+			return dba.loadGuid(getCategoryFromFavourites(), getIdFromFavourites());
+		}
+		
 	}
 	
 	public String getVoteUpFromDb(){
 		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
-		return dba.loadVoteUp(getCategory(), getId());
+		if (getCategory() != 1){
+			return dba.loadVoteUp(getCategory(), getId());
+		}
+		else{
+			return dba.loadVoteUp(getCategoryFromFavourites(), getIdFromFavourites());
+		}
 	}
 	
 	public String getVoteDownFromDb(){
 		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
-		return dba.loadVoteDown(getCategory(), getId());
+		if (getCategory() != 1){
+			return dba.loadVoteDown(getCategory(), getId());
+		}
+		else{
+			return dba.loadVoteDown(getCategoryFromFavourites(), getIdFromFavourites());
+		}
 	}
 	
 	public void checkNumberOfJokesInCategory(){
@@ -302,7 +320,7 @@ public class Joke {
 			dba.deleteJokeFromFavourites(getCategory(), getId());
 		}
 		else{
-			dba.deleteJokeFromFavourites(getCategoryFromFavourites(), getId());
+			dba.deleteJokeFromFavourites(getCategoryFromFavourites(), getIdFromFavourites());
 		}
 		
 		setFavourite(false);
@@ -342,7 +360,13 @@ public class Joke {
 	//sprawdza czy w bazie czy flaga jest ustawiona na voted
 	public String checkIfVoted(){
 		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, sort);
-		return dba.checkVoted(getCategory(), getId());
+		if (getCategory() != 1){
+			return dba.checkVoted(getCategory(), getId());
+		}
+		else{
+			return dba.checkVoted(getCategoryFromFavourites(), getIdFromFavourites());
+		}
+		
 	}
 	
 	public int getNumberOfFavsInCategory(){
@@ -351,6 +375,7 @@ public class Joke {
 	}
 	
 	public void checkNumberOfJokesInFavourites(){
+		setNumberOfJokesInFavourites(0);
 		for (int i = 2; i <= 11; i++){
 			setCategoryFromFavourites(i);
 			setNumberOfJokesInFavourites(getNumberOfJokesInFavourites() + getNumberOfFavsInCategory());

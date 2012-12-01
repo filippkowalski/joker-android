@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -147,6 +148,25 @@ public class JokerActivity extends Activity{
         		Thread t = new Thread(){
         			public void run(){
         				networkManager.updateSqliteVoteDb();
+        				
+        				Looper.prepare();
+        				
+        				
+        						Toast toast = Toast.makeText(getBaseContext(),"Uaktualniono bazê ocen",Toast.LENGTH_SHORT);
+                        		
+                        		LayoutInflater inflater = getLayoutInflater();
+                        		View toastView = inflater.inflate(R.layout.toast, (ViewGroup)findViewById(R.id.toast));
+                        		
+                        		TextView toastText = (TextView)toastView.findViewById(R.id.textView1);
+                        		
+                        		toastText.setText("Uaktualniono bazê ocen");
+                        		
+                        		toast.setView(toastView);
+                        		toast.show();
+        				
+        				Looper.loop();
+        				
+        				
         			}
         		};
         		t.start();
