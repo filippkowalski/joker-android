@@ -136,33 +136,7 @@ public class JokerActivity extends Activity{
         });
 
         
-        //pobieranie aktualnej wersji bazy danych z serwera
-        
-	        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-	        
-	        boolean connectionAllow = sharedPref.getBoolean("internet", true);
-        
-        	final NetworkActivity networkManager = new NetworkActivity();
-        	networkManager.updateSqliteVoteDb();
-        	if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){
-        		Thread t = new Thread(){
-        			public void run(){
-        				networkManager.updateSqliteVoteDb();
-        				
-        				Looper.prepare();
-        				
-        				makeToast("Uaktualniono bazê ocen");
-        				
-        				Looper.loop();
-        				
-        				
-        			}
-        		};
-        		t.start();
-        	}
-        	else{
-        		makeToast("Brak po³¹czenia z internetem, oceny mog¹ byc nieaktualne");
-        	}           
+                
     }  
     
     public void makeToast(String msg){

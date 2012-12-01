@@ -77,7 +77,7 @@ public class NetworkActivity {
 			    		trafiony = true;
 			    	} 
 			    }
-			    catId++;			    
+			    catId++;		    
 		    } while(trafiony == false);
 	    }		
 	}
