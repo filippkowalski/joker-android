@@ -40,10 +40,10 @@ public class DatabaseAdapter{
                 
                 Cursor c;
                 if (sort == 1){
-                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY rating DESC", null);
+                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY voteup - votedown DESC", null);
                 }
                 else if (sort == 2){
-                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY rating", null);
+                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY voteup - votedown", null);
                 }
                 else if (sort == 3){
                 	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY _id DESC", null);
@@ -73,10 +73,10 @@ public class DatabaseAdapter{
             db = dbh.getDatabase();
             Cursor c;
             if (sort == 1){
-            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY rating DESC", null);
+            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY voteup - votedown DESC", null);
             }
             else if (sort == 2){
-            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY rating", null);
+            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY voteup - votedown", null);
             }
             else if (sort == 3){
             	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY _id DESC", null);

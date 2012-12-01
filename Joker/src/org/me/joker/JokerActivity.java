@@ -151,18 +151,7 @@ public class JokerActivity extends Activity{
         				
         				Looper.prepare();
         				
-        				
-        						Toast toast = Toast.makeText(getBaseContext(),"Uaktualniono bazê ocen",Toast.LENGTH_SHORT);
-                        		
-                        		LayoutInflater inflater = getLayoutInflater();
-                        		View toastView = inflater.inflate(R.layout.toast, (ViewGroup)findViewById(R.id.toast));
-                        		
-                        		TextView toastText = (TextView)toastView.findViewById(R.id.textView1);
-                        		
-                        		toastText.setText("Uaktualniono bazê ocen");
-                        		
-                        		toast.setView(toastView);
-                        		toast.show();
+        				makeToast("Uaktualniono bazê ocen");
         				
         				Looper.loop();
         				
@@ -172,17 +161,21 @@ public class JokerActivity extends Activity{
         		t.start();
         	}
         	else{
-        		Toast toast = Toast.makeText(getBaseContext(),"Brak po³¹czenia z internetem, oceny mog¹ byc nieaktualne",Toast.LENGTH_SHORT);
-        		
-        		LayoutInflater inflater = getLayoutInflater();
-        		View toastView = inflater.inflate(R.layout.toast, (ViewGroup)findViewById(R.id.toast));
-        		
-        		TextView toastText = (TextView)toastView.findViewById(R.id.textView1);
-        		
-        		toastText.setText("Brak po³¹czenia z internetem, oceny mog¹ byc nieaktualne");
-        		
-        		toast.setView(toastView);
-        		toast.show();
+        		makeToast("Brak po³¹czenia z internetem, oceny mog¹ byc nieaktualne");
         	}           
     }  
+    
+    public void makeToast(String msg){
+    	Toast toast = Toast.makeText(getBaseContext(),msg,Toast.LENGTH_SHORT);
+		
+		LayoutInflater inflater = getLayoutInflater();
+		View toastView = inflater.inflate(R.layout.toast, (ViewGroup)findViewById(R.id.toast));
+		
+		TextView toastText = (TextView)toastView.findViewById(R.id.textView1);
+		
+		toastText.setText(msg);
+		
+		toast.setView(toastView);
+		toast.show();
+    }
 }
