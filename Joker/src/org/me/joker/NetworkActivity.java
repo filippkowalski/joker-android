@@ -65,21 +65,20 @@ public class NetworkActivity {
 		    do{
 		    	//otworzenie bazy
 				DatabaseAdapter dba = new DatabaseAdapter(catId, null, 0);
-			    int k = dba.getLastInsertedID();
+			    int iloscKawalow = dba.getLastInsertedID();
+			    trafiony = false;
 			    
 			    //pêtla przeszukuj¹ca bazê w poszukiwaniu odpowiedniego miejsca
-			    for(int nrKawalu = 1; nrKawalu <= k; nrKawalu++){
+			    for(int nrKawalu = 1; nrKawalu <= iloscKawalow; nrKawalu++){
 			    	if(dba.loadGuid(catId, nrKawalu).equals(guidServer)){
 			    		//zapisanie do bazy danych 
 			    		dba.saveToDb("voteup", votesUp, nrKawalu, catId);	
 			    		dba.saveToDb("votedown", votesDown, nrKawalu, catId);
 			    		trafiony = true;
-			    		break;
-			    	}
+			    	} 
 			    }
-			    catId++;
-		    }
-		    while(trafiony != true);
+			    catId++;			    
+		    } while(trafiony == false);
 	    }		
 	}
 	
