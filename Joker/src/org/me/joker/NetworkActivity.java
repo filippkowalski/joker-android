@@ -13,9 +13,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import android.content.Context;
+import android.database.SQLException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.content.Context;
 
 /*
  * 
@@ -48,10 +49,7 @@ public class NetworkActivity {
 		
 		//zmienne int
 		int catId = 2;
-		
-		//flaga
-		boolean trafiony = false;
-				
+						
 		//zapisanie danych do tablicy e
 		for (int i = 0; i < nl.getLength(); i++) {
 	    	Element e = (Element) nl.item(i);
@@ -59,26 +57,21 @@ public class NetworkActivity {
 		    votesUp = parser.getValue(e, VOTESUP); 
 		    votesDown = parser.getValue(e, VOTESDOWN); 
 		    guidServer = parser.getValue(e, KEY_NAME);
-
-		    catId = 2;
 		    
-		    do{
-		    	//otworzenie bazy
+		    for(catId = 2; catId < 12; catId++){
+		    	try{
 				DatabaseAdapter dba = new DatabaseAdapter(catId, null, 0);
 			    int iloscKawalow = dba.getLastInsertedID();
-			    trafiony = false;
-			    
-			    //pêtla przeszukuj¹ca bazê w poszukiwaniu odpowiedniego miejsca
-			    for(int nrKawalu = 1; nrKawalu <= iloscKawalow; nrKawalu++){
-			    	if(dba.loadGuid(catId, nrKawalu).equals(guidServer)){
-			    		//zapisanie do bazy danych 
-			    		dba.saveToDb("voteup", votesUp, nrKawalu, catId);	
-			    		dba.saveToDb("votedown", votesDown, nrKawalu, catId);
-			    		trafiony = true;
-			    	} 
-			    }
-			    catId++;		    
-		    } while(trafiony == false);
+				    
+				    for(int nrKawalu = 1; nrKawalu <= iloscKawalow; nrKawalu++){
+			    		dba.saveToDbByGuid("voteup", votesUp, nrKawalu, catId, guidServer);	
+			    		dba.saveToDbByGuid("votedown", votesDown, nrKawalu, catId, guidServer);
+				    }
+		    	}
+		    	catch (SQLException e1) {
+		    	    
+		    	}
+		    }
 	    }		
 	}
 	
