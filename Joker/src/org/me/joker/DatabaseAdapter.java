@@ -469,4 +469,25 @@ public class DatabaseAdapter{
         	db.close();
         	return joke;
         }
+        
+        public int searchIfTheresGuid(int catId, String guid){
+        	SQLiteDatabase db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
+        	
+        	Cursor c = db.rawQuery("SELECT _id FROM " + getCategory(catId) + " WHERE guid LIKE \'" + guid + "\'", null);
+        	
+        	if(c.getCount() == 0){
+        		c.close();
+            	db.close();
+        		return 0;
+        	}
+        	else{
+        		c.moveToFirst();
+        		int jokeId = Integer.parseInt(c.getString(c.getColumnIndex("_id")));
+        		c.close();
+            	db.close();
+        		return jokeId;
+        	}
+        	
+        	
+        }
 }

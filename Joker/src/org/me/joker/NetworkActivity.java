@@ -58,10 +58,21 @@ public class NetworkActivity {
 		    votesDown = parser.getValue(e, VOTESDOWN); 
 		    guidServer = parser.getValue(e, KEY_NAME);
 		    
+		    int jokeId = 0;
+		    
+		    DatabaseAdapter dba = new DatabaseAdapter(catId, null, 0);
+		    
+		    while (catId <= 11 && jokeId == 0){
+		    	jokeId = dba.searchIfTheresGuid(catId, guidServer);
+		    	catId++;
+		    }
+		    
+		    dba.saveToDb("voteup", votesUp, jokeId, catId);
+		    dba.saveToDb("votedown", votesDown, jokeId, catId);
+		    /*
 		    for(catId = 2; catId < 12; catId++){
 		    	try{
-				DatabaseAdapter dba = new DatabaseAdapter(catId, null, 0);
-			    int iloscKawalow = dba.getLastInsertedID();
+				
 				    
 				    for(int nrKawalu = 1; nrKawalu <= iloscKawalow; nrKawalu++){
 			    		dba.saveToDbByGuid("voteup", votesUp, nrKawalu, catId, guidServer);	
@@ -72,6 +83,9 @@ public class NetworkActivity {
 		    	    
 		    	}
 		    }
+		    */
+
+			catId = 2;
 	    }		
 	}
 	
