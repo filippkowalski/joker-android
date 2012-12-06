@@ -137,7 +137,6 @@ public class CategoriesActivity extends Activity {
         boolean connectionAllow = sharedPref.getBoolean("internet", true);
     
     	final NetworkActivity networkManager = new NetworkActivity();
-    	networkManager.updateSqliteVoteDb();
     	if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){
     		Thread t = new Thread(){
     			public void run(){
