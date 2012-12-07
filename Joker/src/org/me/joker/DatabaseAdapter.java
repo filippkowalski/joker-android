@@ -335,20 +335,6 @@ public class DatabaseAdapter{
     		dtb.close();
         }
 		
-		/*
-		 * metoda zapisuje wskazan¹ dan¹ do wskazanej kolumny po guidzie
-		 */
-		public void saveToDbByGuid(String kolumna, String voteValue, int jokeId, int catId, String guid){
-    		    				
-    		ContentValues data = new ContentValues();
-    		data.put(kolumna, voteValue);
-    		
-    		String myPath = DB_PATH + DB_NAME;
-    		SQLiteDatabase dtb = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
-    		dtb.update(getCategory(catId), data, "guid=" + guid, null);
-    		dtb.close();
-        }
-		
 		 /*
          * Metoda dodaje przekazany kawal do ulubionych
          */

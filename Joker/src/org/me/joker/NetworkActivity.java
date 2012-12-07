@@ -48,7 +48,7 @@ public class NetworkActivity {
 		String guidServer = "";
 		
 		//zmienne int
-		int catId = 2;
+		int catId = 1;
 						
 		//zapisanie danych do tablicy e
 		for (int i = 0; i < nl.getLength(); i++) {
@@ -60,11 +60,11 @@ public class NetworkActivity {
 		    
 		    int jokeId = 0;
 		    
-		    DatabaseAdapter dba = new DatabaseAdapter(catId, null, 0);
+		    DatabaseAdapter dba = new DatabaseAdapter(catId + 1, null, 0);
 		    
 		    while (catId <= 11 && jokeId == 0){
-		    	jokeId = dba.searchIfTheresGuid(catId, guidServer);
 		    	catId++;
+		    	jokeId = dba.searchIfTheresGuid(catId, guidServer);
 		    }
 		    
 		    dba.saveToDb("voteup", votesUp, jokeId, catId);
@@ -85,7 +85,7 @@ public class NetworkActivity {
 		    }
 		    */
 
-			catId = 2;
+			catId = 1;
 	    }		
 	}
 	
