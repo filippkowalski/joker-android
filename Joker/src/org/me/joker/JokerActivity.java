@@ -136,6 +136,29 @@ public class JokerActivity extends Activity{
         });
 
         
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        
+        boolean connectionAllow = sharedPref.getBoolean("internet", true);
+    
+    	final NetworkActivity networkManager = new NetworkActivity();
+    	if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){
+    		Thread t = new Thread(){
+    			public void run(){
+    				networkManager.updateSqliteVoteDb();
+    				
+    				Looper.prepare();
+    				
+    				makeToast("Uaktualniono bazê ocen");
+    				
+    				Looper.loop();
+    			}
+    		};
+    		t.start();
+    	}
+    	else{
+    		makeToast("Brak po³¹czenia z internetem, oceny mog¹ byc nieaktualne");
+    	}  
+        
                 
     }  
     

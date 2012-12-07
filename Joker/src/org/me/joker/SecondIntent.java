@@ -34,8 +34,6 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	private int catId = 1;
 	private String catName = "Kategoria";
 	
-	public int sort = 4;
-	
 	Joke joke;
 
 	@Override
@@ -49,8 +47,6 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	        setContentView(R.layout.second); 
 	        
 	        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-	        
-	        sort = Integer.parseInt(sharedPref.getString("pref_list", "4"));
 	        
 	        float fontSize = Float.parseFloat(sharedPref.getString("font_list", "20.0"));
 	        
@@ -68,7 +64,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	        	joke = new Joke(getApplicationContext());
 	        }	
 	        else if(catId == 1){
-	        	joke = new Joke(getApplicationContext(),sort);
+	        	joke = new Joke(getApplicationContext(), 0);
 	        	if(joke.getNumberOfJokesInFavourites() == 0){
 	        		makeToast("Brak ulubionych kawałów");
 			        SecondIntent.this.finish();
@@ -76,7 +72,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	        	
 	        }
 	        else{	        	
-	        	joke = new Joke(catId, getApplicationContext(), sort);
+	        	joke = new Joke(catId, getApplicationContext());
 	        }
 	        
 	        /*
@@ -209,7 +205,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 					        /*
 							 * średnia ocena
 							 */
-							final TextView ocena  = (TextView)findViewById(R.id.ocena); 
+							TextView ocena  = (TextView)findViewById(R.id.ocena); 
 							
 							//przerabia na int
 							int sredniaInt = (Integer.parseInt(joke.getVoteUpFromDb())-Integer.parseInt(joke.getVoteDownFromDb()));
@@ -259,7 +255,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 					        /*
 							 * średnia ocena
 							 */
-							final TextView ocena  = (TextView)findViewById(R.id.ocena); 
+							TextView ocena  = (TextView)findViewById(R.id.ocena); 
 							
 							//przerabia na int
 							int sredniaInt = (Integer.parseInt(joke.getVoteUpFromDb())-Integer.parseInt(joke.getVoteDownFromDb()));
@@ -678,7 +674,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 
 
 	public void onDialogPositiveClick(DialogFragment dialog) {
-		DatabaseAdapter dba = new DatabaseAdapter(catId, null, 0);
+		DatabaseAdapter dba = new DatabaseAdapter(catId, null);
 		
 		if (joke.getCategory() != 1){
 			dba.saveToDb("voted", "1", joke.getId(), catId);
@@ -692,7 +688,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 
 
 	public void onDialogNegativeClick(DialogFragment dialog) {
-		DatabaseAdapter dba = new DatabaseAdapter(catId, null, 0);
+		DatabaseAdapter dba = new DatabaseAdapter(catId, null);
 		
 		if (joke.getCategory() != 1){
 			dba.saveToDb("voted", "1", joke.getId(), catId);

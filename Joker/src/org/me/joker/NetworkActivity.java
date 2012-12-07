@@ -60,7 +60,7 @@ public class NetworkActivity {
 		    
 		    int jokeId = 0;
 		    
-		    DatabaseAdapter dba = new DatabaseAdapter(catId + 1, null, 0);
+		    DatabaseAdapter dba = new DatabaseAdapter(catId + 1, null);
 		    
 		    while (catId <= 11 && jokeId == 0){
 		    	catId++;
@@ -69,21 +69,6 @@ public class NetworkActivity {
 		    
 		    dba.saveToDb("voteup", votesUp, jokeId, catId);
 		    dba.saveToDb("votedown", votesDown, jokeId, catId);
-		    /*
-		    for(catId = 2; catId < 12; catId++){
-		    	try{
-				
-				    
-				    for(int nrKawalu = 1; nrKawalu <= iloscKawalow; nrKawalu++){
-			    		dba.saveToDbByGuid("voteup", votesUp, nrKawalu, catId, guidServer);	
-			    		dba.saveToDbByGuid("votedown", votesDown, nrKawalu, catId, guidServer);
-				    }
-		    	}
-		    	catch (SQLException e1) {
-		    	    
-		    	}
-		    }
-		    */
 
 			catId = 1;
 	    }		

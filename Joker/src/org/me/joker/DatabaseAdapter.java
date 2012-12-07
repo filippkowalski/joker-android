@@ -16,16 +16,14 @@ public class DatabaseAdapter{
         public static final String Key_JokeId = "jokeId";
         public static final String Key_Cat = "category";
         public String DB_ID = "1";
-        public int sort = 4;
        
         private final Context context;
         private SQLiteDatabase db;
        
        
-        public DatabaseAdapter(int category, Context context, int sort){
+        public DatabaseAdapter(int category, Context context){
                 DB_TABLE = getCategory(category);
                 this.context = context;
-                this.sort = sort;
         }    
         
         // Metoda zwraca ostatnio ogladany kawal z kategorii o podanym ID
@@ -38,22 +36,10 @@ public class DatabaseAdapter{
                 String joke = null;
                 db = dbh.getDatabase();
                 
-                Cursor c;
-                if (sort == 1){
-                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY voteup - votedown DESC", null);
-                }
-                else if (sort == 2){
-                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY voteup - votedown", null);
-                }
-                else if (sort == 3){
-                	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY _id DESC", null);
-                }
-                else{
-                	c = db.rawQuery("SELECT text FROM " + DB_TABLE, null);
-                }
+                Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id LIKE " + getLastJokeId(id), null);
                 
+                c.moveToFirst();
                 
-                c.moveToPosition(getLastJokeId(id) - 1);
                 joke = c.getString(c.getColumnIndex("text"));
                 c.close();
                 db.close();
@@ -71,21 +57,11 @@ public class DatabaseAdapter{
            
             String joke = null;
             db = dbh.getDatabase();
-            Cursor c;
-            if (sort == 1){
-            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY voteup - votedown DESC", null);
-            }
-            else if (sort == 2){
-            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY voteup - votedown", null);
-            }
-            else if (sort == 3){
-            	c = db.rawQuery("SELECT text FROM " + DB_TABLE + " ORDER BY _id DESC", null);
-            }
-            else{
-            	c = db.rawQuery("SELECT text FROM " + DB_TABLE, null);
-            }
             
-            c.moveToPosition(jokeId - 1);
+            Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id LIKE " + jokeId, null);
+            
+            c.moveToFirst();
+            
             joke = c.getString(c.getColumnIndex("text"));
             c.close();
             db.close();

@@ -36,7 +36,7 @@ public class UpdateWidgetService extends Service {
 	      
 	      //pobranie kawalu
 	      final Joke joke;
-	      joke = new Joke(10, getApplicationContext(), 4);
+	      joke = new Joke(10, getApplicationContext());
 	      
 	      // ustawienie kawalu	      
 	      joke.setRandomTurboSucharJoke();

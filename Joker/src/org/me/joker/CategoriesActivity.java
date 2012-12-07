@@ -2,20 +2,13 @@ package org.me.joker;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
-import android.os.Looper;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class CategoriesActivity extends Activity {
 	
@@ -130,31 +123,6 @@ public class CategoriesActivity extends Activity {
         	}
         });
         
-        //pobieranie aktualnej wersji bazy danych z serwera
-        
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        
-        boolean connectionAllow = sharedPref.getBoolean("internet", true);
-    
-    	final NetworkActivity networkManager = new NetworkActivity();
-    	if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){
-    		Thread t = new Thread(){
-    			public void run(){
-    				networkManager.updateSqliteVoteDb();
-    				
-    				Looper.prepare();
-    				
-    				makeToast("Uaktualniono bazê ocen");
-    				
-    				Looper.loop();
-    			}
-    		};
-    		t.start();
-    	}
-    	else{
-    		makeToast("Brak po³¹czenia z internetem, oceny mog¹ byc nieaktualne");
-    	}   
-    
 	}
 	
 	
@@ -166,21 +134,6 @@ public class CategoriesActivity extends Activity {
 		intent.putExtra("ID", (int)catId);
 		intent.putExtra("CATEGORY", catName);
 		startActivity(intent);
-    }
-    
-    
-    public void makeToast(String msg){
-    	Toast toast = Toast.makeText(getBaseContext(),msg,Toast.LENGTH_SHORT);
-		
-		LayoutInflater inflater = getLayoutInflater();
-		View toastView = inflater.inflate(R.layout.toast, (ViewGroup)findViewById(R.id.toast));
-		
-		TextView toastText = (TextView)toastView.findViewById(R.id.textView1);
-		
-		toastText.setText(msg);
-		
-		toast.setView(toastView);
-		toast.show();
     }
     
     

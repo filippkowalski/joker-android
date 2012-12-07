@@ -8,14 +8,6 @@
         android:summary="Ta funkcja pozwoli aktualizować na bieżąco oceny kawałów"
         android:title="Połączenie z internetem"
         />
-	
-    <ListPreference
-        android:dialogTitle="Sortowanie"
-        android:entries="@array/sortingList"
-        android:entryValues="@array/sortingValues"
-        android:key="pref_list"
-        android:summary="Wybierz w jakiej kolejności mają wyświetlać się kawały"
-        android:title="Sortowanie" />
     
     <ListPreference
         android:dialogTitle="Rozmiar Czcionki"
