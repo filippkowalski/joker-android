@@ -14,7 +14,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import android.content.Context;
-import android.database.SQLException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 

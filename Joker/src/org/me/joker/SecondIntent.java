@@ -11,6 +11,7 @@ import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.gesture.Prediction;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -39,6 +40,9 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 	        super.onCreate(savedInstanceState);
+	        
+	        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+	        StrictMode.setThreadPolicy(policy);
 	        
 	        requestWindowFeature(Window.FEATURE_NO_TITLE);
 	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
