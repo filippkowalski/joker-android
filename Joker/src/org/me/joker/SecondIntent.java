@@ -11,6 +11,7 @@ import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.gesture.Prediction;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
@@ -121,9 +122,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 			else if (sredniaInt == 0){
 				ocena.setText("0");
 			}
-	        
-
-	        
+	        	        
 	        //licznik
 
 	        	final TextView nr = (TextView)findViewById(R.id.nr);
@@ -313,6 +312,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 				        
 					        //sprawdzenie czy jest połączenie 
 					        if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){
+					        	
 					        	showNoticeDialog();
 				            	            	
 				        	}
@@ -670,10 +670,16 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	 * 3 metody odpowiadające za reakcje na pojawiający się dialog
 	 */
 	public void showNoticeDialog() {
-		NetworkActivity networkManager = new NetworkActivity();
+		final NetworkActivity networkManager = new NetworkActivity();
 		
-		DialogFragment newFragment = new DialogActivity(joke, networkManager);
-    	newFragment.show(getSupportFragmentManager(), "ocenianie");
+		Thread t = new Thread(){
+			public void run(){
+				DialogFragment newFragment = new DialogActivity(joke, networkManager);
+		    	newFragment.show(getSupportFragmentManager(), "ocenianie");
+			}
+		};
+		t.start();    
+		
     }
 
 

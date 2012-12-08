@@ -156,7 +156,7 @@ public class JokerActivity extends Activity{
     				Looper.loop();
     			}
     		};
-    		t.start();
+    		t.start();    		
     	}
     	else{
     		makeToast("Brak po³¹czenia z internetem, oceny mog¹ byc nieaktualne");

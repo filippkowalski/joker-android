@@ -15,7 +15,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static String DB_PATH = "/data/data/org.me.joker/databases/";
 	private static String DB_NAME = "jokes.db";
-	public static final int DB_VERSION = 18;
+	public static final int DB_VERSION = 19;
 	private SQLiteDatabase jokes;
 	private final Context myContext;
 	
