@@ -160,9 +160,7 @@ public class JokerActivity extends Activity{
     	}
     	else{
     		makeToast("Brak po³¹czenia z internetem, oceny mog¹ byc nieaktualne");
-    	}  
-        
-                
+    	}       
     }  
     
     public void makeToast(String msg){

@@ -70,7 +70,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	        else if(catId == 1){
 	        	joke = new Joke(getApplicationContext(), 0);
 	        	if(joke.getNumberOfJokesInFavourites() == 0){
-	        		makeToast("Brak ulubionych kawałów");
+	        		makeToast("Brak ulubionych kawałów.");
 			        SecondIntent.this.finish();
 	        	}
 	        	

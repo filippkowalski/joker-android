@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v4.app.DialogFragment;
 
 public class DialogActivity extends DialogFragment {
@@ -22,13 +23,35 @@ public class DialogActivity extends DialogFragment {
         builder.setMessage(R.string.ocenianie)
                .setPositiveButton(R.string.tak, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
-   		        		networkManager.voteUploadPlus(joke.getGuidFromDb());
+                	   
+                	   Thread t = new Thread(){
+               			public void run(){               				
+	               			Looper.prepare();
+	               				
+	               			networkManager.voteUploadPlus(joke.getGuidFromDb());
+	               				
+	               			Looper.loop();
+	               			}
+	               		};
+	               		t.start(); 
+   		        		
    		        		mListener.onDialogPositiveClick(DialogActivity.this);
                    }
                })
                .setNegativeButton(R.string.nie, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
-                	   networkManager.voteUploadMinus(joke.getGuidFromDb());
+                	   
+                	   Thread t = new Thread(){
+                  			public void run(){               				
+   	               			Looper.prepare();
+   	               				
+   	               			networkManager.voteUploadMinus(joke.getGuidFromDb());
+   	               				
+   	               			Looper.loop();
+   	               			}
+   	               		};
+   	               		t.start();    	               		
+                	   
  		        	mListener.onDialogNegativeClick(DialogActivity.this);
                    }
                })
