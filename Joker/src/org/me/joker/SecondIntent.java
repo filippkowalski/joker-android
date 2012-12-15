@@ -674,10 +674,10 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 
 
 	public void onDialogPositiveClick(DialogFragment dialog) {
-		DatabaseAdapter dba = new DatabaseAdapter(catId, null);
+		DatabaseAdapter dba = new DatabaseAdapter(joke.getCategory(), null);
 		
 		if (joke.getCategory() != 1){
-			dba.saveToDb("voted", "1", joke.getId(), catId);
+			dba.saveToDb("voted", "1", joke.getId(), joke.getCategory());
 		}
 		else{
 			dba.saveToDb("voted", "1", joke.getIdFromFavourites(), joke.getCategoryFromFavourites());
@@ -688,10 +688,10 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 
 
 	public void onDialogNegativeClick(DialogFragment dialog) {
-		DatabaseAdapter dba = new DatabaseAdapter(catId, null);
+		DatabaseAdapter dba = new DatabaseAdapter(joke.getCategory(), null);
 		
 		if (joke.getCategory() != 1){
-			dba.saveToDb("voted", "1", joke.getId(), catId);
+			dba.saveToDb("voted", "1", joke.getId(), joke.getCategory());
 		}
 		else{
 			dba.saveToDb("voted", "1", joke.getIdFromFavourites(), joke.getCategoryFromFavourites());
