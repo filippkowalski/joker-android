@@ -18,10 +18,11 @@ public class DatabaseAdapter{
         public String DB_ID = "1";
        
         private final Context context;
-        private SQLiteDatabase db;
+        public SQLiteDatabase db;
        
        
-        public DatabaseAdapter(int category, Context context){
+        public DatabaseAdapter(int category, Context context, SQLiteDatabase db){
+        	this.db = db;
                 DB_TABLE = getCategory(category);
                 this.context = context;
         }    
@@ -29,12 +30,7 @@ public class DatabaseAdapter{
         // Metoda zwraca ostatnio ogladany kawal z kategorii o podanym ID
         public String loadLastJoke(int id){
                
-                DatabaseHelper dbh = new DatabaseHelper(context);
-               
-                dbh.openDatabase();
-               
                 String joke = null;
-                db = dbh.getDatabase();
                 
                 Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id = " + getLastJokeId(id), null);
                 
@@ -42,8 +38,6 @@ public class DatabaseAdapter{
                 
                 joke = c.getString(c.getColumnIndex("text"));
                 c.close();
-                db.close();
-                dbh.close();
                 return joke;
         }
        
@@ -51,12 +45,7 @@ public class DatabaseAdapter{
         
         public String loadJoke(int catId, int jokeId){
             
-            DatabaseHelper dbh = new DatabaseHelper(context);
-           
-            dbh.openDatabase();
-           
             String joke = null;
-            db = dbh.getDatabase();
             
             Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id = " + jokeId, null);
             
@@ -64,8 +53,6 @@ public class DatabaseAdapter{
             
             joke = c.getString(c.getColumnIndex("text"));
             c.close();
-            db.close();
-            dbh.close();
             return joke;
         }
         
@@ -73,14 +60,13 @@ public class DatabaseAdapter{
         * Metoda zwraca ID ostatniego ogladanego kawalu
         */
        
-        int getLastJokeId(int id) {
-        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);      
+        int getLastJokeId(int id) {    
             int ostatni = 1;
+            
             Cursor c = db.rawQuery("SELECT ostatni FROM " + TABLE_NAME + " WHERE _id = " + id, null);
             c.moveToFirst();
            
             ostatni = c.getInt(c.getColumnIndex("ostatni"));
-            
             
             if(DB_TABLE.contains("ulubione")){
             	int favs = 0;
@@ -88,6 +74,7 @@ public class DatabaseAdapter{
             	for (int i = 2; i <= 11; i++){
         			favs += getNumberOfFavsInCategory(i);
         		}
+            	
             	if (ostatni > favs){
             		if (favs <= 0){
             			favs = 1;
@@ -107,7 +94,6 @@ public class DatabaseAdapter{
             }
             
             c.close();
-            db.close();
             
             return ostatni;
         }
@@ -119,21 +105,17 @@ public class DatabaseAdapter{
          */
         
         public void setLastJokePlus(int catID){
-        	DatabaseHelper dbh = new DatabaseHelper(context);
-    		dbh.openDatabase();
-    		db = dbh.getDatabase();
     		int lastID = getLastJokeId(catID);
     		lastID++;
+    		
     		if (lastID > getLastInsertedID()){
     			lastID = 1;
     		}
+    		
     		ContentValues data = new ContentValues();
     		data.put("ostatni", lastID);
-    		String myPath = DB_PATH + DB_NAME;
-    		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+    		
     		db.update(TABLE_NAME, data, "_id=" + catID, null);
-    		dbh.close();
-    		db.close();
         }
         
         /*
@@ -142,24 +124,20 @@ public class DatabaseAdapter{
          */
         
         public void setLastJokeMinus(int catID){
-        	DatabaseHelper dbh = new DatabaseHelper(context);
-    		dbh.openDatabase();
-    		db = dbh.getDatabase();
     		int lastID = getLastJokeId(catID);
     		lastID--;
+    		
     		if (lastID <= 0 ){
     			lastID = getLastInsertedID();
     			if(lastID == 0){
     				lastID = 1;
     			}
     		}
+    		
     		ContentValues data = new ContentValues();
     		data.put("ostatni", lastID);
-    		String myPath = DB_PATH + DB_NAME;
-    		db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+    		
     		db.update(TABLE_NAME, data, "_id=" + catID, null);
-    		dbh.close();
-    		db.close();
         }
         
         
@@ -169,12 +147,14 @@ public class DatabaseAdapter{
         
         public int getLastInsertedID(){
         	int lastID = 0;
+        	
         	if (!DB_TABLE.contains("ulubione")){
-	        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
+	        	
 	        	Cursor c = db.query(DB_TABLE, new String[] {"_id"}, null, null, null, null, null);
 	        	c.moveToLast();
+	        	
 	        	lastID = (int)c.getLong(c.getColumnIndex("_id"));
-	        	db.close();
+	        	
 	        	c.close();
         	}
         	else{
@@ -182,6 +162,7 @@ public class DatabaseAdapter{
         			lastID += getNumberOfFavsInCategory(i);
         		}
         	}
+        	
         	return lastID;
         	
         }
@@ -191,34 +172,26 @@ public class DatabaseAdapter{
          * o zadanym id z bazy danych
          */
         
-        public String getCategory(int id){                 
-            DatabaseHelper dbh = new DatabaseHelper(context);
-            dbh.openDatabase();
-           
+        public String getCategory(int id){           
             String category = null;
-            db = dbh.getDatabase();
+
             Cursor c = db.rawQuery("SELECT kategoria FROM kategorie WHERE _id = " + id, null);
             c.moveToFirst();
            
             category = c.getString(c.getColumnIndex("kategoria"));
             c.close();
-            dbh.close();
-            db.close();
+            
             return category;
         }
         
        
         
         //metoda zwaraca guid kawa³u
-		public String loadGuid(int catId, int jokeId){
-		            
-            DatabaseHelper dbh = new DatabaseHelper(context);
-           
-            dbh.openDatabase();
-           
+		public String loadGuid(int catId, int jokeId){		    
             String guid = null;
-            db = dbh.getDatabase();
+            
             Cursor c;
+            
             if (!DB_TABLE.contains("ulubione")){
             	c = db.rawQuery("SELECT guid FROM " + DB_TABLE + " WHERE _id = " + jokeId, null);
             }
@@ -231,30 +204,20 @@ public class DatabaseAdapter{
             guid = c.getString(c.getColumnIndex("guid"));
             
             c.close();
-            db.close();
-            dbh.close();
+
             return guid;
 		 }
 		
         //metoda zwaraca voteup kawa³u
 		public String loadVoteUp(int catId, int jokeId){
-			DatabaseHelper dbh = new DatabaseHelper(context);
-			   
-		    dbh.openDatabase();
-		   
 		    String voteup = "0";
-		    db = dbh.getDatabase();
 		    
 		    Cursor c;
 			if (!DB_TABLE.contains("ulubione")){
-            
 			    c = db.rawQuery("SELECT voteup FROM " + DB_TABLE + " WHERE _id = " + jokeId, null);
-			    
 			}
 			else {
-				
 				c = db.rawQuery("SELECT voteup FROM " + getCategory(catId) + " WHERE _id = " + jokeId, null);
-				
 			}
 			
 		    c.moveToFirst();
@@ -262,20 +225,13 @@ public class DatabaseAdapter{
 		    voteup = c.getString(c.getColumnIndex("voteup"));
 		    
 			c.close();
-		    db.close();
-		    dbh.close();
+
 		    return voteup;
         }
 		
         //metoda zwaraca vote down kawa³u
 		public String loadVoteDown(int catId, int jokeId){
-            
-		    DatabaseHelper dbh = new DatabaseHelper(context);
-		   
-		    dbh.openDatabase();
-		   
 		    String votedown = "0";
-		    db = dbh.getDatabase();
 		    
 		    Cursor c;
 		    if (!DB_TABLE.contains("ulubione")){
@@ -292,8 +248,7 @@ public class DatabaseAdapter{
 		    votedown = c.getString(c.getColumnIndex("votedown"));
 		    
 		    c.close();
-		    db.close();
-		    dbh.close();
+
 		    return votedown;
         }
 		
@@ -305,10 +260,7 @@ public class DatabaseAdapter{
     		ContentValues data = new ContentValues();
     		data.put(kolumna, voteValue);
     		
-    		String myPath = DB_PATH + DB_NAME;
-    		SQLiteDatabase dtb = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
-    		dtb.update(getCategory(catId), data, "_id=" + jokeId, null);
-    		dtb.close();
+    		db.update(getCategory(catId), data, "_id=" + jokeId, null);
         }
 		
 		 /*
@@ -316,7 +268,6 @@ public class DatabaseAdapter{
          */
         
         public void addJokeToFavourites(int jokeId){
-        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
         	
         	ContentValues update = new ContentValues();
         	update.put("fav", "1");
@@ -324,8 +275,6 @@ public class DatabaseAdapter{
         	String strFilter = "_id=" + jokeId;
         	
         	db.update(DB_TABLE, update, strFilter, null);
-        	
-        	db.close();
         }
         
         
@@ -335,34 +284,24 @@ public class DatabaseAdapter{
          */
         public void deleteJokeFromFavourites(int catId, int jokeId){
         	
-        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
-        	
         	ContentValues update = new ContentValues();
         	update.put("fav", "0");
         	
         	String strFilter = "_id=" + jokeId;
         	
         	db.update(getCategory(catId), update, strFilter, null);
-        	
-        	db.close();
         }
         
         public boolean checkFavourite(int jokeId){
             String ulub;
             
             if(!DB_TABLE.contains("ulubione")){
-	            DatabaseHelper dbh = new DatabaseHelper(context);
-	            dbh.openDatabase();
-	           
-	            db = dbh.getDatabase();
 	            Cursor c = db.rawQuery("SELECT fav FROM " + DB_TABLE + " WHERE _id = " + jokeId, null);
 	            c.moveToFirst();
 	            
 	            ulub = c.getString(c.getColumnIndex("fav"));
 	            
 	            c.close();
-	            dbh.close();
-	            db.close();
             }
             else
             	ulub = "1";
@@ -377,12 +316,7 @@ public class DatabaseAdapter{
         }
         
         public String checkVoted(int catId, int jokeId){
-        	DatabaseHelper dbh = new DatabaseHelper(context);
-			   
-		    dbh.openDatabase();
-		   
 		    String voted = "0";
-		    db = dbh.getDatabase();
 		    
 		    Cursor c;
 			if (!DB_TABLE.contains("ulubione")){
@@ -397,29 +331,24 @@ public class DatabaseAdapter{
 		    voted = c.getString(c.getColumnIndex("voted"));	
 		    
 		    c.close();
-		    db.close();
-		    dbh.close();
+
 		    return voted;
         }
 
         public int getNumberOfFavsInCategory(int catId){
         	int numberOfFavs = 0;
         	
-        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
-        	
         	Cursor c = db.rawQuery("SELECT _id FROM " + getCategory(catId) + " WHERE fav = 1", null);
         	
         	numberOfFavs = c.getCount();
         	
         	c.close();
-        	db.close();
+        	
         	return numberOfFavs;
         }
         
         public String getFavouriteJoke(int catId, int jokeId){
         	String joke = "";
-        	
-        	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
         	
         	Cursor c = db.rawQuery("SELECT text FROM " + getCategory(catId) + " WHERE fav = 1", null);
         	
@@ -428,25 +357,26 @@ public class DatabaseAdapter{
         	joke = c.getString(c.getColumnIndex("text"));
         	
         	c.close();
-        	db.close();
+        	
         	return joke;
         }
         
         public int searchIfTheresGuid(int catId, String guid){
-        	SQLiteDatabase db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
-        	
+        	        	
         	Cursor c = db.rawQuery("SELECT _id FROM " + getCategory(catId) + " WHERE guid = \'" + guid + "\'", null);
         	
         	if(c.getCount() == 0){
         		c.close();
-            	db.close();
+        		
         		return 0;
         	}
         	else{
         		c.moveToFirst();
+        		
         		int jokeId = Integer.parseInt(c.getString(c.getColumnIndex("_id")));
+        		
         		c.close();
-            	db.close();
+        		
         		return jokeId;
         	}
         	

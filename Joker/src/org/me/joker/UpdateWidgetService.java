@@ -36,7 +36,11 @@ public class UpdateWidgetService extends Service {
 	      
 	      //pobranie kawalu
 	      final Joke joke;
-	      joke = new Joke(10, getApplicationContext());
+	      
+	      DatabaseHelper dbh = new DatabaseHelper(this);
+	      dbh.openDatabase();
+	      
+	      joke = new Joke(10, getApplicationContext(), dbh.getDatabase());
 	      
 	      // ustawienie kawalu	      
 	      joke.setRandomTurboSucharJoke();

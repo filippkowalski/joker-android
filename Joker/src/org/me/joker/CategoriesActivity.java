@@ -133,6 +133,7 @@ public class CategoriesActivity extends Activity {
 		Intent intent = new Intent(getApplicationContext(), SecondIntent.class);
 		intent.putExtra("ID", (int)catId);
 		intent.putExtra("CATEGORY", catName);
+		intent.putExtra("DatabaseSingleton", (DatabaseSingleton)getIntent().getSerializableExtra("DatabaseSingleton"));
 		startActivity(intent);
     }
     

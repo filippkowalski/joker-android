@@ -26,7 +26,9 @@ import android.widget.Toast;
  
 public class JokerActivity extends Activity{
 	
-	private final static String APP_PNAME = "org.me.joker";  
+	private final static String APP_PNAME = "org.me.joker";
+	public DatabaseHelper dbh;
+	public DatabaseSingleton dbs;
 	
 	
 	
@@ -91,14 +93,16 @@ public class JokerActivity extends Activity{
         setContentView(R.layout.main);
                 
         //Jeœli potrzebne tworzy bazê lub j¹ uaktualnia
-        DatabaseHelper dbh = new DatabaseHelper(this);
+        dbh = new DatabaseHelper(this);
         try{
         	dbh.createDatabase();
         }
         catch (IOException e){
         	throw new Error("Error creating database.");
         }
-        dbh.close();
+        
+        dbs.setDatabase(dbh.getDatabase());
+        
         
         
         //Buttony i ich funkcje
@@ -108,7 +112,8 @@ public class JokerActivity extends Activity{
         categories.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
         		Intent intent = new Intent(getApplicationContext(), CategoriesActivity.class);
-        		startActivityForResult(intent, 1337);
+        		intent.putExtra("DatabaseSingleton", dbs);
+        		startActivity(intent);
         	}
         });        
        
@@ -117,7 +122,7 @@ public class JokerActivity extends Activity{
         settings.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
         		Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-        		startActivityForResult(intent, 1337);
+        		startActivity(intent);
         	}
         });
         
@@ -143,7 +148,7 @@ public class JokerActivity extends Activity{
         
         boolean connectionAllow = sharedPref.getBoolean("internet", true);
     
-    	final NetworkActivity networkManager = new NetworkActivity();
+    	final NetworkActivity networkManager = new NetworkActivity(dbs.getDatabase());
     	if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){
     		Thread t = new Thread(){
     			public void run(){
@@ -175,5 +180,11 @@ public class JokerActivity extends Activity{
 		
 		toast.setView(toastView);
 		toast.show();
+    }
+    
+    public void onDestroy(){
+        dbh.close();
+        dbs.close();
+        super.onDestroy();
     }
 }

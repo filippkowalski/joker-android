@@ -35,6 +35,8 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	private String catName = "Kategoria";
 	
 	Joke joke;
+	
+	public DatabaseSingleton dbs;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -51,6 +53,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	        float fontSize = Float.parseFloat(sharedPref.getString("font_list", "20.0"));
 	        
 	        
+	        this.dbs = (DatabaseSingleton)getIntent().getSerializableExtra("DatabaseSingleton");
 	        
 	        /*
 	         * Przejecie danych z pierwszego okna
@@ -61,10 +64,10 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 
 
 	        if (catId == 0){
-	        	joke = new Joke(getApplicationContext());
+	        	joke = new Joke(getApplicationContext(), dbs.getDatabase());
 	        }	
 	        else if(catId == 1){
-	        	joke = new Joke(getApplicationContext(), 0);
+	        	joke = new Joke(getApplicationContext(), 0, dbs.getDatabase());
 	        	if(joke.getNumberOfJokesInFavourites() == 0){
 	        		makeToast("Brak ulubionych kawałów.");
 			        SecondIntent.this.finish();
@@ -72,7 +75,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	        	
 	        }
 	        else{	        	
-	        	joke = new Joke(catId, getApplicationContext());
+	        	joke = new Joke(catId, getApplicationContext(), dbs.getDatabase());
 	        }
 	        
 	        /*
@@ -297,7 +300,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 					SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 				        
 				    boolean connectionAllow = sharedPref.getBoolean("internet", true);
-				    NetworkActivity networkManager = new NetworkActivity();
+				    NetworkActivity networkManager = new NetworkActivity(dbs.getDatabase());
 				    
 			        if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){  
 						//pobranie informacji o tym czy użytkownik głosował czy nie
@@ -665,7 +668,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 	 * 3 metody odpowiadające za reakcje na pojawiający się dialog
 	 */
 	public void showNoticeDialog() {
-		NetworkActivity networkManager = new NetworkActivity();
+		NetworkActivity networkManager = new NetworkActivity(dbs.getDatabase());
 		DialogFragment newFragment = new DialogActivity(joke, networkManager);
     	newFragment.show(getSupportFragmentManager(), "ocenianie");
  
@@ -674,7 +677,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 
 
 	public void onDialogPositiveClick(DialogFragment dialog) {
-		DatabaseAdapter dba = new DatabaseAdapter(joke.getCategory(), null);
+		DatabaseAdapter dba = new DatabaseAdapter(joke.getCategory(), null, dbs.getDatabase());
 		
 		if (joke.getCategory() != 1){
 			dba.saveToDb("voted", "1", joke.getId(), joke.getCategory());
@@ -688,7 +691,7 @@ public class SecondIntent extends FragmentActivity implements OnGesturePerformed
 
 
 	public void onDialogNegativeClick(DialogFragment dialog) {
-		DatabaseAdapter dba = new DatabaseAdapter(joke.getCategory(), null);
+		DatabaseAdapter dba = new DatabaseAdapter(joke.getCategory(), null, dbs.getDatabase());
 		
 		if (joke.getCategory() != 1){
 			dba.saveToDb("voted", "1", joke.getId(), joke.getCategory());

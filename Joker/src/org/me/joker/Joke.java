@@ -4,6 +4,7 @@ package org.me.joker;
 import java.util.Random;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 public class Joke {
 	
@@ -24,14 +25,16 @@ public class Joke {
 	private boolean favourite;
 	
 	private final Context context;
+	public SQLiteDatabase db;
 	
 	
 	// Konstruktor
 	
-	public Joke(int catId, Context context){
+	public Joke(int catId, Context context, SQLiteDatabase db){
 		
 		setCategory(catId);
 		this.context = context;
+		this.db = db;
 		checkNumberOfJokesInCategory();
 		
 		refreshJoke();		
@@ -39,8 +42,10 @@ public class Joke {
 	
 	//Konstruktor dla kawalow ulubionych
 	
-	public Joke(Context context, int sort){
+	public Joke(Context context, int sort, SQLiteDatabase db){
 		this.context = context;
+		this.db = db;
+		
 		setCategory(1);
 		checkNumberOfJokesInFavourites();
 		setFavourite(true);
@@ -52,7 +57,8 @@ public class Joke {
 	
 	
 	//Konstruktor dla losowych kawalow
-	public Joke(Context context){
+	public Joke(Context context, SQLiteDatabase db){
+		this.db = db;
 		setRandomJoke();
 		this.context = context;
 	}
@@ -167,17 +173,17 @@ public class Joke {
 	// Metody
 	
 	public int getLastReadJokeId(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, db);
 		return dba.getLastJokeId(getCategory());
 	}
 	
 	public String getContentFromDatabase(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, db);
 		return dba.loadLastJoke(getCategory());
 	}
 	
 	public String getJokeFromDatabase(int jokeId){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, db);
 		return dba.loadJoke(getCategory(), jokeId);
 	}
 	
@@ -195,7 +201,7 @@ public class Joke {
 	}
 	
 	public String getGuidFromDb(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, db);
 		if (getCategory() != 1){
 			return dba.loadGuid(getCategory(), getId());
 		}
@@ -206,7 +212,7 @@ public class Joke {
 	}
 	
 	public String getVoteUpFromDb(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, db);
 		if (getCategory() != 1){
 			return dba.loadVoteUp(getCategory(), getId());
 		}
@@ -216,7 +222,7 @@ public class Joke {
 	}
 	
 	public String getVoteDownFromDb(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, db);
 		if (getCategory() != 1){
 			return dba.loadVoteDown(getCategory(), getId());
 		}
@@ -226,7 +232,7 @@ public class Joke {
 	}
 	
 	public void checkNumberOfJokesInCategory(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, db);
 		setNumberOfJokesInCategory(dba.getLastInsertedID());
 	}	
 	
@@ -282,7 +288,7 @@ public class Joke {
 	}
 	
 	public void onNextButtonClick(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, db);
 		dba.setLastJokePlus(getCategory());
 		if (getCategory() != 1){
 			refreshJoke();
@@ -293,7 +299,7 @@ public class Joke {
 	}
 	
 	public void onPreviousButtonClick(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, db);
 		dba.setLastJokeMinus(getCategory());
 		if (getCategory() != 1){
 			refreshJoke();
@@ -304,13 +310,13 @@ public class Joke {
 	}
 	
 	public void addToFavourites(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, db);
 		dba.addJokeToFavourites(getId());
 		setFavourite(true);
 	}
 	
 	public void deleteFromFavourites(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, db);
 		
 		if (getCategory() != 1){
 			dba.deleteJokeFromFavourites(getCategory(), getId());
@@ -329,7 +335,7 @@ public class Joke {
 		setCategory(randomCategory);
 		checkNumberOfJokesInCategory();
 		
-		int randomJoke = rand.nextInt(getNumberOfJokesInCategory())+1;
+		int randomJoke = rand.nextInt(getNumberOfJokesInCategory()) + 1;
 		setId(randomJoke);
 				
 		setContent(getJokeFromDatabase(getId()));
@@ -349,13 +355,13 @@ public class Joke {
 	}
 	
 	public void checkIfFavourite(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, db);
 		setFavourite(dba.checkFavourite(getId()));
 	}
 	
 	//sprawdza czy w bazie czy flaga jest ustawiona na voted
 	public String checkIfVoted(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, db);
 		if (getCategory() != 1){
 			return dba.checkVoted(getCategory(), getId());
 		}
@@ -366,7 +372,7 @@ public class Joke {
 	}
 	
 	public int getNumberOfFavsInCategory(){
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, db);
 		return dba.getNumberOfFavsInCategory(getCategoryFromFavourites());
 	}
 	
@@ -393,7 +399,7 @@ public class Joke {
 	public String getLastFavouriteJoke(){
 		String joke = "";
 		
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, db);
 		joke = dba.getFavouriteJoke(getCategoryFromFavourites(), getIdFromFavourites());
 		
 		return joke;
@@ -405,7 +411,7 @@ public class Joke {
 		
 		checkCategoryAndId(jokeId);
 		
-		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context);
+		DatabaseAdapter dba = new DatabaseAdapter(getCategory(), context, db);
 		joke = dba.getFavouriteJoke(getCategoryFromFavourites(), getIdFromFavourites());
 		
 		checkCategoryAndId(id);

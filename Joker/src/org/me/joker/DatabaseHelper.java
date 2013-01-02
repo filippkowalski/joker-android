@@ -10,9 +10,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
+import java.io.Serializable;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	private static String DB_PATH = "/data/data/org.me.joker/databases/";
 	private static String DB_NAME = "jokes.db";
 	public static final int DB_VERSION = 19;
@@ -23,6 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public DatabaseHelper(Context context){
 		super(context, DB_NAME, null, DB_VERSION);
 		this.myContext = context;
+		openDatabase();
 	}
 	
 	
@@ -121,7 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void openDatabase() throws SQLiteException{
 		
 		String myPath = DB_PATH + DB_NAME;
-		jokes = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+		jokes = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
 		
 	}
 	
