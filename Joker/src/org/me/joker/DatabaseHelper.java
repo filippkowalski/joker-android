@@ -29,7 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Serializable {
 	}
 	
 	
-	/* Tworzy pusta baze danych i przepisuje do niej
+	/* 
+	 * Tworzy pusta baze danych i przepisuje do niej
 	 * baze wczesniej utworzona
 	 */
 	
@@ -61,7 +62,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Serializable {
 	}
 	
 	
-	/*sprawdza czy istnieje
+	/*
+	 * sprawdza czy istnieje
 	 * baza danych, aby uniknac kopiowania
 	 * przy kolejnym otwarciu aplikacji
 	 * Zwraca true gdy istnieje
@@ -94,7 +96,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Serializable {
 	}
 	
 	
-	/*Kopiuje istniejaca baze do pustej bazy
+	/*
+	 * Kopiuje istniejaca baze do pustej bazy
 	 * stworzonej w systemie telefonu
 	 */
 	private void copyDatabase() throws IOException{
