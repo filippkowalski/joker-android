@@ -14,7 +14,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -34,11 +33,6 @@ public class NetworkActivity {
 	static final String VOTESDOWN = "VotesDown";
 	static final String VOTESUP = "VotesUp";
 	
-	public SQLiteDatabase db;
-	
-	public NetworkActivity(SQLiteDatabase db){
-		this.db = db;
-	}
 	
 	public void updateSqliteVoteDb(){		
 		//pobieranie danych
@@ -66,7 +60,7 @@ public class NetworkActivity {
 		    
 		    int jokeId = 0;
 		    
-		    DatabaseAdapter dba = new DatabaseAdapter(catId + 1, null, db);
+		    DatabaseAdapter dba = new DatabaseAdapter(catId + 1, null);
 		    
 		    while (catId <= 11 && jokeId == 0){
 		    	catId++;

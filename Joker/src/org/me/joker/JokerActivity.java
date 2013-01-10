@@ -27,8 +27,6 @@ import android.widget.Toast;
 public class JokerActivity extends Activity{
 	
 	private final static String APP_PNAME = "org.me.joker";
-	public DatabaseHelper dbh;
-	public DatabaseSingleton dbs;
 	
 	
 	
@@ -93,16 +91,9 @@ public class JokerActivity extends Activity{
         setContentView(R.layout.main);
                 
         //Jeœli potrzebne tworzy bazê lub j¹ uaktualnia
-        dbh = new DatabaseHelper(this);
-        try{
-        	dbh.createDatabase();
-        }
-        catch (IOException e){
-        	throw new Error("Error creating database.");
-        }
         
-        dbs.setDatabase(dbh.getDatabase());
         
+        JokerApp appState = ((JokerApp)getApplicationContext());
         
         
         //Buttony i ich funkcje
@@ -112,7 +103,6 @@ public class JokerActivity extends Activity{
         categories.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
         		Intent intent = new Intent(getApplicationContext(), CategoriesActivity.class);
-        		intent.putExtra("DatabaseSingleton", dbs);
         		startActivity(intent);
         	}
         });        
@@ -148,7 +138,7 @@ public class JokerActivity extends Activity{
         
         boolean connectionAllow = sharedPref.getBoolean("internet", true);
     
-    	final NetworkActivity networkManager = new NetworkActivity(dbs.getDatabase());
+    	final NetworkActivity networkManager = new NetworkActivity();
     	if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){
     		Thread t = new Thread(){
     			public void run(){
@@ -182,9 +172,4 @@ public class JokerActivity extends Activity{
 		toast.show();
     }
     
-    public void onDestroy(){
-        dbh.close();
-        dbs.close();
-        super.onDestroy();
-    }
 }

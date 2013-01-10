@@ -18,11 +18,9 @@ public class DatabaseAdapter{
         public String DB_ID = "1";
        
         private final Context context;
-        public SQLiteDatabase db;
        
        
-        public DatabaseAdapter(int category, Context context, SQLiteDatabase db){
-        	this.db = db;
+        public DatabaseAdapter(int category, Context context){
                 DB_TABLE = getCategory(category);
                 this.context = context;
         }    
@@ -32,7 +30,7 @@ public class DatabaseAdapter{
                
                 String joke = null;
                 
-                Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id = " + getLastJokeId(id), null);
+                Cursor c = JokerApp.getDatabaseHelper().getDatabase().rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id = " + getLastJokeId(id), null);
                 
                 c.moveToFirst();
                 
@@ -47,7 +45,7 @@ public class DatabaseAdapter{
             
             String joke = null;
             
-            Cursor c = db.rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id = " + jokeId, null);
+            Cursor c = JokerApp.getDatabaseHelper().getDatabase().rawQuery("SELECT text FROM " + DB_TABLE + " WHERE _id = " + jokeId, null);
             
             c.moveToFirst();
             
@@ -63,7 +61,7 @@ public class DatabaseAdapter{
         int getLastJokeId(int id) {    
             int ostatni = 1;
             
-            Cursor c = db.rawQuery("SELECT ostatni FROM " + TABLE_NAME + " WHERE _id = " + id, null);
+            Cursor c = JokerApp.getDatabaseHelper().getDatabase().rawQuery("SELECT ostatni FROM " + TABLE_NAME + " WHERE _id = " + id, null);
             c.moveToFirst();
            
             ostatni = c.getInt(c.getColumnIndex("ostatni"));
@@ -85,9 +83,7 @@ public class DatabaseAdapter{
                 	
                 	String strFilter = "_id=" + "1";
                 	
-                	db = SQLiteDatabase.openDatabase(DB_PATH + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
-                	
-                	db.update("kategorie", update, strFilter, null);
+                	JokerApp.getDatabaseHelper().getDatabase().update("kategorie", update, strFilter, null);
                 	
                 	ostatni = favs;
             	}
@@ -115,7 +111,7 @@ public class DatabaseAdapter{
     		ContentValues data = new ContentValues();
     		data.put("ostatni", lastID);
     		
-    		db.update(TABLE_NAME, data, "_id=" + catID, null);
+    		JokerApp.getDatabaseHelper().getDatabase().update(TABLE_NAME, data, "_id=" + catID, null);
         }
         
         /*
@@ -137,7 +133,7 @@ public class DatabaseAdapter{
     		ContentValues data = new ContentValues();
     		data.put("ostatni", lastID);
     		
-    		db.update(TABLE_NAME, data, "_id=" + catID, null);
+    		JokerApp.getDatabaseHelper().getDatabase().update(TABLE_NAME, data, "_id=" + catID, null);
         }
         
         
@@ -150,7 +146,7 @@ public class DatabaseAdapter{
         	
         	if (!DB_TABLE.contains("ulubione")){
 	        	
-	        	Cursor c = db.query(DB_TABLE, new String[] {"_id"}, null, null, null, null, null);
+	        	Cursor c = JokerApp.getDatabaseHelper().getDatabase().query(DB_TABLE, new String[] {"_id"}, null, null, null, null, null);
 	        	c.moveToLast();
 	        	
 	        	lastID = (int)c.getLong(c.getColumnIndex("_id"));
@@ -175,7 +171,7 @@ public class DatabaseAdapter{
         public String getCategory(int id){           
             String category = null;
 
-            Cursor c = db.rawQuery("SELECT kategoria FROM kategorie WHERE _id = " + id, null);
+            Cursor c = JokerApp.getDatabaseHelper().getDatabase().rawQuery("SELECT kategoria FROM kategorie WHERE _id = " + id, null);
             c.moveToFirst();
            
             category = c.getString(c.getColumnIndex("kategoria"));
@@ -193,10 +189,10 @@ public class DatabaseAdapter{
             Cursor c;
             
             if (!DB_TABLE.contains("ulubione")){
-            	c = db.rawQuery("SELECT guid FROM " + DB_TABLE + " WHERE _id = " + jokeId, null);
+            	c = JokerApp.getDatabaseHelper().getDatabase().rawQuery("SELECT guid FROM " + DB_TABLE + " WHERE _id = " + jokeId, null);
             }
             else{
-            	c = db.rawQuery("SELECT guid FROM " + getCategory(catId) + " WHERE _id = " + jokeId, null);
+            	c = JokerApp.getDatabaseHelper().getDatabase().rawQuery("SELECT guid FROM " + getCategory(catId) + " WHERE _id = " + jokeId, null);
             }
             
             c.moveToFirst();
@@ -214,10 +210,10 @@ public class DatabaseAdapter{
 		    
 		    Cursor c;
 			if (!DB_TABLE.contains("ulubione")){
-			    c = db.rawQuery("SELECT voteup FROM " + DB_TABLE + " WHERE _id = " + jokeId, null);
+			    c = JokerApp.getDatabaseHelper().getDatabase().rawQuery("SELECT voteup FROM " + DB_TABLE + " WHERE _id = " + jokeId, null);
 			}
 			else {
-				c = db.rawQuery("SELECT voteup FROM " + getCategory(catId) + " WHERE _id = " + jokeId, null);
+				c = JokerApp.getDatabaseHelper().getDatabase().rawQuery("SELECT voteup FROM " + getCategory(catId) + " WHERE _id = " + jokeId, null);
 			}
 			
 		    c.moveToFirst();
@@ -236,11 +232,11 @@ public class DatabaseAdapter{
 		    Cursor c;
 		    if (!DB_TABLE.contains("ulubione")){
 	            
-			    c = db.rawQuery("SELECT votedown FROM " + DB_TABLE + " WHERE _id = " + jokeId, null);
+			    c = JokerApp.getDatabaseHelper().getDatabase().rawQuery("SELECT votedown FROM " + DB_TABLE + " WHERE _id = " + jokeId, null);
 			    
 			}
 			else {
-				c = db.rawQuery("SELECT votedown FROM " + getCategory(catId) + " WHERE _id = " + jokeId, null);
+				c = JokerApp.getDatabaseHelper().getDatabase().rawQuery("SELECT votedown FROM " + getCategory(catId) + " WHERE _id = " + jokeId, null);
 			}
 		    
 		    c.moveToFirst();
@@ -260,7 +256,7 @@ public class DatabaseAdapter{
     		ContentValues data = new ContentValues();
     		data.put(kolumna, voteValue);
     		
-    		db.update(getCategory(catId), data, "_id=" + jokeId, null);
+    		JokerApp.getDatabaseHelper().getDatabase().update(getCategory(catId), data, "_id=" + jokeId, null);
         }
 		
 		 /*
@@ -274,7 +270,7 @@ public class DatabaseAdapter{
         	
         	String strFilter = "_id=" + jokeId;
         	
-        	db.update(DB_TABLE, update, strFilter, null);
+        	JokerApp.getDatabaseHelper().getDatabase().update(DB_TABLE, update, strFilter, null);
         }
         
         
@@ -289,14 +285,14 @@ public class DatabaseAdapter{
         	
         	String strFilter = "_id=" + jokeId;
         	
-        	db.update(getCategory(catId), update, strFilter, null);
+        	JokerApp.getDatabaseHelper().getDatabase().update(getCategory(catId), update, strFilter, null);
         }
         
         public boolean checkFavourite(int jokeId){
             String ulub;
             
             if(!DB_TABLE.contains("ulubione")){
-	            Cursor c = db.rawQuery("SELECT fav FROM " + DB_TABLE + " WHERE _id = " + jokeId, null);
+	            Cursor c = JokerApp.getDatabaseHelper().getDatabase().rawQuery("SELECT fav FROM " + DB_TABLE + " WHERE _id = " + jokeId, null);
 	            c.moveToFirst();
 	            
 	            ulub = c.getString(c.getColumnIndex("fav"));
@@ -320,10 +316,10 @@ public class DatabaseAdapter{
 		    
 		    Cursor c;
 			if (!DB_TABLE.contains("ulubione")){
-			    c = db.rawQuery("SELECT voted FROM " + DB_TABLE + " WHERE _id = " + jokeId, null);
+			    c = JokerApp.getDatabaseHelper().getDatabase().rawQuery("SELECT voted FROM " + DB_TABLE + " WHERE _id = " + jokeId, null);
 			}
 			else {
-				c = db.rawQuery("SELECT voted FROM " + getCategory(catId) + " WHERE _id = " + jokeId, null);				
+				c = JokerApp.getDatabaseHelper().getDatabase().rawQuery("SELECT voted FROM " + getCategory(catId) + " WHERE _id = " + jokeId, null);				
 			}
 
 		    c.moveToFirst();
@@ -338,7 +334,7 @@ public class DatabaseAdapter{
         public int getNumberOfFavsInCategory(int catId){
         	int numberOfFavs = 0;
         	
-        	Cursor c = db.rawQuery("SELECT _id FROM " + getCategory(catId) + " WHERE fav = 1", null);
+        	Cursor c = JokerApp.getDatabaseHelper().getDatabase().rawQuery("SELECT _id FROM " + getCategory(catId) + " WHERE fav = 1", null);
         	
         	numberOfFavs = c.getCount();
         	
@@ -350,7 +346,7 @@ public class DatabaseAdapter{
         public String getFavouriteJoke(int catId, int jokeId){
         	String joke = "";
         	
-        	Cursor c = db.rawQuery("SELECT text FROM " + getCategory(catId) + " WHERE fav = 1", null);
+        	Cursor c = JokerApp.getDatabaseHelper().getDatabase().rawQuery("SELECT text FROM " + getCategory(catId) + " WHERE fav = 1", null);
         	
         	c.moveToPosition(jokeId - 1);
         	
@@ -363,7 +359,7 @@ public class DatabaseAdapter{
         
         public int searchIfTheresGuid(int catId, String guid){
         	        	
-        	Cursor c = db.rawQuery("SELECT _id FROM " + getCategory(catId) + " WHERE guid = \'" + guid + "\'", null);
+        	Cursor c = JokerApp.getDatabaseHelper().getDatabase().rawQuery("SELECT _id FROM " + getCategory(catId) + " WHERE guid = \'" + guid + "\'", null);
         	
         	if(c.getCount() == 0){
         		c.close();

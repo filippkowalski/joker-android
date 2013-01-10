@@ -35,12 +35,9 @@ public class UpdateWidgetService extends Service {
 	      RemoteViews remoteViews = new RemoteViews(this.getApplicationContext().getPackageName(), R.layout.widget_layout);
 	      
 	      //pobranie kawalu
-	      final Joke joke;
+	      Joke joke;
 	      
-	      DatabaseHelper dbh = new DatabaseHelper(this);
-	      dbh.openDatabase();
-	      
-	      joke = new Joke(10, getApplicationContext(), dbh.getDatabase());
+	      joke = new Joke(10, getApplicationContext());
 	      
 	      // ustawienie kawalu	      
 	      joke.setRandomTurboSucharJoke();

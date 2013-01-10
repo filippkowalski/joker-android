@@ -18,14 +18,13 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Serializable {
 	private static String DB_PATH = "/data/data/org.me.joker/databases/";
 	private static String DB_NAME = "jokes.db";
 	public static final int DB_VERSION = 19;
-	private SQLiteDatabase jokes;
+	private static SQLiteDatabase jokes;
 	private final Context myContext;
 	
 	
 	public DatabaseHelper(Context context){
 		super(context, DB_NAME, null, DB_VERSION);
 		this.myContext = context;
-		openDatabase();
 	}
 	
 	
@@ -124,13 +123,6 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Serializable {
 	}
 	
 	
-	public void openDatabase() throws SQLiteException{
-		
-		String myPath = DB_PATH + DB_NAME;
-		jokes = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
-		
-	}
-	
 	
 	public SQLiteDatabase getDatabase(){
 		return jokes;
@@ -157,16 +149,21 @@ public class DatabaseHelper extends SQLiteOpenHelper implements Serializable {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		// TODO Auto-generated method stub
 		if (newVersion > oldVersion)
 			Log.v("Database Upgrade", "Database higher than old.");
 			try {
 				copyDatabase();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				throw new Error("Blad przy tworzeniu bazy danych.");
 			}
 
+	}
+	
+	public void openDatabase() throws SQLiteException{
+		
+		String myPath = DB_PATH + DB_NAME;
+		jokes = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+		
 	}
 	
 }
