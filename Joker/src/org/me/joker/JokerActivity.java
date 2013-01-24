@@ -142,13 +142,22 @@ public class JokerActivity extends Activity{
     	if(networkManager.haveNetworkConnection(getApplicationContext()) && connectionAllow){
     		Thread t = new Thread(){
     			public void run(){
-    				networkManager.updateSqliteVoteDb();
-    				
-    				Looper.prepare();
-    				
-    				makeToast("Uaktualniono bazê ocen");
-    				
-    				Looper.loop();
+    				try{
+	    				networkManager.updateSqliteVoteDb();
+	    				
+	    				Looper.prepare();
+	    				
+	    				makeToast("Uaktualniono bazê ocen");
+	    				
+	    				Looper.loop();
+    				}
+    				catch(Exception e){
+    					Looper.prepare();
+	    				
+	    				makeToast("Wystapil blad");
+	    				
+	    				Looper.loop();
+    				}
     			}
     		};
     		t.start();    		
