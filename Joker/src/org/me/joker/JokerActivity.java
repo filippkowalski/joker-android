@@ -152,11 +152,7 @@ public class JokerActivity extends Activity{
 	    				Looper.loop();
     				}
     				catch(Exception e){
-    					Looper.prepare();
-	    				
-	    				makeToast("Wystapil blad");
-	    				
-	    				Looper.loop();
+    					
     				}
     			}
     		};
