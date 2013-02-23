@@ -1,7 +1,5 @@
 package org.me.joker;
 
-import java.io.IOException;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,13 +17,18 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
 
 
  
 public class JokerActivity extends Activity{
-	
+	private AdView adView;
 	private final static String APP_PNAME = "org.me.joker";
 	
 	
@@ -90,11 +93,18 @@ public class JokerActivity extends Activity{
 
         setContentView(R.layout.main);
                 
-        //Jeœli potrzebne tworzy bazê lub j¹ uaktualnia
-        
-        
-        JokerApp appState = ((JokerApp)getApplicationContext());
-        
+        // Create the adView
+        adView = new AdView(this, AdSize.BANNER, "a15123946ec6cbb");
+
+        // Lookup your LinearLayout assuming it's been given
+        // the attribute android:id="@+id/mainLayout"
+        TableLayout layout = (TableLayout)findViewById(R.id.mainLayout);
+
+        // Add the adView to it
+        layout.addView(adView);
+
+        // Initiate a generic request to load it with an ad
+        adView.loadAd(new AdRequest());
         
         //Buttony i ich funkcje
         
@@ -177,4 +187,11 @@ public class JokerActivity extends Activity{
 		toast.show();
     }
     
+    @Override
+    public void onDestroy() {
+      if (adView != null) {
+        adView.destroy();
+      }
+      super.onDestroy();
+    }
 }

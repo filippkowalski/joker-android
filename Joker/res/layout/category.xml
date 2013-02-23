@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="top"
     android:background="@drawable/jokerbckg" >
+    
     <TextView
         android:id="@+id/category"
         android:layout_width="wrap_content"
